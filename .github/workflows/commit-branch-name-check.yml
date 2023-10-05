@@ -1,0 +1,47 @@
+name: Commit and Branch Name Check
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Check Commit Messages
+        run: |
+          if [[ ${{ github.event_name }} == 'push' ]]; then
+            commit_range="HEAD^..HEAD"
+          elif [[ ${{ github.event_name }} == 'pull_request' ]]; then
+            commit_range="${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
+          else
+            echo "Unsupported event: ${{ github.event_name }}"
+            exit 1
+          fi
+          
+          commits=$(git log --pretty=format:"%s" $commit_range)
+          for commit in $commits
+          do
+            if [[ ! $commit =~ ^HMS-[0-9]+\ .+$ ]]; then
+              echo "error: invalid commit message - $commit"
+              echo "Commit messages must start with the HMS JIRA key, followed by a number, whitespace, and then the description (e.g., HMS-123 Commit description)"
+              exit 1
+            fi
+          done
+
+      - name: Check Branch Name
+        run: |
+          branch_name=${GITHUB_REF#refs/heads/}
+          if [[ ! $branch_name =~ ^HMS-[0-9]+.*$ ]]; then
+            echo "error: invalid branch name - $branch_name"
+            echo "Branch name must start with the HMS JIRA key (e.g., HMS-123-description)"
+            exit 1
+          fi
