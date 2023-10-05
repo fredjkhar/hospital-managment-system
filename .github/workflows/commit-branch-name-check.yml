@@ -1,0 +1,45 @@
+name: Commit and Branch Name Check
+
+'on':
+  push:
+    branches-ignore:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  branch-name-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+
+      - name: Check Commit Messages
+        run: |
+          commits=$(git log --pretty=format:"%s" ${{ github.event.before }}..${{ github.sha }})
+          for commit in $commits
+          do
+            if [[ ! $commit =~ ^HMS-[0-9]+\ .+$ ]]; then
+              echo "error: invalid commit message - $commit"
+              echo "Commit messages must start with the HMS JIRA key, 
+              followed by a number, whitespace, and then the description (e.g., HMS-123 Commit description)"
+              exit 1
+            fi
+          done
+
+      - name: Check Branch Name
+        run: |
+          branch_name=$(git rev-parse --abbrev-ref HEAD)
+          if [[ $branch_name == "master" ]]; then
+          echo "Skipping branch name check for master branch"
+          if [[ ! $branch_name =~ ^HMS-[0-9]+.*$ ]]; then
+            echo "error: invalid branch name - $branch_name"
+            echo "Branch name must start with the HMS JIRA key (e.g., HMS-123-description)"
+            exit 1
+          fi
+          
