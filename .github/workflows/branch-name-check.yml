@@ -1,0 +1,25 @@
+name: Branch Name Check
+
+'on':
+  push:
+    branches-ignore:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  branch-name-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Branch Name
+        run: |
+          BRANCH_NAME=${GITHUB_REF##*/}
+          echo "Checking branch name: $BRANCH_NAME"
+
+          if [[ ! $BRANCH_NAME =~ ^[A-Z]+-[0-9]+.*$ ]]; then
+            echo "error: invalid branch name - $BRANCH_NAME"
+            echo "Branch names must start with a JIRA key (e.g., ABC-123)"
+            exit 1
+          fi

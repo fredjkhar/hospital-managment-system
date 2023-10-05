@@ -1,0 +1,28 @@
+name: Commit Message Check
+'on':
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  message-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Check Commit Messages
+        run: >
+          commits=$(git log --pretty=format:"%s" ${{ github.event.before }}..${{
+          github.sha }})
+
+          for commit in $commits
+
+          do
+            if [[ ! $commit =~ ^[A-Z]+-[0-9]+.*$ ]]; then
+              echo "error: invalid commit message - $commit"
+              echo "Commit messages must start with a JIRA key (e.g., ABC-123)"
+              exit 1
+            fi
+          done
