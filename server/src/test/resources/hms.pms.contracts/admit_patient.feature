@@ -2,11 +2,10 @@ Feature: Admit Patient
     Scenario: Successful Patient Admission by Charge Nurse
         Given a charge nurse is logged in
         And the charge nurse is consulting a patient’s file
-        And the patient file exists
         And the specific ward is not full
         And the specific ward room is selected
         And the specific ward room bed is selected
-        And the remaining admission information is selected
+        And the remaining admission information is selected (rationaleForRequest, localDoctor,...)
         When the admitPatient command application is invoked
         Then the patient is admitted to the chosen ward
         And the patient is admitted to the chosen ward room

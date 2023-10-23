@@ -1,5 +1,10 @@
 package hms.pms.Application.usecases;
 
+import hms.pms.Application.dtos.queries.DivisionInfoCreateDTO;
+import hms.pms.Application.dtos.queries.PatientFileAdmissionCreateTDO;
+
+import java.util.UUID;
+
 public interface AdmitPatient {
-    void admitPatient();
+    Boolean admitPatient(PatientFileAdmissionCreateTDO patientFileAdmission, DivisionInfoCreateDTO divisionInfo);
 }
