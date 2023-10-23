@@ -5,6 +5,7 @@ Feature: Prescribe Medication
         And the doctor is consulting a patient’s file
         And the patient is under the care of the doctor
         And the required prescription medication is provided
+        And the necessary  information about the prescription is provided
         When the prescribeMedication command application is invoked
         Then a prescription is created a filled with the provided information
         And the system associates the prescription with the correct patient
