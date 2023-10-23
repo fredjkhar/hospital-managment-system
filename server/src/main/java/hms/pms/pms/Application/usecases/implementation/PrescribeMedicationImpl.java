@@ -1,7 +1,7 @@
-package hms.pms.Application.usecases.implementation;
+package hms.pms.pms.Application.usecases.implementation;
 
-import hms.pms.Application.dtos.queries.PrescriptionCreateDTO;
-import hms.pms.Application.usecases.PrescribeMedication;
+import hms.pms.pms.Application.dtos.queries.PrescriptionCreateDTO;
+import hms.pms.pms.Application.usecases.PrescribeMedication;
 
 import java.util.UUID;
 

@@ -1,8 +1,8 @@
-package hms.pms.Application.usecases.implementation;
+package hms.pms.pms.Application.usecases.implementation;
 
-import hms.pms.Application.dtos.queries.DivisionInfoCreateDTO;
-import hms.pms.Application.dtos.queries.PatientAdmissionRequestCreateDTO;
-import hms.pms.Application.usecases.RequestPatientAdmission;
+import hms.pms.pms.Application.dtos.queries.DivisionInfoCreateDTO;
+import hms.pms.pms.Application.dtos.queries.PatientAdmissionRequestCreateDTO;
+import hms.pms.pms.Application.usecases.RequestPatientAdmission;
 
 import java.util.UUID;
 

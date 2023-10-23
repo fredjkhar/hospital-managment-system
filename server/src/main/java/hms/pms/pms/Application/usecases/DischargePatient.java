@@ -1,6 +1,6 @@
-package hms.pms.Application.usecases;
+package hms.pms.pms.Application.usecases;
 
-import hms.pms.Application.dtos.queries.DivisionInfoCreateDTO;
+import hms.pms.pms.Application.dtos.queries.DivisionInfoCreateDTO;
 
 import java.util.UUID;
 

@@ -1,10 +1,8 @@
-package hms.pms.Application.usecases.implementation;
+package hms.pms.pms.Application.usecases.implementation;
 
-import hms.pms.Application.dtos.queries.DivisionInfoCreateDTO;
-import hms.pms.Application.dtos.queries.PatientFileAdmissionCreateTDO;
-import hms.pms.Application.usecases.AdmitPatientFromRequestList;
-
-import java.util.UUID;
+import hms.pms.pms.Application.dtos.queries.DivisionInfoCreateDTO;
+import hms.pms.pms.Application.dtos.queries.PatientFileAdmissionCreateTDO;
+import hms.pms.pms.Application.usecases.AdmitPatientFromRequestList;
 
 public class AdmitPatientFromRequestListImpl implements AdmitPatientFromRequestList {
     @Override

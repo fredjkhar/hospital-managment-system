@@ -1,7 +1,7 @@
-package hms.pms.Application.usecases.implementation;
+package hms.pms.pms.Application.usecases.implementation;
 
-import hms.pms.Application.dtos.queries.PatientFileCreateDTO;
-import hms.pms.Application.usecases.RegisterPatient;
+import hms.pms.pms.Application.dtos.queries.PatientFileCreateDTO;
+import hms.pms.pms.Application.usecases.RegisterPatient;
 
 import java.util.UUID;
 

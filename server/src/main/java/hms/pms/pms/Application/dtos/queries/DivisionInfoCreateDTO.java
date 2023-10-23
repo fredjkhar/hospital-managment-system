@@ -1,4 +1,4 @@
-package hms.pms.Application.dtos.queries;
+package hms.pms.pms.Application.dtos.queries;
 
 public class DivisionInfoCreateDTO {
     private String divisionIdentifier;
