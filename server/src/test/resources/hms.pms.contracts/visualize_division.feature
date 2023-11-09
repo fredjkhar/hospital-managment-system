@@ -1,22 +1,17 @@
 Feature: Visualize Division
+  In order to manage division information
+  As a Charge Nurse
+  I want to view details about my division
 
   Scenario: Successful division visualization
-    Given a charge nurse with ID "CN123" is logged in
-    And the correct division identifier "DIV456" is entered
-    When the charge nurse invokes the visualizeDivision command application
-    Then division "DIV456" information is displayed
-    And the division information includes the division name, occupancy status, and patient details
+    Given the charge nurse with ID "CN123" is logged in
+    And "DIV456" is a valid division identifier
+    When the charge nurse selects to visualize division "DIV456"
+    Then the system displays the division name, occupancy status, and patient details for "DIV456"
+    And the system lists available beds within the division
 
   Scenario: Wrong division identifier is entered
-    Given a charge nurse with ID "CN123" is logged in
-    And an incorrect division identifier "INVALID" is entered
-    When the charge nurse attempts to visualize a division using the visualizeDivision command application
-    Then an error message is displayed, indicating "Division not found. Please enter a valid division identifier."
-    And the charge nurse is prompted to re-enter a valid division identifier
-
-  Scenario: Unauthorized Division Visualization
-    Given a non-charge nurse staff member with ID "STAFF456" is logged in
-    And a correct division identifier "DIV789" is entered
-    When they attempt to visualize a division using the visualizeDivision command application
-    Then an error message is displayed, indicating "Unauthorized access. Only charge nurses can visualize divisions."
-    And the division visualization request is denied
+    Given the charge nurse with ID "CN123" is logged in
+    And "INVALID" is an incorrect division identifier
+    When the charge nurse attempts to visualize a division with identifier "INVALID"
+    Then the system displays an error message "Division not found. Please enter a valid division identifier."

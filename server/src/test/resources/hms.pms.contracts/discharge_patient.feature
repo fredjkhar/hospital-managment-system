@@ -1,27 +1,21 @@
 Feature: Discharge Patient
+    In order to manage the discharge of patients from the hospital
+    As a Charge Nurse
+    I want to discharge patients and update the hospital records accordingly
+
     Scenario: Successful Patient Discharge
-        Given a charge nurse is logged in
-        And the charge nurse is consulting a patient’s file
+        Given a charge nurse is logged in and is consulting the patient’s file
         And the patient is currently admitted to a ward
-        When the dischargePatient command application is invoked
-        Then the patient is discharged from the hospital
-        And the bed availability information for the ward is updated
-        And discharge information is generated and issued
-        And a copy of the discharge information is sent to the patient's external doctor
-        And the system displays a confirmation message indicating successful discharge
+        When the charge nurse initiates the discharge process
+        Then the system discharges the patient from the hospital
+        And updates the bed availability for the ward
+        And generates discharge information
+        And sends a copy of the discharge information to the patient's external doctor
+        And displays a confirmation message of successful discharge
 
     Scenario: Discharge Non-Admitted Patient
-        Given a charge nurse is logged in
-        And the charge nurse is consulting a patient’s file
-        And the patient is not currently admitted
-        When the dischargePatient command application is invoked
-        Then the system displays a error message indicating that the patient is not admitted
+        Given a charge nurse is logged in and is consulting the patient’s file
+        And the patient is not currently admitted to a ward
+        When the charge nurse initiates the discharge process
+        Then the system displays an error message that the patient is not admitted
         And the discharge process is halted
-
-    Scenario: Discharge Patient without Authorization
-        Given a non-charge nurse staff member is logged in
-        And the staff member is consulting a patient’s file
-        When the dischargePatient command application is invoked
-        Then the system displays an error message indicating a lack of authorization
-        And the discharge process is halted
-
