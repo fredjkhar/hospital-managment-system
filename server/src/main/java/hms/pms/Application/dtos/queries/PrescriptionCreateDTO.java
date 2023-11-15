@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 public class PrescriptionCreateDTO {
+    private String patientId;
     private String drugNumber;
     private String drugName;
+    private String dosage;
     private int unitsByDay;
-    private int numberOfAdminsPerDay;
+    private int frequency;
     private List<AdministrationTime> administrationTimes;
     private String methodOfAdministration;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
