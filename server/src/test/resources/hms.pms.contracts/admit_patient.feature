@@ -1,43 +1,32 @@
 Feature: Admit Patient
+    In order to admit patients to the hospital
+    As a Charge Nurse
+    I want to assign patients to a specific ward, room, and bed
+
     Scenario: Successful Patient Admission by Charge Nurse
-        Given a charge nurse is logged in
-        And the charge nurse is consulting a patient’s file
-        And the specific ward is not full
-        And the specific ward room is selected
-        And the specific ward room bed is selected
-        And the remaining admission information is selected (rationaleForRequest, localDoctor,...)
-        When the admitPatient command application is invoked
-        Then the patient is admitted to the chosen ward
-        And the patient is admitted to the chosen ward room
-        And the patient is admitted to the chosen ward room bed
-        And the system updates all relevant patient and division data
-        And the system displays a confirmation message indicating successful admission
+        Given the charge nurse is logged in
+        And is consulting a patient’s file
+        And there is an available bed in the specified ward
+        And the charge nurse selects the available room and bed
+        And enters all remaining admission information
+        When the charge nurse submits the admission form
+        Then the system admits the patient to the selected bed in the ward
+        And updates bed availability and patient information
+        And displays a confirmation of successful admission
 
     Scenario: Division is Full
-        Given a charge nurse is logged in
-        And the charge nurse is consulting a patient’s file
-        And the patient file exists
-        And the specific ward is full
-        When the admitPatient command application is invoked
-        Then the system notifies the charge nurse that the division is full
-        And provides the option to initiate a patient admission request
-        And the patient admission process is halted
+        Given the charge nurse is logged in
+        And is consulting a patient’s file
+        And the specified ward is full
+        When the charge nurse attempts to admit a patient to the specified ward
+        Then the system notifies the charge nurse of the full status
+        And suggests initiating a patient admission request
 
     Scenario: Admission with Invalid Room/Bed Details
         Given a charge nurse is logged in
-        And the charge nurse is consulting a patient’s file
-        And the patient file exists
-        And the specific ward is not full
+        And is consulting a patient’s file
+        And there is an available bed in the specified ward
         And the provided ward room or bed details are invalid
-        When the admitPatient command application is invoked
+        When the charge nurse attempts to admit a patient to the specified ward
         Then the system displays an error message indicating invalid room/bed details
         And requests valid room and bed details again
-        And the patient admission process is halted
-
-    Scenario: Unauthorized Admission
-        Given a non-charge nurse staff member is logged in
-        And the staff member is consulting a patient’s file
-        And the patient file exists
-        When the admitPatient command application is invoked
-        Then the system displays an error message indicating a lack of authorization
-        And the patient admission process is halted

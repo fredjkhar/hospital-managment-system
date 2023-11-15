@@ -1,19 +1,20 @@
 Feature: Consult Patient File
+  In order to review patient records for medical or administrative purposes
+  As a Medical Staff Member
+  I want to access and view the content of a patient's file
 
   Scenario: Successful Access to Patient File
-    Given a staff member is logged in
-    And the patient identification number is provided
-    When the consultPatientFile command application is invoked
+    Given a medical staff member is logged in
+    And the staff member has provided a valid patient identification number
+    When the staff member requests to view the patient's file
     Then the system retrieves the patient's registration information
-    And displays the patient's file to the staff member
-    And logs the staff member unique identifier
+    And the system displays the patient's file to the staff member
+    And the system records the access by the staff member's unique identifier
 
   Scenario: Access Patient File with Invalid Patient ID
-    Given a staff member is logged in
-    And the staff member has authorization to access patient files
-    And the staff member specifies an invalid patient identification number
-    When the consultPatientFile command application is invoked
-    Then the system displays an error message indicating that the patient ID is not found
-    And does not display any patient file
-    And the consultPatientFile process is halted
-
+    Given a medical staff member is logged in
+    And the staff member enters an invalid patient identification number
+    When the staff member requests to view the patient's file
+    Then the system alerts that the patient ID is not recognized
+    And the system prevents any patient file from being displayed
+    And the system logs the unsuccessful access attempt
