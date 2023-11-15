@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class RequestPatientAdmissionImpl implements RequestPatientAdmission {
     @Override
-    public Boolean requestPatientAdmission(UUID patientId, PatientAdmissionRequestCreateDTO patientAdmissionRequest, DivisionInfoCreateDTO divisionInfo) {
+    public Boolean requestPatientAdmission(PatientAdmissionRequestCreateDTO patientAdmissionRequest, DivisionInfoCreateDTO divisionInfo) {
         //TODO  Implement the method
         return null;
     }

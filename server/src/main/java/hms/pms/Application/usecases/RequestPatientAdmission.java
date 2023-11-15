@@ -6,5 +6,5 @@ import hms.pms.Application.dtos.queries.PatientAdmissionRequestCreateDTO;
 import java.util.UUID;
 
 public interface RequestPatientAdmission {
-    Boolean requestPatientAdmission(UUID patientId, PatientAdmissionRequestCreateDTO patientAdmissionRequest, DivisionInfoCreateDTO divisionInfo);
+    Boolean requestPatientAdmission(PatientAdmissionRequestCreateDTO patientAdmissionRequest, DivisionInfoCreateDTO divisionInfo);
 }

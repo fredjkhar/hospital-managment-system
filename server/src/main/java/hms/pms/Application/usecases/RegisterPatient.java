@@ -1,9 +1,9 @@
 package hms.pms.Application.usecases;
 
-import hms.pms.Application.dtos.queries.PatientFileCreateDTO;
+import hms.pms.Application.dtos.queries.PatientCreateDTO;
 
 import java.util.UUID;
 
 public interface RegisterPatient {
-    UUID registerPatient(PatientFileCreateDTO patientInfo);
+    UUID registerPatient(PatientCreateDTO patientInfo);
 }
