@@ -1,4 +1,4 @@
-## Ward/Ward
+## Ward
 
 **Type**: Support
 
