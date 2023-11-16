@@ -17,8 +17,8 @@ public class Ward {
     int occupiedBeds;
     int extensionNumber;
     String status;
-    List<UUID> admissions;
-    Queue<UUID> admissionRequests;
+    List<Admission> admissions;
+    Queue<AdmissionRequest> admissionRequests;
 
     public Ward(UUID id, String wardName, UUID chargeNurseId, String location, int totalBeds, int occupiedBeds, int extensionNumber) {
         this.wardId = (id == null ? UUID.randomUUID() : id);
@@ -29,11 +29,12 @@ public class Ward {
         this.occupiedBeds = occupiedBeds;
         this.extensionNumber = extensionNumber;
         this.status = STATUS_INCOMPLETE;
-        this.admissions = new LinkedList<UUID>();
-        this.admissionRequests = new LinkedList<UUID>();
+        this.admissions = new LinkedList<Admission>();
+        this.admissionRequests = new LinkedList<AdmissionRequest>();
     }
 
-    public void admittedPatient() {
+    public void admitPatient(Admission admission) {
+        this.admissions.add(admission);
         occupiedBeds++;
         if (occupiedBeds == totalBeds) {
             status = STATUS_COMPLETE;
