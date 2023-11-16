@@ -1,15 +1,14 @@
 package hms.pms.domain.patient.facade.implementation;
 
-import hms.pms.application.dtos.queries.PatientAdmissionCreateTDO;
-import hms.pms.application.dtos.queries.PatientDischargeCreateDTO;
+import hms.pms.Application.services.DomainEventEmitter;
 import hms.pms.application.dtos.queries.PatientCreateDto;
 import hms.pms.domain.patient.events.NewPatientCreated;
 import hms.pms.domain.patient.events.PatientUpdated;
 import hms.pms.domain.patient.factories.PatientFactory;
 import hms.pms.domain.patient.repositories.PatientRepository;
-
 import java.util.Date;
 import java.util.UUID;
+
 
 public class PatientFacadeImpl implements PatientFacade {
     private final PatientFactory patientFactory;
@@ -49,10 +48,10 @@ public class PatientFacadeImpl implements PatientFacade {
     }
 
     @Override
-    public boolean admitPatient(UUID patientId, UUID divisionId, UUID admissionId) {
+    public boolean admitPatient(UUID patientId, UUID wardId, UUID admissionId) {
         seg3x02.PatientManagementSystem.domain.patient.entities.Patient patient = patientRepository.find(patientId);
         if (patient != null) {
-            patient.setDivisionAndAdmission(divisionId, admissionId);
+            patient.setWardAndAdmission(wardId, admissionId);
             eventEmitter.emit(new PatientUpdated(UUID.randomUUID(), new Date(), patient.getPatientId()));
             return true;
         }
@@ -66,11 +65,11 @@ public class PatientFacadeImpl implements PatientFacade {
     }
 
     @Override
-    public boolean removeDivisionFromPatient(UUID patientId, DischargeInformationCreateDto dischargeInfo) {
+    public boolean removeWardFromPatient(UUID patientId, DischargeInformationCreateDto dischargeInfo) {
         seg3x02.PatientManagementSystem.domain.patient.entities.Patient patient = patientRepository.find(patientId);
         if (patient != null) {
-            patient.removeDivisionFromPatient(dischargeInfo, dischargeInformationFactory);
-            patient.setDivisionId(null);
+            patient.removeWardFromPatient(dischargeInfo, dischargeInformationFactory);
+            patient.setWardId(null);
             patient.setAdmissionId(null);
             eventEmitter.emit(new PatientUpdated(UUID.randomUUID(), new Date(), patient.getPatientId()));
             return true;
@@ -82,7 +81,7 @@ public class PatientFacadeImpl implements PatientFacade {
     public UUID[] getAdmIdAndDivId(UUID patientId) {
         seg3x02.PatientManagementSystem.domain.patient.entities.Patient patient = patientRepository.find(patientId);
         if (patient != null) {
-            UUID[] adIdAndDivId = patient.getAdmissionIdAndDivisionId();
+            UUID[] adIdAndDivId = patient.getAdmissionIdAndWardId();
             eventEmitter.emit(new PatientUpdated(UUID.randomUUID(), new Date(), patient.getPatientId()));
             return adIdAndDivId;
         }

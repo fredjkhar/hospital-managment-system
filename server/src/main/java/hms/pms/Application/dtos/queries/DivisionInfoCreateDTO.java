@@ -1,14 +1,14 @@
 package hms.pms.Application.dtos.queries;
 
-public class DivisionInfoCreateDTO {
-    private String divisionIdentifier;
-    private String divisionName;
+public class WardInfoCreateDTO {
+    private String wardIdentifier;
+    private String wardName;
     private ChargeNurse chargeNurse;
     private String location;
     private int totalNumberOfBeds;
     private int currentNumberOfBeds;
     private String telephoneExtensionNumber;
-    private Boolean statusOfDivision;
+    private Boolean statusOfWard;
 
     private static class ChargeNurse {
         private String name;

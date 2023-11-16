@@ -2,7 +2,7 @@ package hms.pms.Application.dtos.queries;
 
 public class PatientAdmissionCreateTDO {
     private String patientId;
-    private String divisionId;
+    private String wardId;
     private String localDoctor;
     private String roomNumber;
     private String bedNumber;

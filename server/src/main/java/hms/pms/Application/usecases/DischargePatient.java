@@ -1,10 +1,9 @@
 package hms.pms.Application.usecases;
 
-import hms.pms.Application.dtos.queries.DivisionInfoCreateDTO;
 import hms.pms.Application.dtos.queries.PatientDischargeCreateDTO;
+import hms.pms.Application.dtos.queries.WardInfoCreateDTO;
 
-import java.util.UUID;
 
 public interface DischargePatient {
-    Boolean dischargePatient(PatientDischargeCreateDTO patientDischarge, DivisionInfoCreateDTO divisionInfo);
+    Boolean dischargePatient(PatientDischargeCreateDTO patientDischarge, WardInfoCreateDTO wardInfo);
 }

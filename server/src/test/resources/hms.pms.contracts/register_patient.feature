@@ -9,7 +9,7 @@ Feature: Register Patient
     And the Local Doctor ID matches a doctor in the HMS
     When the staff member submits the patient registration form
     Then the system registers the patient with the provided information
-    And assigns a primary Charge Nurse to the patient based on the division
+    And assigns a primary Charge Nurse to the patient based on the ward
     And sends a confirmation message to the medical staff member
 
   Scenario: Registration with Duplicate Patient Details

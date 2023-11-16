@@ -14,7 +14,7 @@ Feature: Admit Patient
         And updates bed availability and patient information
         And displays a confirmation of successful admission
 
-    Scenario: Division is Full
+    Scenario: Ward is Full
         Given the charge nurse is logged in
         And is consulting a patient’s file
         And the specified ward is full

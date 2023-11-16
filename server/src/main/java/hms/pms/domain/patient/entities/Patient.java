@@ -1,12 +1,9 @@
 package hms.pms.domain.patient.entities;
 
-import hms.pms.application.dtos.queries.PatientCreateDTO;
-import hms.pms.application.dtos.queries.PatientDischargeCreateDTO;
-
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
+
 
 public class Patient {
     private final UUID patientId;
@@ -20,7 +17,7 @@ public class Patient {
     private final UUID familyDoctor;
     private final ArrayList<UUID> prescriptionIds;
     private UUID admissionId;
-    private UUID divisionId;
+    private UUID wardId;
 
     private Address address;
     private NextOfKin nextOfKin;
@@ -37,7 +34,7 @@ public class Patient {
             UUID familyDoctor,
             ArrayList<UUID> prescriptionIds,
             UUID admissionId,
-            UUID divisionId,
+            UUID wardId,
             Address address,
             NextOfKin nextOfKin,
           
@@ -53,7 +50,7 @@ public class Patient {
         this.familyDoctor = familyDoctor;
         this.prescriptionIds = prescriptionIds;
         this.admissionId = admissionId;
-        this.divisionId = divisionId;
+        this.wardId = wardId;
         this.address = address;
         this.nextOfKin = nextOfKin;
     }
@@ -71,9 +68,9 @@ public class Patient {
         nextOfKin = patientInfo.getNextOfKin();
     }
 
-//     public boolean setDivisionAndAdmission(UUID divisionIdIn, UUID admissionIdIn) {
+//     public boolean setWardAndAdmission(UUID wardIdIn, UUID admissionIdIn) {
 //         admissionId = admissionIdIn;
-//         divisionId = divisionIdIn;
+//         wardId = wardIdIn;
 //         return true;
 //     }
 
@@ -81,13 +78,13 @@ public class Patient {
 //         return admissionId != null;
 //     }
 
-//     public void removeDivisionFromPatient(DischargeInformationCreateDto dischargeInfo, DischargeInformationFactory dischargeInformationFactory) {
+//     public void removeWardFromPatient(DischargeInformationCreateDto dischargeInfo, DischargeInformationFactory dischargeInformationFactory) {
 //         dischargeInformationFactory.createDischargeInformation(dischargeInfo);
 //     }
 
-//     public UUID[] getAdmissionIdAndDivisionId() {
-//         if (admissionId != null && divisionId != null) {
-//             return new UUID[]{admissionId, divisionId};
+//     public UUID[] getAdmissionIdAndWardId() {
+//         if (admissionId != null && wardId != null) {
+//             return new UUID[]{admissionId, wardId};
 //         } else {
 //             return null;
 //         }

@@ -1,6 +1,7 @@
+import hms.pms.domain.patient.entities.Patient;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
 
 public class RegisterPatientSteps {
@@ -36,9 +37,9 @@ public class RegisterPatientSteps {
         Assert.assertTrue(patientRepository.isPatientRegistered(patient));
     }
 
-    @Then("assigns a primary Charge Nurse to the patient based on the division")
+    @Then("assigns a primary Charge Nurse to the patient based on the ward")
     public void assignsPrimaryChargeNurse() {
-        chargeNurse = ChargeNurseService.assignPrimaryChargeNurse(patient.getDivision());
+        chargeNurse = ChargeNurseService.assignPrimaryChargeNurse(patient.getWard());
         Assert.assertNotNull(chargeNurse);
     }
 
