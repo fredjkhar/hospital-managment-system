@@ -1,12 +1,12 @@
 package hms.pms.domain.staff.repositories;
 
+import hms.pms.domain.staff.entities.Staff;
+
 import java.util.UUID;
 
-import hms.pms.domain.staff.entities.staff.Staff;
-
 public interface StaffRepository {
-    public Staff find(String EmployeeNbr);
+    Staff find(UUID EmployeeNbr);
 
-    public void save(Staff staff);
+    void save(Staff staff);
     
 }

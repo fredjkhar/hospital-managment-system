@@ -1,13 +1,33 @@
 package hms.pms.Application.dtos.queries;
 
-public class PatientAdmissionCreateTDO {
-    private String patientId;
-    private String divisionId;
-    private String localDoctor;
-    private String roomNumber;
-    private String bedNumber;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.UUID;
+
+@Getter
+@Setter
+public class PatientAdmissionCreateDTO {
+    private UUID patientId;
+    private UUID localDoctor;
+    private UUID roomNumber;
+    private UUID bedNumber;
     private String privateInsuranceNumber;
     private String rationaleForRequest;
     private int priorityAssessment;
     private String localDoctorId;
+
+    public PatientAdmissionCreateDTO(UUID patientId, UUID localDoctor, UUID roomNumber,
+                                     UUID bedNumber, String privateInsuranceNumber,
+                                     String rationaleForRequest, int priorityAssessment,
+                                     String localDoctorId) {
+        this.patientId = patientId;
+        this.localDoctor = localDoctor;
+        this.roomNumber = roomNumber;
+        this.bedNumber = bedNumber;
+        this.privateInsuranceNumber = privateInsuranceNumber;
+        this.rationaleForRequest = rationaleForRequest;
+        this.priorityAssessment = priorityAssessment;
+        this.localDoctorId = localDoctorId;
+    }
 }

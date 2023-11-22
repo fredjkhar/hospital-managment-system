@@ -1,16 +1,25 @@
 package hms.pms.domain.patient.entities;
 
-public class NextOfKin {
-    private String firstName;
-    private String lastName;
-    private String relationshipToPatient;
-    private int phoneNumber;
+import hms.pms.Application.dtos.queries.AddressCreateDTO;
+import lombok.Getter;
 
-    public NextOfKin(String firstName, String lastName, String relationshipToPatient, int phoneNumber) {
+@Getter
+public final class NextOfKin {
+    private final String firstName;
+    private final String lastName;
+    private final String relationshipToPatient;
+    private final String phoneNumber;
+    private Address address;
+
+    public NextOfKin(String firstName, String lastName, String relationshipToPatient, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.relationshipToPatient = relationshipToPatient;
         this.phoneNumber = phoneNumber;
     }
 
+    public void setAddress(AddressCreateDTO addressInfo) {
+        this.address = new Address(addressInfo.getStreet(), addressInfo.getCity(),
+                addressInfo.getCountry(), addressInfo.getPostalCode());
+    }
 }

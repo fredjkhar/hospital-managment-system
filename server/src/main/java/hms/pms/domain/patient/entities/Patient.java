@@ -1,48 +1,38 @@
 package hms.pms.domain.patient.entities;
 
-import hms.pms.application.dtos.queries.PatientCreateDTO;
-import hms.pms.application.dtos.queries.PatientDischargeCreateDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import hms.pms.Application.dtos.queries.AddressCreateDTO;
+import hms.pms.Application.dtos.queries.NextOfKinCreateDTO;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
+@Getter
+@Setter
 public class Patient {
-    private final UUID patientId;
-    private final int insuranceNumber;
-    private final String firstName;
-    private final String lastName;
-    private final int phoneNumber;
-    private final Date dateOfBirth;
-    private final char gender;
-    private final String maritalStatus;
-    private final UUID familyDoctor;
-    private final ArrayList<UUID> prescriptionIds;
-    private UUID admissionId;
-    private UUID divisionId;
-
+    private UUID patientId;
+    private int insuranceNumber;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date dateOfBirth;
+    private char gender;
+    private String maritalStatus;
+    private UUID externalDoctorId;
+    private ArrayList<UUID> prescriptions;
     private Address address;
     private NextOfKin nextOfKin;
-    
-    public Patient(
-            UUID patientId,
-            int insuranceNumber,
-            String firstName,
-            String lastName,
-            int phoneNumber,
-            Date dateOfBirth,
-            char gender,
-            String maritalStatus,
-            UUID familyDoctor,
-            ArrayList<UUID> prescriptionIds,
-            UUID admissionId,
-            UUID divisionId,
-            Address address,
-            NextOfKin nextOfKin,
-          
-    ) {
-        this.patientId = patientId;
+    private String primaryChargeNurseId;
+
+    public Patient(int insuranceNumber, String firstName,
+                   String lastName, String phoneNumber, Date dateOfBirth,
+                   char gender, String maritalStatus, UUID externalDoctorId,
+                   ArrayList<UUID> prescriptions, String primaryChargeNurseId) {
+        this.patientId = UUID.randomUUID();
         this.insuranceNumber = insuranceNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,52 +40,35 @@ public class Patient {
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.maritalStatus = maritalStatus;
-        this.familyDoctor = familyDoctor;
-        this.prescriptionIds = prescriptionIds;
-        this.admissionId = admissionId;
-        this.divisionId = divisionId;
-        this.address = address;
+        this.externalDoctorId = externalDoctorId;
+        this.prescriptions = new ArrayList<>();
+        this.primaryChargeNurseId = primaryChargeNurseId;
+    }
+
+    public void update(Patient patient) {
+        this.firstName = patient.getFirstName();
+        this.lastName = patient.getLastName();
+        this.phoneNumber = patient.getPhoneNumber();
+        this.address = patient.getAddress();
+        this.nextOfKin = patient.getNextOfKin();
+        this.primaryChargeNurseId = patient.getPrimaryChargeNurseId();
+    }
+
+    public void setAddress(AddressCreateDTO addressInfo) {
+        this.address = new Address(addressInfo.getStreet(), addressInfo.getCity(),
+                addressInfo.getCountry(), addressInfo.getPostalCode());
+    }
+
+    public void setNextOfKin(NextOfKinCreateDTO nextOfKinInfo) {
+        NextOfKin nextOfKin = new NextOfKin(nextOfKinInfo.getFirstName(), nextOfKinInfo.getLastName(),
+                nextOfKinInfo.getRelationship(), nextOfKinInfo.getPhoneNumber());
+        nextOfKin.setAddress(nextOfKinInfo.getAddress());
         this.nextOfKin = nextOfKin;
+
     }
 
-    public void updateInfo(PatientCreateDto patientInfo) {
-        insuranceNumber = patientInfo.getinsuranceNumber();
-        firstName = patientInfo.getLastName();
-        lastName = patientInfo.getFirstName();
-        phoneNumber = patientInfo.getTelephoneNumber();
-        dateOfBirth = patientInfo.getDateOfBirth();
-        gender = patientInfo.getGender();
-        maritalStatus = patientInfo.getMaritalStatus();
-        familyDoctor = patientInfo.getPersonalDoctor();
-        address = patientInfo.getAddressInfo();
-        nextOfKin = patientInfo.getNextOfKin();
+    public void addPrescription(UUID prescriptionId) {
+        prescriptions.add(prescriptionId);
     }
-
-//     public boolean setDivisionAndAdmission(UUID divisionIdIn, UUID admissionIdIn) {
-//         admissionId = admissionIdIn;
-//         divisionId = divisionIdIn;
-//         return true;
-//     }
-
-//     public boolean isAdmitted() {
-//         return admissionId != null;
-//     }
-
-//     public void removeDivisionFromPatient(DischargeInformationCreateDto dischargeInfo, DischargeInformationFactory dischargeInformationFactory) {
-//         dischargeInformationFactory.createDischargeInformation(dischargeInfo);
-//     }
-
-//     public UUID[] getAdmissionIdAndDivisionId() {
-//         if (admissionId != null && divisionId != null) {
-//             return new UUID[]{admissionId, divisionId};
-//         } else {
-//             return null;
-//         }
-//     }
-
-//     public boolean addPrescription(UUID prescId) {
-//         prescriptionIds.add(prescId);
-//         return true;
-//     }
 }
 

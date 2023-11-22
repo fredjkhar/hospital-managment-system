@@ -5,5 +5,5 @@ import hms.pms.Application.dtos.queries.StaffInfoCreateDTO;
 import java.util.UUID;
 
 public interface RegisterStaff {
-    UUID registerStaff(StaffInfoCreateDTO staffInfo);
+    boolean registerStaff(StaffInfoCreateDTO staffInfo);
 }

@@ -4,18 +4,19 @@ Feature: Discharge Patient
     I want to discharge patients and update the hospital records accordingly
 
     Scenario: Successful Patient Discharge
-        Given a charge nurse is logged in and is consulting the patient’s file
+        Given the charge nurse is logged in
+        And the charge nurse is consulting a patient’s file
         And the patient is currently admitted to a ward
         When the charge nurse initiates the discharge process
         Then the system discharges the patient from the hospital
-        And updates the bed availability for the ward
+        And updates the bed availability of the ward
         And generates discharge information
         And sends a copy of the discharge information to the patient's external doctor
-        And displays a confirmation message of successful discharge
+        And displays a successful discharge confirmation message
 
     Scenario: Discharge Non-Admitted Patient
-        Given a charge nurse is logged in and is consulting the patient’s file
+        Given the charge nurse is logged in
+        And the charge nurse is consulting a patient’s file
         And the patient is not currently admitted to a ward
         When the charge nurse initiates the discharge process
         Then the system displays an error message that the patient is not admitted
-        And the discharge process is halted
