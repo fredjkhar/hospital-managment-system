@@ -1,102 +1,70 @@
 package hms.pms.domain.patient.facade.implementation;
 
-import hms.pms.application.dtos.queries.PatientAdmissionCreateTDO;
-import hms.pms.application.dtos.queries.PatientDischargeCreateDTO;
-import hms.pms.application.dtos.queries.PatientCreateDto;
-import hms.pms.domain.patient.events.NewPatientCreated;
+import hms.pms.Application.dtos.queries.AddressCreateDTO;
+import hms.pms.Application.dtos.queries.NextOfKinCreateDTO;
+import hms.pms.Application.dtos.queries.PatientCreateDTO;
+import hms.pms.Application.services.DomainEventEmitter;
+import hms.pms.domain.patient.entities.Patient;
+import hms.pms.domain.patient.events.PatientCreated;
 import hms.pms.domain.patient.events.PatientUpdated;
+import hms.pms.domain.patient.facade.PatientFacade;
 import hms.pms.domain.patient.factories.PatientFactory;
 import hms.pms.domain.patient.repositories.PatientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.UUID;
 
 public class PatientFacadeImpl implements PatientFacade {
-    private final PatientFactory patientFactory;
+
     private final PatientRepository patientRepository;
-    private final DischargeInformationFactory dischargeInformationFactory;
+    private final PatientFactory patientFactory;
     private final DomainEventEmitter eventEmitter;
 
-    public PatientFacadeImpl(
-            PatientFactory patientFactory,
-            PatientRepository patientRepository,
-            DischargeInformationFactory dischargeInformationFactory,
-            DomainEventEmitter eventEmitter
-    ) {
-        this.patientFactory = patientFactory;
+    @Autowired
+    public PatientFacadeImpl(PatientRepository patientRepository,
+                             PatientFactory patientFactory,
+                             DomainEventEmitter eventEmitter) {
         this.patientRepository = patientRepository;
-        this.dischargeInformationFactory = dischargeInformationFactory;
+        this.patientFactory = patientFactory;
         this.eventEmitter = eventEmitter;
     }
 
     @Override
-    public UUID createPatient(PatientCreateDto patientInfo) {
-        seg3x02.PatientManagementSystem.domain.patient.entities.Patient patient = patientFactory.createPatient(patientInfo);
+    public boolean createPatient(PatientCreateDTO patientInfo) {
+        if (patientRepository.find(patientInfo.getInsuranceNumber()) != null) return false;
+
+        Patient patient = patientFactory.createPatient(patientInfo);
         patientRepository.save(patient);
-        eventEmitter.emit(new NewPatientCreated(UUID.randomUUID(), new Date(), patient.getPatientId()));
-        return patient.getPatientId();
+
+        AddressCreateDTO addressInfo = patientInfo.getAddressInfo();
+        patient.setAddress(addressInfo);
+
+        NextOfKinCreateDTO nextOfKinInfo = patientInfo.getNextOfKinInfo();
+        patient.setNextOfKin(nextOfKinInfo);
+
+        patientRepository.save(patient);
+        eventEmitter.emit(new PatientCreated(UUID.randomUUID(), new Date(), patient.getPatientId()));
+        return true;
     }
 
     @Override
-    public boolean updatePatient(UUID patientId, PatientCreateDto patientInfo) {
-        seg3x02.PatientManagementSystem.domain.patient.entities.Patient patient = patientRepository.find(patientId);
-        if (patient != null) {
-            patient.updateInfo(patientInfo);
-            eventEmitter.emit(new PatientUpdated(UUID.randomUUID(), new Date(), patient.getPatientId()));
-            return true;
-        }
-        return false;
-    }
+    public boolean updatePatient(UUID patientID, PatientCreateDTO patientInfo) {
+        Patient patient = patientRepository.find(patientID);
+        if (patient == null) return false;
 
-    @Override
-    public boolean admitPatient(UUID patientId, UUID divisionId, UUID admissionId) {
-        seg3x02.PatientManagementSystem.domain.patient.entities.Patient patient = patientRepository.find(patientId);
-        if (patient != null) {
-            patient.setDivisionAndAdmission(divisionId, admissionId);
-            eventEmitter.emit(new PatientUpdated(UUID.randomUUID(), new Date(), patient.getPatientId()));
-            return true;
-        }
-        return false;
-    }
+        Patient updated = patientFactory.createPatient(patientInfo);
 
-    @Override
-    public boolean isAdmitted(UUID patientId) {
-        seg3x02.PatientManagementSystem.domain.patient.entities.Patient patient = patientRepository.find(patientId);
-        return patient != null && patient.isAdmitted();
-    }
+        AddressCreateDTO addressInfo = patientInfo.getAddressInfo();
+        patient.setAddress(addressInfo);
 
-    @Override
-    public boolean removeDivisionFromPatient(UUID patientId, DischargeInformationCreateDto dischargeInfo) {
-        seg3x02.PatientManagementSystem.domain.patient.entities.Patient patient = patientRepository.find(patientId);
-        if (patient != null) {
-            patient.removeDivisionFromPatient(dischargeInfo, dischargeInformationFactory);
-            patient.setDivisionId(null);
-            patient.setAdmissionId(null);
-            eventEmitter.emit(new PatientUpdated(UUID.randomUUID(), new Date(), patient.getPatientId()));
-            return true;
-        }
-        return false;
-    }
+        NextOfKinCreateDTO nextOfKinInfo = patientInfo.getNextOfKinInfo();
+        patient.setNextOfKin(nextOfKinInfo);
 
-    @Override
-    public UUID[] getAdmIdAndDivId(UUID patientId) {
-        seg3x02.PatientManagementSystem.domain.patient.entities.Patient patient = patientRepository.find(patientId);
-        if (patient != null) {
-            UUID[] adIdAndDivId = patient.getAdmissionIdAndDivisionId();
-            eventEmitter.emit(new PatientUpdated(UUID.randomUUID(), new Date(), patient.getPatientId()));
-            return adIdAndDivId;
-        }
-        return null;
-    }
+        patient.update(updated);
+        patientRepository.save(patient);
 
-    @Override
-    public boolean addPrescription(UUID patientId, UUID prescId) {
-        seg3x02.PatientManagementSystem.domain.patient.entities.Patient patient = patientRepository.find(patientId);
-        if (patient != null) {
-            patient.addPrescription(prescId);
-            eventEmitter.emit(new PatientUpdated(UUID.randomUUID(), new Date(), patient.getPatientId()));
-            return true;
-        }
-        return false;
+        eventEmitter.emit(new PatientUpdated(UUID.randomUUID(), new Date(), patient.getPatientId()));
+        return true;
     }
 }

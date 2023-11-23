@@ -6,5 +6,8 @@ import java.util.UUID;
 
 public interface PatientRepository {
     Patient find(UUID patientId);
+
+    Patient find(String insuranceNumber);
+
     void save(Patient patient);
 }

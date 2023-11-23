@@ -1,6 +1,8 @@
 package hms.pms.Application.services;
 
+import hms.pms.domain.common.DomainEvent;
+
 public interface DomainEventEmitter {
-    void emit(Object obj);
+    void emit(DomainEvent event);
 }
 

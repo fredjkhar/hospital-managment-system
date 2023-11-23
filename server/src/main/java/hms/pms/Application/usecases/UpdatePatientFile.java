@@ -5,5 +5,5 @@ import hms.pms.Application.dtos.queries.PatientCreateDTO;
 import java.util.UUID;
 
 public interface UpdatePatientFile {
-    Boolean updatePatientFile(PatientCreateDTO patient, UUID patientId);
+    boolean updatePatientFile(UUID patientId, PatientCreateDTO patient);
 }

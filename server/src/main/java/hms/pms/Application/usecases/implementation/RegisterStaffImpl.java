@@ -17,7 +17,7 @@ public class RegisterStaffImpl implements RegisterStaff {
     }
 
     @Override
-    public UUID registerStaff(StaffInfoCreateDTO staffInfo) {
+    public boolean registerStaff(StaffInfoCreateDTO staffInfo) {
         return staffFacade.createStaffAccount(staffInfo);
     }
 }
