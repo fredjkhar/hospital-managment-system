@@ -13,14 +13,23 @@ public class Admission {
     private UUID localDoctorId;
     private UUID roomNbr;
     private UUID bedNbr;
-    private String insurance;
+    private String privateInsuranceNumber;
+    private String rationaleForRequest;
+    private int priorityAssessment;
 
-    public Admission(UUID patientId, UUID localDoctorId, UUID roomNbr, UUID bedNbr, String insurance) {
+
+    public Admission(UUID patientId, UUID localDoctorId, UUID roomNbr, UUID bedNbr,
+                     String privateInsuranceNumber, String rationaleForRequest,
+                     int priorityAssessment) {
         this.id = UUID.randomUUID();
         this.patientId = patientId;
         this.localDoctorId = localDoctorId;
         this.roomNbr = roomNbr;
         this.bedNbr = bedNbr;
-        this.insurance = insurance;
+        this.privateInsuranceNumber = privateInsuranceNumber;
+        this.rationaleForRequest = rationaleForRequest;
+        this.priorityAssessment = priorityAssessment;
     }
 }
+
+

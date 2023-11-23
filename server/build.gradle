@@ -35,6 +35,7 @@ dependencies {
 	testImplementation 'io.cucumber:cucumber-junit-platform-engine:latest.release'
 	testImplementation 'org.junit.platform:junit-platform-suite:latest.release'
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:latest.release'
+	testImplementation 'io.cucumber:cucumber-picocontainer:latest.release'
 	testRuntimeOnly 'io.cucumber:cucumber-picocontainer:latest.release'
 }
 

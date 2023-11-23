@@ -14,7 +14,7 @@ import java.util.UUID;
 @Setter
 public class Patient {
     private UUID patientId;
-    private int insuranceNumber;
+    private String insuranceNumber;
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -28,7 +28,7 @@ public class Patient {
     private NextOfKin nextOfKin;
     private String primaryChargeNurseId;
 
-    public Patient(int insuranceNumber, String firstName,
+    public Patient(String insuranceNumber, String firstName,
                    String lastName, String phoneNumber, Date dateOfBirth,
                    char gender, String maritalStatus, UUID externalDoctorId,
                    ArrayList<UUID> prescriptions, String primaryChargeNurseId) {

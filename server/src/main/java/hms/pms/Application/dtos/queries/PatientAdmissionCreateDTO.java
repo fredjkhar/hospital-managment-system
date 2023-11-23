@@ -9,25 +9,22 @@ import java.util.UUID;
 @Setter
 public class PatientAdmissionCreateDTO {
     private UUID patientId;
-    private UUID localDoctor;
+    private UUID localDoctorId;
     private UUID roomNumber;
     private UUID bedNumber;
     private String privateInsuranceNumber;
     private String rationaleForRequest;
     private int priorityAssessment;
-    private String localDoctorId;
 
-    public PatientAdmissionCreateDTO(UUID patientId, UUID localDoctor, UUID roomNumber,
+    public PatientAdmissionCreateDTO(UUID patientId, UUID localDoctorId, UUID roomNumber,
                                      UUID bedNumber, String privateInsuranceNumber,
-                                     String rationaleForRequest, int priorityAssessment,
-                                     String localDoctorId) {
+                                     String rationaleForRequest, int priorityAssessment) {
         this.patientId = patientId;
-        this.localDoctor = localDoctor;
+        this.localDoctorId = localDoctorId;
         this.roomNumber = roomNumber;
         this.bedNumber = bedNumber;
         this.privateInsuranceNumber = privateInsuranceNumber;
         this.rationaleForRequest = rationaleForRequest;
         this.priorityAssessment = priorityAssessment;
-        this.localDoctorId = localDoctorId;
     }
 }

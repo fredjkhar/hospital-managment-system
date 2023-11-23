@@ -1,45 +1,159 @@
 package hms.pms.contracts.steps;
 
+import hms.pms.Application.dtos.queries.PatientAdmissionCreateDTO;
+import hms.pms.Application.services.DomainEventEmitter;
+import hms.pms.contracts.testStubs.factories.AdmissionFactoryStub;
+import hms.pms.contracts.testStubs.factories.AdmissionRequestFactoryStub;
+import hms.pms.contracts.testStubs.factories.DischargeFactoryStub;
+import hms.pms.contracts.testStubs.repositories.*;
+import hms.pms.contracts.testStubs.services.DomainEventEmitterStub;
+import hms.pms.domain.common.DomainEvent;
+import hms.pms.domain.patient.entities.Patient;
+import hms.pms.domain.staff.entities.Staff;
+import hms.pms.domain.ward.entities.Admission;
+import hms.pms.domain.ward.entities.Ward;
+import hms.pms.domain.ward.entities.Room;
+import hms.pms.domain.ward.entities.Bed;
+import hms.pms.domain.ward.facade.WardFacade;
+import hms.pms.domain.ward.facade.implementation.WardFacadeImpl;
+import hms.pms.domain.ward.factories.AdmissionFactory;
+import hms.pms.domain.ward.factories.AdmissionRequestFactory;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.jupiter.api.Assertions;
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+import java.util.Objects;
+import java.util.UUID;
 
 public class PatientStepDefinitions {
+    private final StaffRepositoryStub staffRepositoryStub;
+    private final PatientRepositoryStub patientRepositoryStub;
+    private final RoomRepositoryStub roomRepositoryStub;
+    private final BedRepositoryStub bedRepositoryStub;
+    private final WardRepositoryStub wardRepositoryStub;
 
-    // Given steps
+    private final AdmissionFactoryStub admissionFactoryStub;
+    private final AdmissionRequestFactoryStub admissionRequestFactoryStub;
+    private final DischargeFactoryStub dischargeFactoryStub;
+    private final DomainEventEmitterStub eventEmitterStub;
+
+    @Autowired
+    public PatientStepDefinitions(StaffRepositoryStub staffRepositoryStub, PatientRepositoryStub patientRepositoryStub,
+                                  RoomRepositoryStub roomRepositoryStub, BedRepositoryStub bedRepositoryStub,
+                                  WardRepositoryStub wardRepositoryStub, AdmissionFactoryStub admissionFactoryStub,
+                                  AdmissionRequestFactoryStub admissionRequestFactoryStub, DischargeFactoryStub dischargeFactoryStub,
+                                  DomainEventEmitterStub eventEmitterStub) {
+        this.staffRepositoryStub = staffRepositoryStub;
+        this.patientRepositoryStub = patientRepositoryStub;
+        this.roomRepositoryStub = roomRepositoryStub;
+        this.bedRepositoryStub = bedRepositoryStub;
+        this.wardRepositoryStub = wardRepositoryStub;
+        this.admissionFactoryStub = admissionFactoryStub;
+        this.admissionRequestFactoryStub = admissionRequestFactoryStub;
+        this.dischargeFactoryStub = dischargeFactoryStub;
+        this.eventEmitterStub = eventEmitterStub;
+    }
+
+    private Staff chargeNurse = null;
+    private Patient patient = null;
+    private Ward ward = null;
+    private Room room = null;
+    private Bed bed = null;
+    private Bed invalidBed = null;
+    private Ward wardFull = null;
+    private PatientAdmissionCreateDTO patientAdmissionInfo;
+    private PatientAdmissionCreateDTO patientAdmissionInfo_invalidBed;
+
+    private WardFacade wardFacade;
+
     @Given("the charge nurse is logged in")
     public void the_charge_nurse_is_logged_in() {
-        // Implementation for verifying charge nurse login
+        chargeNurse = StepUtils.createChargeNurseAccount(staffRepositoryStub);
+        Assertions.assertNotNull(chargeNurse);
     }
 
     @Given("the charge nurse is consulting a patient’s file")
     public void the_charge_nurse_is_consulting_a_patients_file() {
-        // Implementation for the charge nurse consulting a patient's file
+        patient = StepUtils.createPatient(patientRepositoryStub);
+        Assertions.assertNotNull(patient);
     }
 
     @Given("there is an available bed in the specified ward")
     public void there_is_an_available_bed_in_the_specified_ward() {
-        // Check for available bed in the specified ward
+        ward = StepUtils.createWard(roomRepositoryStub, bedRepositoryStub, wardRepositoryStub);
+        Assertions.assertNotNull(ward);
+        Assertions.assertEquals("incomplete", ward.getStatus());
     }
-
     @Given("the specified ward is full")
     public void the_specified_ward_is_full() {
-        // Check if the specified ward is full
+        wardFull = StepUtils.createFullWard(roomRepositoryStub, bedRepositoryStub, wardRepositoryStub);
+        Assertions.assertNotNull(wardFull);
+        Assertions.assertEquals("complete", wardFull.getStatus());
     }
 
     @Given("the charge nurse selects the available room and bed")
     public void the_charge_nurse_selects_the_available_room_and_bed() {
-        // Implementation for selecting an available room and bed
+        UUID[] roomNbrs = ward.getRooms();
+        for (UUID roomNbr: roomNbrs) {
+            Room r = roomRepositoryStub.find(roomNbr);
+            if (Objects.equals(r.getStatus(), "incomplete")) {
+                room = r;
+            }
+        }
+        Assertions.assertNotNull(room);
+        Assertions.assertEquals("incomplete", room.getStatus());
+
+        for (UUID bedNbr: room.getBeds()) {
+            Bed b = bedRepositoryStub.find(bedNbr);
+            if (Objects.equals(b.getStatus(), "incomplete")) {
+                bed = b;
+            }
+        }
+        Assertions.assertNotNull(bed);
+        Assertions.assertEquals("incomplete", bed.getStatus());
     }
 
     @Given("the charge nurse enters all remaining admission information")
     public void the_charge_nurse_enters_all_remaining_admission_information() {
-        // Logic to handle entry of all remaining admission information
+        UUID roomNbr = room == null  ? UUID.randomUUID() : room.getRoomNbr();
+        UUID bedNbr = bed == null ? UUID.randomUUID() : bed.getBedNbr();
+        patientAdmissionInfo = new PatientAdmissionCreateDTO(patient.getPatientId(), UUID.randomUUID(),
+                 roomNbr, bedNbr, "OHIP", "He's sick", 5);
+        Assertions.assertNotNull(patientAdmissionInfo);
+    }
+
+    @Given("the charge nurse enters all remaining admission information with invalid bed or room details")
+    public void the_charge_nurse_enters_all_remaining_admission_information_with_invalid_bed_or_room_details() {
+        UUID[] roomNbrs = ward.getRooms();
+        for (UUID roomNbr: roomNbrs) {
+            Room r = roomRepositoryStub.find(roomNbr);
+            if (Objects.equals(r.getStatus(), "incomplete")) {
+                room = r;
+            }
+        }
+        patientAdmissionInfo_invalidBed = new PatientAdmissionCreateDTO(patient.getPatientId(), UUID.randomUUID(),
+                room.getRoomNbr(), invalidBed.getBedNbr(), "OHIP", "He's sick", 5);
+        Assertions.assertNotNull(patientAdmissionInfo_invalidBed);
     }
 
     @Given("the provided ward room or bed details are invalid")
     public void the_provided_ward_room_or_bed_details_are_invalid() {
-        // Check if provided room or bed details are invalid
+
+        invalidBed = new Bed(UUID.randomUUID());
+        Bed isInRepository = bedRepositoryStub.find(invalidBed.getBedNbr());
+        boolean isInWard = false;
+        for (UUID roomNbr: ward.getRooms()) {
+            Room r = roomRepositoryStub.find(roomNbr);
+            UUID[] bedNbrs = r.getBeds();
+            for (UUID bedNbr: bedNbrs) {
+                Bed b = bedRepositoryStub.find(bedNbr);
+                if (b.getBedNbr() == invalidBed.getBedNbr()) isInWard = true;
+            }
+        }
+        Assertions.assertTrue(isInRepository == null || !isInWard);
     }
 
     @Given("the charge nurse has a patient selected from the request list")
@@ -155,12 +269,10 @@ public class PatientStepDefinitions {
     // When steps
     @When("the charge nurse submits the admission form")
     public void the_charge_nurse_submits_the_admission_form() {
-        // Logic for the charge nurse submitting the admission form
-    }
-
-    @When("the charge nurse attempts to admit a patient to the specified ward")
-    public void the_charge_nurse_attempts_to_admit_a_patient_to_the_specified_ward() {
-        // Logic for attempting to admit a patient to a specified ward
+        wardFacade = new WardFacadeImpl(wardRepositoryStub, roomRepositoryStub, bedRepositoryStub,
+                patientRepositoryStub, admissionFactoryStub, admissionRequestFactoryStub, dischargeFactoryStub,
+                eventEmitterStub);
+        Assertions.assertNotNull(wardFacade);
     }
 
     @When("the charge nurse submits the admission form from the request list")
@@ -196,27 +308,27 @@ public class PatientStepDefinitions {
     // Then steps
     @Then("the system admits the patient to the selected bed in the ward")
     public void the_system_admits_the_patient_to_the_selected_bed_in_the_ward() {
-        // Implement logic to verify patient admission to the selected bed
+        boolean result = wardFacade.admitPatient(ward.getWardId(), patientAdmissionInfo);
+        Assertions.assertTrue(result);
     }
 
     @Then("the system updates bed availability and patient information")
     public void the_system_updates_bed_availability_and_patient_information() {
-        // Implement logic to update bed availability and patient information
-    }
-
-    @Then("the system displays a confirmation of successful admission")
-    public void the_system_displays_a_confirmation_of_successful_admission() {
-        // Implement logic to display a confirmation message for successful admission
+        UUID bedNbr = patientAdmissionInfo.getBedNumber();
+        Bed bed = bedRepositoryStub.find(bedNbr);
+        Assertions.assertEquals("complete", bed.getStatus());
     }
 
     @Then("the system notifies the charge nurse of the full status")
     public void the_system_notifies_the_charge_nurse_of_the_full_status() {
-        // Implement logic to notify the charge nurse of the ward's full status
+        boolean result = wardFacade.admitPatient(wardFull.getWardId(), patientAdmissionInfo);
+        Assertions.assertFalse(result); //For now we deal with bool values
     }
 
     @Then("the system displays an error message indicating invalid room and bed details")
     public void the_system_displays_an_error_message_indicating_invalid_room_bed_details() {
-        // Implement logic to display an error message for invalid room/bed details
+        boolean result = wardFacade.admitPatient(ward.getWardId(), patientAdmissionInfo_invalidBed);
+        Assertions.assertFalse(result); //For now we deal with bool values
     }
 
     // Admit Patient from Request List Feature
