@@ -1,0 +1,27 @@
+<div class="register-container">
+    <h2>Register</h2>
+  
+    <div class="form-group">
+      <label for="usernumb">Employee Number:</label>
+      <input type="text" id="usernumb" [(ngModel)]="usernumb" />
+    </div>
+
+    <div class="form-group">
+      <label for="username">Full Name:</label>
+      <input type="text" id="username" [(ngModel)]="username" />
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="text" id="email" [(ngModel)]="email" />
+    </div>
+  
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" [(ngModel)]="password" />
+    </div>
+  
+    <button class="login-button" (click)="register()">Register</button>
+    <h2></h2>
+
+  </div>

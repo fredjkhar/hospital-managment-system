@@ -1,0 +1,63 @@
+<body>
+  <div class="page-container" [ngClass]="{'blur': selectedNurse}">
+    <h2>Departments Information</h2>
+      <div class="header-container">
+          <input type="text" [(ngModel)]="searchText" placeholder="Search ward" class="search-bar" />
+          <button (click)="search()" class="search-button">
+              <i class="material-icons">search</i>
+          </button>
+      </div>
+
+      <table class="ward-table" [ngClass]="{'blur': selectedNurse}">
+          <thead>
+              <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Charge Nurse</th>
+                  <th>Location</th>
+                  <th>Total nº beds</th>
+                  <th>Tel. ext. nº</th>
+                  <th>Status</th>
+                  <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+              <ng-container *ngIf="Wards.length > 0; else noResults">
+                  <tr *ngFor="let item of Wards">
+                      <td>{{ item.Id }}</td>
+                      <td>{{ item.name }}</td>
+                      <td id='nurse' (click)="showNurseDetails(item.nurse, item.name, 'nurse')">{{ item.nurse }}</td>
+                      <td>{{ item.location }}</td>
+                      <td>{{ item.beds }}</td>
+                      <td>{{ item.telExt }}</td>
+                      <td>{{ item.status }}</td>
+                      <td>
+                          <button (click)="editWard(item)" title="Edit" class="edit-button">
+                              <i class="material-icons">edit</i>
+                          </button>
+                          <button (click)="deleteWard(item)" title="Delete" class="delete-button">
+                              <i class="material-icons">clear</i>
+                          </button>
+                      </td>
+                  </tr>
+              </ng-container>
+              <ng-template #noResults>
+                  <tr>
+                      <td colspan="8" style="text-align: center;">No matching results</td>
+                  </tr>
+              </ng-template>
+          </tbody>
+      </table>
+    </div>
+
+      <div *ngIf="selectedNurse" class="nurse-details" >
+        <div class="close-icon" (click)="closeNurseDetails()" >
+            <i class="material-icons">close</i>
+        </div>          
+        <h2 style="margin-top: 11px;margin-left: 15px;width: 170px;">Nurse Details</h2>
+          <p>Name: {{ selectedNurse.name }}</p>
+          <p>Telephone Extension: {{ selectedNurse.telExt }}</p>
+          <p>Bipper Extension: {{ selectedNurse.bipExt }}</p>
+          <p>Department: {{ selectedNurse.dept }}</p>
+      </div>
+</body>

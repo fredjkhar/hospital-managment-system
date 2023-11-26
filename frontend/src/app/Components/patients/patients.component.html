@@ -1,0 +1,56 @@
+<body>
+    <div>
+      <h2>Patients Information</h2>
+      <div class="header-container">
+        <button (click)="openRegistrationForm()" class="register-button">
+          <i class="material-icons">person_add</i>     
+          <span class="button-text">Register Patient</span>
+        </button>
+        <input type="text" [(ngModel)]="searchText" placeholder="Search patients" class="search-bar" />
+        <button (click)="search()" class="search-button">
+          <i class="material-icons">search</i>
+        </button>
+      </div>
+      <table class="patient-table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Full Name</th>
+            <th>Gender</th>
+            <th>Date of birth</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="Patients.length > 0; else noResults">
+            <tr *ngFor="let item of Patients">
+              <td>{{ item.Id }}</td>
+              <td>{{ item.fullname }}</td>
+              <td>{{ item.gender }}</td>
+              <td>{{ item.birthday }}</td>
+              <td>{{ item.address }}</td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.contact }}</td>
+              <td>
+                <button (click)="editPatient(item)" title="Edit" class="edit-button">
+                  <i class="material-icons">edit</i>
+                </button>
+                <button (click)="deletePatient(item)" title="Delete" class="delete-button">
+                  <i class="material-icons">clear</i>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template #noResults>
+            <tr>
+              <td colspan="8" style="text-align: center;">No matching results</td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  
