@@ -5,8 +5,6 @@ import hms.pms.Application.usecases.RegisterStaff;
 import hms.pms.domain.staff.facade.StaffFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.UUID;
-
 public class RegisterStaffImpl implements RegisterStaff {
 
     private final StaffFacade staffFacade;
@@ -17,7 +15,7 @@ public class RegisterStaffImpl implements RegisterStaff {
     }
 
     @Override
-    public boolean registerStaff(StaffInfoCreateDTO staffInfo) {
-        return staffFacade.createStaffAccount(staffInfo);
+    public void registerStaff(StaffInfoCreateDTO staffInfo) {
+        staffFacade.createStaffAccount(staffInfo);
     }
 }

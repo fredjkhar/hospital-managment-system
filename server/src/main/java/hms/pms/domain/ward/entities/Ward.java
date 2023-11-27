@@ -24,7 +24,8 @@ public class Ward {
     private Queue<AdmissionRequest> admissionRequests;
     private UUID[] rooms;
 
-    public Ward(UUID wardId, String wardName, UUID chargeNurseId, String location, int totalBeds, int occupiedBeds, int extensionNumber, String status, UUID[] rooms) {
+    public Ward(UUID wardId, String wardName, UUID chargeNurseId, String location,
+                int totalBeds, int occupiedBeds, int extensionNumber, String status, UUID[] rooms) {
         this.wardId = wardId;
         this.wardName = wardName;
         this.chargeNurseId = chargeNurseId;
@@ -40,44 +41,51 @@ public class Ward {
     }
 
     public boolean admitPatient(Admission admission) {
-        if (totalBeds == occupiedBeds) return false;
-        this.admissions.add(admission);
-        this.occupiedBeds++;
-        if (occupiedBeds == totalBeds) {
-            this.status = STATUS_COMPLETE;
+        if (totalBeds == occupiedBeds) {
+            return false;
         }
+        admissions.add(admission);
+        occupiedBeds++;
+        updateWardStatus();
         return true;
     }
 
     public boolean admitPatientFromRequestList(AdmissionRequest admissionRequest) {
-        if (totalBeds == occupiedBeds) return false;
-        this.admissionRequests.remove(admissionRequest);
-        this.occupiedBeds++;
-        if (occupiedBeds == totalBeds) {
-            this.status = STATUS_COMPLETE;
+        if (totalBeds == occupiedBeds) {
+            return false;
         }
+        admissionRequests.remove(admissionRequest);
+        occupiedBeds++;
+        updateWardStatus();
         return true;
     }
 
     public boolean dischargePatient(Discharge discharge, Admission admission) {
-        this.dischargeInfos.add(discharge);
-        this.admissions.remove(admission);
-        this.occupiedBeds--;
-        this.status = STATUS_INCOMPLETE;
+        if (!admissions.contains(admission)) {
+            return false;
+        }
+        dischargeInfos.add(discharge);
+        admissions.remove(admission);
+        occupiedBeds--;
+        updateWardStatus();
         return true;
     }
 
     public Admission getAdmission(UUID patientId) {
-        for (Admission admission: admissions) {
-            if (admission.getPatientId() == patientId) return admission;
-        }
-        return null;
+        return admissions.stream()
+                .filter(admission -> admission.getPatientId().equals(patientId))
+                .findFirst()
+                .orElse(null);
     }
 
     public AdmissionRequest getAdmissionRequest(UUID patientId) {
-        for (AdmissionRequest admissionRequest: admissionRequests) {
-            if (admissionRequest.getPatientId() == patientId) return admissionRequest;
-        }
-        return null;
+        return admissionRequests.stream()
+                .filter(request -> request.getPatientId().equals(patientId))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private void updateWardStatus() {
+        status = occupiedBeds == totalBeds ? STATUS_COMPLETE : STATUS_INCOMPLETE;
     }
 }

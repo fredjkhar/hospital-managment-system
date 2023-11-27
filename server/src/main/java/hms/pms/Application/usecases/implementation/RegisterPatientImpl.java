@@ -15,7 +15,7 @@ public class RegisterPatientImpl implements RegisterPatient {
     }
 
     @Override
-    public boolean registerPatient(PatientCreateDTO patientInfo) {
-        return patientFacade.createPatient(patientInfo);
+    public void registerPatient(PatientCreateDTO patientInfo) {
+        patientFacade.createPatient(patientInfo);
     }
 }

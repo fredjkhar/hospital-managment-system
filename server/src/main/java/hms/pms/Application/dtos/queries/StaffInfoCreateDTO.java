@@ -1,6 +1,5 @@
 package hms.pms.Application.dtos.queries;
 
-import hms.pms.domain.staff.entities.StaffRole;
 import lombok.Getter;
 import lombok.Setter;
 

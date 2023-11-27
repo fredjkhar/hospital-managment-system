@@ -26,16 +26,12 @@ public class Staff {
     }
 
     public void update(Staff updated) {
-        firstName = updated.firstName;
-        lastName = updated.lastName;
-        email = updated.email;
+        this.firstName = updated.getFirstName();
+        this.lastName = updated.getLastName();
+        this.email = updated.getEmail();
     }
 
     public void setRole(String role) {
         this.role = new StaffRole(role);
     }
-
 }
-
-
-

@@ -5,11 +5,15 @@ import hms.pms.Application.usecases.UpdatePatientFile;
 import hms.pms.domain.patient.entities.Patient;
 import hms.pms.domain.patient.facade.PatientFacade;
 import hms.pms.domain.patient.repositories.PatientRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
 public class UpdatePatientFileImpl implements UpdatePatientFile {
+
+    private static final Logger logger = LogManager.getLogger(UpdatePatientFileImpl.class);
 
     private final PatientRepository patientRepository;
     private final PatientFacade patientFacade;
@@ -21,12 +25,13 @@ public class UpdatePatientFileImpl implements UpdatePatientFile {
     }
 
     @Override
-    public boolean updatePatientFile(UUID patientId, PatientCreateDTO patientFile) {
+    public void updatePatientFile(UUID patientId, PatientCreateDTO patientFile) {
         Patient patient = patientRepository.find(patientId);
 
-        if (patient != null) {
-            return patientFacade.updatePatient(patientId, patientFile);
+        if (patient == null) {
+            logger.error("Failed to update patient file: Patient not found with ID " + patientId);
+            return;
         }
-        return false;
+        patientFacade.updatePatient(patientId, patientFile);
     }
 }

@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface PatientFacade {
 
-    boolean createPatient(PatientCreateDTO patientInfo);
+    void createPatient(PatientCreateDTO patientInfo);
 
-    boolean updatePatient(UUID patientID, PatientCreateDTO patientInfo);
+    void updatePatient(UUID patientID, PatientCreateDTO patientInfo);
 }

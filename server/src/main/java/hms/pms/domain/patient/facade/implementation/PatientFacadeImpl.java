@@ -6,16 +6,21 @@ import hms.pms.Application.dtos.queries.PatientCreateDTO;
 import hms.pms.Application.services.DomainEventEmitter;
 import hms.pms.domain.patient.entities.Patient;
 import hms.pms.domain.patient.events.PatientCreated;
+import hms.pms.domain.patient.events.PatientCreationFailed;
+import hms.pms.domain.patient.events.PatientUpdateFailed;
 import hms.pms.domain.patient.events.PatientUpdated;
 import hms.pms.domain.patient.facade.PatientFacade;
 import hms.pms.domain.patient.factories.PatientFactory;
 import hms.pms.domain.patient.repositories.PatientRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.UUID;
 
 public class PatientFacadeImpl implements PatientFacade {
+    private static final Logger logger = LogManager.getLogger(PatientFacadeImpl.class);
 
     private final PatientRepository patientRepository;
     private final PatientFactory patientFactory;
@@ -31,40 +36,56 @@ public class PatientFacadeImpl implements PatientFacade {
     }
 
     @Override
-    public boolean createPatient(PatientCreateDTO patientInfo) {
-        if (patientRepository.find(patientInfo.getInsuranceNumber()) != null) return false;
+    public void createPatient(PatientCreateDTO patientInfo) {
+        if (patientRepository.find(patientInfo.getInsuranceNumber()) != null) {
+            String msg = "Creation failed: Patient with insurance number " + patientInfo.getInsuranceNumber() + " already exists.";
+            logger.warn(msg);
+            eventEmitter.emit(new PatientCreationFailed(UUID.randomUUID(), new Date(), patientInfo, msg));
+            return;
+        }
 
         Patient patient = patientFactory.createPatient(patientInfo);
-        patientRepository.save(patient);
+        setPatientDetails(patient, patientInfo);
 
-        AddressCreateDTO addressInfo = patientInfo.getAddressInfo();
-        patient.setAddress(addressInfo);
-
-        NextOfKinCreateDTO nextOfKinInfo = patientInfo.getNextOfKinInfo();
-        patient.setNextOfKin(nextOfKinInfo);
-
-        patientRepository.save(patient);
-        eventEmitter.emit(new PatientCreated(UUID.randomUUID(), new Date(), patient.getPatientId()));
-        return true;
+        try {
+            patientRepository.save(patient);
+            logger.info("Patient created successfully: " + patient.getPatientId());
+            eventEmitter.emit(new PatientCreated(UUID.randomUUID(), new Date(), patient.getPatientId()));
+        } catch (Exception e) {
+            logger.error("Error creating patient: ", e);
+            eventEmitter.emit(new PatientCreationFailed(UUID.randomUUID(), new Date(), patientInfo, e.getMessage()));
+        }
     }
 
     @Override
-    public boolean updatePatient(UUID patientID, PatientCreateDTO patientInfo) {
+    public void updatePatient(UUID patientID, PatientCreateDTO patientInfo) {
         Patient patient = patientRepository.find(patientID);
-        if (patient == null) return false;
+        if (patient == null) {
+            String msg = "Update failed: Patient not found with ID " + patientID;
+            logger.warn(msg);
+            eventEmitter.emit(new PatientUpdateFailed(UUID.randomUUID(), new Date(), patientID, msg));
+            return;
+        }
 
-        Patient updated = patientFactory.createPatient(patientInfo);
+        Patient updatedPatient = patientFactory.createPatient(patientInfo);
+        patient.update(updatedPatient);
+        setPatientDetails(patient, patientInfo);
 
+        try {
+            patientRepository.save(patient);
+            logger.info("Patient updated successfully: " + patient.getPatientId());
+            eventEmitter.emit(new PatientUpdated(UUID.randomUUID(), new Date(), patient.getPatientId()));
+        } catch (Exception e) {
+            logger.error("Error updating patient: ", e);
+            eventEmitter.emit(new PatientUpdateFailed(UUID.randomUUID(), new Date(), patientID, e.getMessage()));
+        }
+    }
+
+    private void setPatientDetails(Patient patient, PatientCreateDTO patientInfo) {
         AddressCreateDTO addressInfo = patientInfo.getAddressInfo();
         patient.setAddress(addressInfo);
 
         NextOfKinCreateDTO nextOfKinInfo = patientInfo.getNextOfKinInfo();
         patient.setNextOfKin(nextOfKinInfo);
-
-        patient.update(updated);
-        patientRepository.save(patient);
-
-        eventEmitter.emit(new PatientUpdated(UUID.randomUUID(), new Date(), patient.getPatientId()));
-        return true;
     }
 }

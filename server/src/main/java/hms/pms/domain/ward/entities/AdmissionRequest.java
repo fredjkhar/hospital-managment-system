@@ -14,7 +14,8 @@ public class AdmissionRequest {
     private int priorityAssessment;
     private UUID localDoctorId;
 
-    public AdmissionRequest(UUID id, UUID patientId, String rationaleForRequest, int priorityAssessment, UUID localDoctorId) {
+    public AdmissionRequest(UUID id, UUID patientId, String rationaleForRequest,
+                            int priorityAssessment, UUID localDoctorId) {
         this.id = id;
         this.patientId = patientId;
         this.rationaleForRequest = rationaleForRequest;

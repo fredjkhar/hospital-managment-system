@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DivisionInfoCreateDTO {
+public class WardInfoCreateDTO {
     private String divisionIdentifier;
     private String divisionName;
     private ChargeNurse chargeNurse;
@@ -15,10 +15,10 @@ public class DivisionInfoCreateDTO {
     private String telephoneExtensionNumber;
     private Boolean statusOfDivision;
 
-    public DivisionInfoCreateDTO(String divisionIdentifier, String divisionName,
-                                 ChargeNurse chargeNurse, String location,
-                                 int totalNumberOfBeds, int currentNumberOfBeds,
-                                 String telephoneExtensionNumber, Boolean statusOfDivision) {
+    public WardInfoCreateDTO(String divisionIdentifier, String divisionName,
+                             ChargeNurse chargeNurse, String location,
+                             int totalNumberOfBeds, int currentNumberOfBeds,
+                             String telephoneExtensionNumber, Boolean statusOfDivision) {
         this.divisionIdentifier = divisionIdentifier;
         this.divisionName = divisionName;
         this.chargeNurse = chargeNurse;
