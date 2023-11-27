@@ -16,7 +16,6 @@ public class Bed {
         this.status = STATUS_INCOMPLETE;
     }
 
-
     public void occupy() {
         this.status = STATUS_COMPLETE;
     }

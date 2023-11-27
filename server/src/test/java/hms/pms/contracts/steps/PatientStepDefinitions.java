@@ -1,23 +1,18 @@
 package hms.pms.contracts.steps;
 
-import hms.pms.Application.dtos.queries.PatientAdmissionCreateDTO;
-import hms.pms.Application.services.DomainEventEmitter;
+import hms.pms.application.dtos.queries.PatientAdmissionCreateDTO;
 import hms.pms.contracts.testStubs.factories.AdmissionFactoryStub;
 import hms.pms.contracts.testStubs.factories.AdmissionRequestFactoryStub;
 import hms.pms.contracts.testStubs.factories.DischargeFactoryStub;
 import hms.pms.contracts.testStubs.repositories.*;
 import hms.pms.contracts.testStubs.services.DomainEventEmitterStub;
-import hms.pms.domain.common.DomainEvent;
 import hms.pms.domain.patient.entities.Patient;
 import hms.pms.domain.staff.entities.Staff;
-import hms.pms.domain.ward.entities.Admission;
 import hms.pms.domain.ward.entities.Ward;
 import hms.pms.domain.ward.entities.Room;
 import hms.pms.domain.ward.entities.Bed;
 import hms.pms.domain.ward.facade.WardFacade;
 import hms.pms.domain.ward.facade.implementation.WardFacadeImpl;
-import hms.pms.domain.ward.factories.AdmissionFactory;
-import hms.pms.domain.ward.factories.AdmissionRequestFactory;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

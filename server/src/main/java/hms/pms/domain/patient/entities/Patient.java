@@ -1,8 +1,8 @@
 package hms.pms.domain.patient.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import hms.pms.Application.dtos.queries.AddressCreateDTO;
-import hms.pms.Application.dtos.queries.NextOfKinCreateDTO;
+import hms.pms.application.dtos.queries.AddressCreateDTO;
+import hms.pms.application.dtos.queries.NextOfKinCreateDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,10 +28,10 @@ public class Patient {
     private NextOfKin nextOfKin;
     private String primaryChargeNurseId;
 
-    public Patient(String insuranceNumber, String firstName,
-                   String lastName, String phoneNumber, Date dateOfBirth,
-                   char gender, String maritalStatus, UUID externalDoctorId,
-                   ArrayList<UUID> prescriptions, String primaryChargeNurseId) {
+    public Patient(String insuranceNumber, String firstName, String lastName,
+                   String phoneNumber, Date dateOfBirth, char gender,
+                   String maritalStatus, UUID externalDoctorId,
+                   String primaryChargeNurseId) {
         this.patientId = UUID.randomUUID();
         this.insuranceNumber = insuranceNumber;
         this.firstName = firstName;
@@ -41,8 +41,8 @@ public class Patient {
         this.gender = gender;
         this.maritalStatus = maritalStatus;
         this.externalDoctorId = externalDoctorId;
-        this.prescriptions = new ArrayList<>();
         this.primaryChargeNurseId = primaryChargeNurseId;
+        this.prescriptions = new ArrayList<>();
     }
 
     public void update(Patient patient) {
@@ -60,15 +60,12 @@ public class Patient {
     }
 
     public void setNextOfKin(NextOfKinCreateDTO nextOfKinInfo) {
-        NextOfKin nextOfKin = new NextOfKin(nextOfKinInfo.getFirstName(), nextOfKinInfo.getLastName(),
+        this.nextOfKin = new NextOfKin(nextOfKinInfo.getFirstName(), nextOfKinInfo.getLastName(),
                 nextOfKinInfo.getRelationship(), nextOfKinInfo.getPhoneNumber());
-        nextOfKin.setAddress(nextOfKinInfo.getAddress());
-        this.nextOfKin = nextOfKin;
-
+        this.nextOfKin.setAddress(nextOfKinInfo.getAddress());
     }
 
     public void addPrescription(UUID prescriptionId) {
         prescriptions.add(prescriptionId);
     }
 }
-

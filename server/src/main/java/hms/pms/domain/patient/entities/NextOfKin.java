@@ -1,6 +1,6 @@
 package hms.pms.domain.patient.entities;
 
-import hms.pms.Application.dtos.queries.AddressCreateDTO;
+import hms.pms.application.dtos.queries.AddressCreateDTO;
 import lombok.Getter;
 
 @Getter
@@ -11,7 +11,8 @@ public final class NextOfKin {
     private final String phoneNumber;
     private Address address;
 
-    public NextOfKin(String firstName, String lastName, String relationshipToPatient, String phoneNumber) {
+    public NextOfKin(final String firstName, final String lastName,
+                     final String relationshipToPatient, final String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.relationshipToPatient = relationshipToPatient;
