@@ -1,12 +1,12 @@
 package hms.pms.domain.patient.facade;
 
-import hms.pms.Application.dtos.queries.PatientCreateDTO;
+import hms.pms.application.dtos.queries.PatientCreateDTO;
 
 import java.util.UUID;
 
 public interface PatientFacade {
 
-    boolean createPatient(PatientCreateDTO patientInfo);
+    void createPatient(PatientCreateDTO patientInfo);
 
-    boolean updatePatient(UUID patientID, PatientCreateDTO patientInfo);
+    void updatePatient(UUID patientID, PatientCreateDTO patientInfo);
 }

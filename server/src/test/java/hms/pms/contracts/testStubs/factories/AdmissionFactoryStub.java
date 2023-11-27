@@ -1,6 +1,6 @@
 package hms.pms.contracts.testStubs.factories;
 
-import hms.pms.Application.dtos.queries.PatientAdmissionCreateDTO;
+import hms.pms.application.dtos.queries.PatientAdmissionCreateDTO;
 import hms.pms.domain.ward.entities.Admission;
 import hms.pms.domain.ward.factories.AdmissionFactory;
 

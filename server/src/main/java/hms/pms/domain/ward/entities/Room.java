@@ -8,8 +8,8 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Room {
-    private final String STATUS_COMPLETE = "complete";
-    private final String STATUS_INCOMPLETE = "incomplete";
+    private static final String STATUS_COMPLETE = "complete";
+    private static final String STATUS_INCOMPLETE = "incomplete";
     private final UUID roomNbr;
     private final UUID[] beds;
     private String status;
@@ -23,16 +23,28 @@ public class Room {
     }
 
     public boolean occupyBed() {
-        if(occupiedBeds == beds.length) return false;
+        if (occupiedBeds == beds.length) {
+            return false;
+        }
         ++occupiedBeds;
+        updateRoomStatus();
         return true;
     }
 
     public boolean releaseBed() {
-        if(occupiedBeds == 0) return false;
+        if (occupiedBeds == 0) {
+            return false;
+        }
         --occupiedBeds;
+        updateRoomStatus();
         return true;
     }
 
-
+    private void updateRoomStatus() {
+        if (occupiedBeds == beds.length) {
+            status = STATUS_COMPLETE;
+        } else {
+            status = STATUS_INCOMPLETE;
+        }
+    }
 }

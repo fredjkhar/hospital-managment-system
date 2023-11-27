@@ -17,7 +17,6 @@ public class Admission {
     private String rationaleForRequest;
     private int priorityAssessment;
 
-
     public Admission(UUID patientId, UUID localDoctorId, UUID roomNbr, UUID bedNbr,
                      String privateInsuranceNumber, String rationaleForRequest,
                      int priorityAssessment) {
@@ -31,5 +30,3 @@ public class Admission {
         this.priorityAssessment = priorityAssessment;
     }
 }
-
-

@@ -1,9 +1,7 @@
 package hms.pms.domain.staff.facade;
 
-import hms.pms.Application.dtos.queries.StaffInfoCreateDTO;
-
-import java.util.UUID;
+import hms.pms.application.dtos.queries.StaffInfoCreateDTO;
 
 public interface StaffFacade {
-    boolean createStaffAccount(StaffInfoCreateDTO staffInfo);
+    void createStaffAccount(StaffInfoCreateDTO staffInfo);
 }

@@ -12,4 +12,3 @@ public class AdministrationTimes {
         this.unitsAdministered = unitsAdministered;
     }
 }
-
