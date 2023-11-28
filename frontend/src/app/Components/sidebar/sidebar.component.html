@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <title>HMS</title>
+  <script>
+    var mini = true;
+
+    function toggleSidebar() {
+      if (mini) {
+        console.log("opening sidebar");
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+        this.mini = false;
+      } else {
+        console.log("closing sidebar");
+        document.getElementById("mySidebar").style.width = "85px";
+        document.getElementById("main").style.marginLeft = "85px";
+        this.mini = true;
+      }
+    }
+  </script>
+</head>
+
+<body *ngIf="showSidebar">
+  
+  <div id="mySidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+    <a routerLink='/dashboard'>
+      <i class="material-icons">dashboard</i>
+      <span class="icon-text">Home</span>
+    </a><br>
+    <a *ngIf="showDoctorsLink" routerLink='/doctors'>
+      <i class="material-icons">medical_services</i>
+      <span class="icon-text">Doctors</span>
+    </a><br>
+    <a routerLink='/patients'>
+      <i class="material-icons">person</i>
+      <span class="icon-text">Patients</span>
+    </a><br>
+    <a *ngIf="showDepartmentsLink" routerLink='/departments'>
+      <i class="material-icons">domain</i>
+      <span class="icon-text">Department</span>
+    </a><br>
+    <a routerLink='/prescriptions'>
+      <i class="material-icons">description</i>
+      <span class="icon-text">Prescription</span>
+    </a><br>
+    <a routerLink='/appointments'>
+      <i class="material-icons">event</i>
+      <span class="icon-text">Appointments</span>
+    </a><br>
+    <a routerLink='/login'>
+      <i class="material-icons">logout</i>
+      <span class="icon-text">Logout</span>
+    </a>
+  </div>
+
+</body>
+
+</html>

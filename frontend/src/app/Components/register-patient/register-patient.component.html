@@ -1,0 +1,70 @@
+<body>
+    <div class="registration-container">
+      <h2>Patient Registration</h2>
+      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="insuranceNumber">Insurance Number</label>
+          <input type="text" id="insuranceNumber" formControlName="insuranceNumber" required>
+        </div>
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" formControlName="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" formControlName="lastName" required>
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" id="address" formControlName="address" required>
+        </div>
+        <div class="form-group">
+          <label for="telephoneNumber">Telephone Number</label>
+          <input type="tel" id="telephoneNumber" formControlName="telephoneNumber" required>
+        </div>
+        <div class="form-group">
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" formControlName="dob" required>
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select id="gender" formControlName="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="maritalStatus">Marital Status</label>
+          <select id="maritalStatus" formControlName="maritalStatus" required>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+            <option value="divorced">Divorced</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="familyDoctor">Family Doctor (Identifier)</label>
+          <input type="text" id="familyDoctor" formControlName="familyDoctor" required>
+        </div>
+        <div class="form-group">
+          <label for="nextOfKin">Next of Kin (Full Name)</label>
+          <input type="text" id="nextOfKin" formControlName="nextOfKin" required>
+        </div>
+        <div class="form-group">
+          <label for="relationship">Relationship to the Patient</label>
+          <input type="text" id="relationship" formControlName="relationship" required>
+        </div>
+        <div class="form-group">
+          <label for="kinAddress">Next of Kin Address</label>
+          <input type="text" id="kinAddress" formControlName="kinAddress" required>
+        </div>
+        <div class="form-group">
+          <label for="kinPhoneNumber">Next of Kin Telephone Number</label>
+          <input type="tel" id="kinPhoneNumber" formControlName="kinPhoneNumber" required>
+        </div>
+        <div class="form-group">
+          <button type="submit">Register</button>
+        </div>
+      </form>
+    </div>
+  </body>
+  

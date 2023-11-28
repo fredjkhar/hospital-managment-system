@@ -1,0 +1,51 @@
+<body>
+  <div>
+    <h2>Employee Information</h2>
+    <div class="header-container">
+      <button (click)="openRegistrationForm()" class="register-button">
+        <i class="material-icons">person_add</i>     
+        <span class="button-text">Add Employee</span>
+      </button>
+      <input type="text" [(ngModel)]="searchText" placeholder="Search employees" class="search-bar" />
+    <button (click)="search()" class="search-button">
+      <i class="material-icons">search</i>
+    </button>
+    </div>
+    <table class="doctor-table">
+      <thead>
+        <tr>
+          <th>Employee Id</th>
+          <th>Name</th>
+          <th>Specialization</th>
+          <th>Email</th>
+          <th>Contact</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="Doctors.length > 0; else noResults">
+          <tr *ngFor="let item of Doctors">
+            <td>{{ item.empId }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.speciality }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.contact }}</td>
+            <td>
+              <button (click)="editDoctor(item)" title="Edit" class="edit-button">
+                <i class="material-icons">edit</i>
+              </button>
+              <button (click)="deleteDoctor(item)" title="Delete" class="delete-button">
+                <i class="material-icons">clear</i>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-template #noResults>
+          <tr>
+            <td colspan="6" style="text-align: center;">No matching results</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
+</body>
