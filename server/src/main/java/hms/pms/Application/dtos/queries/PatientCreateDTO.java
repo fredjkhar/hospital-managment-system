@@ -6,7 +6,7 @@ public class PatientCreateDTO {
     private String insuranceNumber;
     private String firstName;
     private String lastName;
-    private String address;
+    private Address address;
     private String telephoneNumber;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
@@ -16,10 +16,18 @@ public class PatientCreateDTO {
     private NextOfKin nextOfKin;
     private String primaryChargeNurseId;
 
-    public static class NextOfKin {
+    private static class Address {
+        private String street;
+        private String city;
+        private String country;
+        private String postalcode;
+    }
+    
+    private static class NextOfKin {
         private String fullName;
         private String relationship;
         private String address;
         private String telephoneNumber;
     }
+
 }
