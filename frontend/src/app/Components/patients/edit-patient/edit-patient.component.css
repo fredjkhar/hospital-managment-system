@@ -1,0 +1,16 @@
+body {
+    margin-left: 100px;
+    font-family: Arial, sans-serif;
+  }
+  
+  h2 {
+    color: #333;
+    margin-left: 40%;
+    margin-top: -650px;
+  }
+  
+  .header-container {
+    display: flex;
+    align-items: center;
+  }
+  

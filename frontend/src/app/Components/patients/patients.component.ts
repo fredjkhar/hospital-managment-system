@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { StaffService } from '../staff/staff.service';
 import { Router } from '@angular/router';
+import { PatientsService } from './patients.service';
 
 @Component({
   selector: 'app-patients',
@@ -9,14 +10,11 @@ import { Router } from '@angular/router';
 })
 export class PatientsComponent {
   searchText: string = '';
-  originalPatients = [
-    { Id: '1', fullname: 'rada', gender: 'm', address: '350 mt...', birthday: '11-12-2002', email: 'john.doe@example.com', contact: '123-456-7890' },
-    { Id: '2', fullname: 'Jane', gender: 'f', address: 'king edward', birthday: '11-12-2002', email: 'jane.smith@example.com', contact: '987-654-3210' },
-  ];
+  
   Patients: any[] = [];
   hasSearchResults: boolean = true;
 
-  constructor(private StaffService: StaffService, private router: Router) { }
+  constructor(private StaffService: StaffService, private router: Router, private patientsService: PatientsService) { }
 
   ngOnInit(): void {
     this.loadStaff();
@@ -31,15 +29,15 @@ export class PatientsComponent {
     //     console.error('Error loading Patients:', error);
     //   }
     // );
-    this.Patients = [...this.originalPatients];
+    this.Patients = [...this.patientsService.getPatients()];
   }
 
   search(): void {
     console.log('Search called', this.searchText); 
     if (this.searchText.trim() === '') {
-      this.Patients = [...this.originalPatients];
+      this.Patients = [...this.Patients];
     } else {
-      this.Patients = this.originalPatients.filter(item => {
+      this.Patients = this.Patients.filter(item => {
         return (
         item.Id.toLowerCase().includes(this.searchText.toLowerCase()) ||
         item.fullname.toLowerCase().includes(this.searchText.toLowerCase()) ||
@@ -54,15 +52,15 @@ export class PatientsComponent {
   this.hasSearchResults = this.Patients.length > 0;
   }
 
-  editPatient(doctor: any): void {
-    console.log('Edit doctor:', doctor);
+  editPatient(patient: any): void {
+    this.router.navigate(['patients', 'edit-patient', patient.id])
   }
 
-  deletePatient(doctor: any): void {
-    this.StaffService.deletePatient(doctor.id).subscribe(
+  deletePatient(patient: any): void {
+    this.StaffService.deletePatient(patient.id).subscribe(
       () => {
-        this.Patients = this.Patients.filter(d => d.id !== doctor.id);
-        console.log('Patient deleted:', doctor);
+        this.Patients = this.Patients.filter(d => d.id !== patient.id);
+        console.log('Patient deleted:', patient);
       },
       error => {
         console.error('Error deleting Patient:', error);
