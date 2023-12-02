@@ -1,5 +1,4 @@
 body {
-  margin-left: 100px;
   font-family: Arial, sans-serif;
 }
 
@@ -114,5 +113,5 @@ button i {
 .button-text {
   margin-left: 1px;
   font-size: 14px;
-  width: 100px
+  width: 100px;
 }
