@@ -1,3 +1,108 @@
 body{
-    margin-left: 100px;
+    font-family: Arial, sans-serif;
+  }
+  
+  h2 {
+    color: #333;
+    margin-left: 40%;
+    margin-top: -650px;
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center; 
+  }
+  
+.search-button {
+  margin-top: 20px;
+  margin-left: 10px;
+  padding: 4px;
+  height:35px;
+  background-color: #9ae89d;
+  color: white;
+  border: none;
+  border-radius: 10%;
+  cursor: pointer;
 }
+
+.search-button:hover {
+  background-color: #45a049;
+}
+  .search-bar {
+    padding: 8px;
+    margin-top: 20px;
+    margin-left: 10px;
+    font-size: 16px;
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .prescription-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 50px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .prescription-table th, .prescription-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .prescription-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .prescription-table tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+button.edit-button {
+  background-color: transparent; 
+  color: #3498db; 
+  border: none; 
+  cursor: pointer; 
+}
+button.edit-button:hover {
+  background-color: #3498db; 
+  color: white; 
+  border: none; 
+  cursor: pointer; 
+  border-radius: 20%;
+}
+button.delete-button {
+  background-color: transparent;
+  color: red; 
+  border: none; 
+  cursor: pointer; 
+}
+button.delete-button:hover {
+  background-color: red;
+  color: white; 
+  border: none; 
+  cursor: pointer; 
+  border-radius: 20%;
+}
+button i {
+  margin-right: 5px; 
+}
+.register-button {
+  display: flex;
+  align-items: center;
+  width:150px;
+  height:35px;
+  margin-top: 20px;
+  margin-left: 63%;
+  background-color: #C6D8FF;
+  color: #818181; 
+  border: none; 
+  cursor: pointer; 
+}
+.button-text {
+  margin-left: 1px;
+  font-size: 14px;
+  width: 100px}
