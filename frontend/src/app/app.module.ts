@@ -18,6 +18,8 @@ import { PatientsComponent } from './Components/patients/patients.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './Components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EditPatientComponent } from './Components/patients/edit-patient/edit-patient.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PrescriptionComponent,
     RegisterPatientComponent,
     PatientsComponent,
-    StaffComponent
+    StaffComponent,
+    EditPatientComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule
   ],
   providers: [StaffService],
   bootstrap: [AppComponent]
