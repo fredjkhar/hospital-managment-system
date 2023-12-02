@@ -1,2 +1,50 @@
-<body><p>prescription</p>
+<body>
+    <div>
+        <h2>Prescription Information</h2>
+        <div class="header-container">
+            <button (click)="openAddPrescriptionForm()" class="register-button">
+                <i class="material-icons">add_box</i>
+                <span class="button-text">Add Prescription</span>
+            </button>
+            <input type="text" [(ngModel)]="searchText" placeholder="Search prescriptions" class="search-bar" />
+            <button (click)="search()" class="search-button">
+                <i class="material-icons">search</i>
+            </button>
+        </div>
+        <table class="prescription-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Patient Id</th>
+                    <th>Drug Number</th>
+                    <th>Drug Name</th>
+                    <th># Units/day</th>
+                    <th># Admin/day</th>
+                    <th>Admin Method</th>
+                    <th>Start</th>
+                    <th>End</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="prescriptions.length > 0; else noResults">
+                    <tr *ngFor="let prescription of prescriptions">
+                        <td>{{ prescription.id }}</td>
+                        <td>{{ prescription.patientId }}</td>
+                        <td>{{ prescription.drugNumber }}</td>
+                        <td>{{ prescription.drugName }}</td>
+                        <td>{{ prescription.unitsPerDay }}</td>
+                        <td>{{ prescription.administrationNbrPerDay }}</td>
+                        <td>{{ prescription.administrationMethod }}</td>
+                        <td>{{ prescription.startDate }}</td>
+                        <td>{{ prescription.endDate }}</td>
+                    </tr>
+                </ng-container>
+                <ng-template #noResults>
+                    <tr>
+                        <td colspan="8" style="text-align: center;">No matching results</td>
+                    </tr>
+                </ng-template>
+            </tbody>
+        </table>
+    </div>
 </body>
