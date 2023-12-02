@@ -1,0 +1,51 @@
+<body>
+    <h2>Patients Information</h2>
+    <div>
+        <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                <label for="fullname">Full Name:</label>
+                <input type="text" class="form-control" id="fullname" formControlName="fullname">
+                <div [hidden]="fullname.pristine || fullname.valid" class="alert alert-danger">
+                    Full name is required.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="gender">Gender:</label>
+                <input type="text" class="form-control" id="gender" required formControlName="gender">
+                <div [hidden]="gender.pristine || gender.valid" class="alert alert-danger">
+                    Gender is required.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="address">Address:</label>
+                <input type="text" class="form-control" id="address"
+                    formControlName="address">
+                <div [hidden]="address.pristine || address.valid" class="alert alert-danger">
+                    Address is required.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="birthday">Birthday:</label>
+                <input type="text" class="form-control" id="birthday" formControlName="birthday">
+                <div [hidden]="birthday.pristine || birthday.valid" class="alert alert-danger">
+                    Birthday is required.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" formControlName="email">
+                <div [hidden]="email.pristine || email.valid" class="alert alert-danger">
+                    Email is required, and must be of format a&#64;b.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="contact">Contact number:</label>
+                <input type="text" class="form-control" id="contact" formControlName="contact">
+                <div [hidden]="contact.pristine || contact.valid" class="alert alert-danger">
+                    Contact number is required, and must be a valid 10 digit number (without spaces).
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success" [disabled]="patientForm.invalid">Submit</button>
+        </form>
+    </div>
+</body>
