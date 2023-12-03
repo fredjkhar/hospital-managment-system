@@ -11,6 +11,7 @@ import { PatientsComponent } from './Components/patients/patients.component';
 import { RegisterPatientComponent } from './Components/register-patient/register-patient.component';
 import { StaffComponent } from './Components/staff/staff.component';
 import { EditPatientComponent } from './Components/patients/edit-patient/edit-patient.component';
+import { AddPrescriptionComponent } from './Components/prescription/add-prescription/add-prescription.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'patients/edit-patient/:id', component: EditPatientComponent },
   { path: 'register-patient', component: RegisterPatientComponent },
   { path: 'addEmp', component: StaffComponent },
+  { path: 'prescriptions/add-prescription', component: AddPrescriptionComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' },];
 
