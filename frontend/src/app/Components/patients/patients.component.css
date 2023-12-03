@@ -113,5 +113,28 @@ button i {
 .button-text {
   margin-left: 1px;
   font-size: 14px;
-  width: 100px;
-}
+  width: 100px}
+  
+  .details-button {
+    background-color: transparent; 
+    color: grey;
+    border: none; 
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin-left: -8px;
+    cursor: pointer; 
+    width: 15px;
+  }
+  .details-container {
+    height: 60px;
+    padding: 10px; 
+    margin-top: -10px; 
+    margin-left: 140px;
+    text-align: left; 
+  }
+  
+  .details-container p {
+    margin: 5px 0; 
+  }
