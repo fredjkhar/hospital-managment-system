@@ -1,6 +1,6 @@
 package hms.pms.application.usecases.implementation;
 
-import hms.pms.application.dtos.queries.PatientAdmissionFromRequestListCreateDTO;
+import hms.pms.application.dtos.queries.AdmissionRequestCreateDTO;
 import hms.pms.application.usecases.AdmitPatientFromRequestList;
 import hms.pms.domain.patient.entities.Patient;
 import hms.pms.domain.patient.repositories.PatientRepository;
@@ -29,7 +29,7 @@ public class AdmitPatientFromRequestListImpl implements AdmitPatientFromRequestL
     }
 
     @Override
-    public void admitPatientFromRequestList(UUID wardId, PatientAdmissionFromRequestListCreateDTO patientAdmissionRequestInfo) {
+    public void admitPatientFromRequestList(UUID wardId, AdmissionRequestCreateDTO patientAdmissionRequestInfo) {
         UUID patientId = patientAdmissionRequestInfo.getPatientId();
 
         Patient patient = patientRepository.find(patientId);

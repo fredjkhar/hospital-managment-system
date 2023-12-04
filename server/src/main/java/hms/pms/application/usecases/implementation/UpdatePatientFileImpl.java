@@ -1,6 +1,6 @@
 package hms.pms.application.usecases.implementation;
 
-import hms.pms.application.dtos.queries.PatientCreateDTO;
+import hms.pms.application.dtos.queries.PatientInfoCreateDTO;
 import hms.pms.application.usecases.UpdatePatientFile;
 import hms.pms.domain.patient.entities.Patient;
 import hms.pms.domain.patient.facade.PatientFacade;
@@ -25,7 +25,7 @@ public class UpdatePatientFileImpl implements UpdatePatientFile {
     }
 
     @Override
-    public void updatePatientFile(UUID patientId, PatientCreateDTO patientFile) {
+    public void updatePatientFile(UUID patientId, PatientInfoCreateDTO patientFile) {
         Patient patient = patientRepository.find(patientId);
 
         if (patient == null) {

@@ -1,8 +1,8 @@
 package hms.pms.domain.ward.facade;
 
-import hms.pms.application.dtos.queries.PatientAdmissionCreateDTO;
-import hms.pms.application.dtos.queries.PatientAdmissionFromRequestListCreateDTO;
-import hms.pms.application.dtos.queries.PatientDischargeCreateDTO;
+import hms.pms.application.dtos.queries.AdmissionCreateDTO;
+import hms.pms.application.dtos.queries.AdmissionRequestCreateDTO;
+import hms.pms.application.dtos.queries.DischargeCreateDTO;
 import hms.pms.domain.ward.entities.Ward;
 
 import java.util.UUID;
@@ -11,12 +11,12 @@ import java.util.UUID;
 public interface WardFacade {
     Ward getWard(UUID wardId);
 
-    void admitPatient(UUID wardId, PatientAdmissionCreateDTO patientAdmissionInfo);
+    void admitPatient(UUID wardId, AdmissionCreateDTO patientAdmissionInfo);
 
-    void admitPatientFromRequestList(UUID wardId, PatientAdmissionFromRequestListCreateDTO patientAdmissionRequestInfo);
+    void admitPatientFromRequestList(UUID wardId, AdmissionRequestCreateDTO patientAdmissionRequestInfo);
 
-    void addPatientToRequestList(UUID wardId, PatientAdmissionFromRequestListCreateDTO patientAdmissionInfo);
+    void addPatientToRequestList(UUID wardId, AdmissionRequestCreateDTO patientAdmissionInfo);
 
-    void dischargePatient(UUID wardId, PatientDischargeCreateDTO patientDischargeInfo);
+    void dischargePatient(UUID wardId, DischargeCreateDTO patientDischargeInfo);
     
 }

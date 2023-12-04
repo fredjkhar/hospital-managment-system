@@ -16,8 +16,8 @@ public class Staff {
     private String email;
     private StaffRole role;
 
-    public Staff(UUID employeeNbr, String firstName, String lastName, String password, String email) {
-        this.id = UUID.randomUUID();
+    public Staff(UUID id, UUID employeeNbr, String firstName, String lastName, String password, String email) {
+        this.id = id;
         this.employeeNbr = employeeNbr;
         this.firstName = firstName;
         this.lastName = lastName;

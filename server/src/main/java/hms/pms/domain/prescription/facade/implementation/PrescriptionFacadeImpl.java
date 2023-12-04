@@ -1,42 +1,50 @@
 package hms.pms.domain.prescription.facade.implementation;
 
-import hms.pms.application.dtos.queries.AdministrationTimesCreateDTO;
+import hms.pms.application.dtos.queries.AdministrationTimeCreateDTO;
 import hms.pms.application.dtos.queries.PrescriptionCreateDTO;
 import hms.pms.application.services.DomainEventEmitter;
 import hms.pms.domain.patient.entities.Patient;
 import hms.pms.domain.patient.repositories.PatientRepository;
+import hms.pms.domain.prescription.Entities.AdministrationTime;
 import hms.pms.domain.prescription.Entities.Prescription;
 import hms.pms.domain.prescription.events.PrescriptionCreated;
 import hms.pms.domain.prescription.events.PrescriptionCreationFailed;
 import hms.pms.domain.prescription.events.PrescriptionUpdateFailed;
 import hms.pms.domain.prescription.events.PrescriptionUpdated;
 import hms.pms.domain.prescription.facade.PrescriptionFacade;
+import hms.pms.domain.prescription.factory.AdministrationTimeFactory;
 import hms.pms.domain.prescription.factory.PrescriptionFactory;
+import hms.pms.domain.prescription.repository.AdministrationTimeRepository;
 import hms.pms.domain.prescription.repository.PrescriptionRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 public class PrescriptionFacadeImpl implements PrescriptionFacade {
     private static final Logger logger = LogManager.getLogger(PrescriptionFacadeImpl.class);
 
     private final PrescriptionRepository prescriptionRepository;
-    private final PrescriptionFactory prescriptionFactory;
+    private final AdministrationTimeRepository administrationTimeRepository;
     private final PatientRepository patientRepository;
+    private final PrescriptionFactory prescriptionFactory;
+    private final AdministrationTimeFactory administrationTimeFactory;
     private final DomainEventEmitter eventEmitter;
 
     @Autowired
     public PrescriptionFacadeImpl(PrescriptionRepository prescriptionRepository,
-                                  PrescriptionFactory prescriptionFactory,
+                                  AdministrationTimeRepository administrationTimeRepository,
                                   PatientRepository patientRepository,
+                                  PrescriptionFactory prescriptionFactory,
+                                  AdministrationTimeFactory administrationTimeFactory,
                                   DomainEventEmitter eventEmitter) {
         this.prescriptionRepository = prescriptionRepository;
-        this.prescriptionFactory = prescriptionFactory;
+        this.administrationTimeRepository = administrationTimeRepository;
         this.patientRepository = patientRepository;
+        this.prescriptionFactory = prescriptionFactory;
+        this.administrationTimeFactory = administrationTimeFactory;
         this.eventEmitter = eventEmitter;
     }
 
@@ -49,8 +57,15 @@ public class PrescriptionFacadeImpl implements PrescriptionFacade {
             return;
         }
 
-        Prescription prescription = prescriptionFactory.createPrescription(prescriptionInfo);
-        setAdministrationTimes(prescription, prescriptionInfo.getAdministrationTimes());
+        UUID[] administrationTimeIds = new UUID[prescriptionInfo.getAdministrationTimes().size()];
+        int i = 0;
+        for (AdministrationTimeCreateDTO administrationTimeCreateDTO : prescriptionInfo.getAdministrationTimes()) {
+            AdministrationTime administrationTime = administrationTimeFactory.createAdministrationTime(administrationTimeCreateDTO);
+            administrationTimeIds[i++] = administrationTime.getId();
+            administrationTimeRepository.save(administrationTime);
+        }
+
+        Prescription prescription = prescriptionFactory.createPrescription(prescriptionInfo, administrationTimeIds);
 
         patient.addPrescription(prescription.getPrescriptionId());
         prescriptionRepository.save(prescription);
@@ -69,17 +84,20 @@ public class PrescriptionFacadeImpl implements PrescriptionFacade {
             return;
         }
 
-        Prescription updated = prescriptionFactory.createPrescription(prescriptionInfo);
-        setAdministrationTimes(prescription, prescriptionInfo.getAdministrationTimes());
+        UUID[] administrationTimeIds = new UUID[prescriptionInfo.getAdministrationTimes().size()];
+        int i = 0;
+        for (AdministrationTimeCreateDTO administrationTimeCreateDTO : prescriptionInfo.getAdministrationTimes()) {
+            AdministrationTime administrationTime = administrationTimeFactory.createAdministrationTime(administrationTimeCreateDTO);
+            administrationTimeIds[i++] = administrationTime.getId();
+            administrationTimeRepository.save(administrationTime);
+        }
+
+        Prescription updated = prescriptionFactory.createPrescription(prescriptionInfo, administrationTimeIds);
 
         prescription.update(updated);
         prescriptionRepository.save(prescription);
 
         logger.info("Prescription updated successfully: " + prescription.getPrescriptionId());
         eventEmitter.emit(new PrescriptionUpdated(UUID.randomUUID(), new Date(), patient.getPatientId(), prescription.getPrescriptionId()));
-    }
-
-    private void setAdministrationTimes(Prescription prescription, List<AdministrationTimesCreateDTO> administrationTimesInfo) {
-        prescription.setAdministrationTimes(administrationTimesInfo);
     }
 }
