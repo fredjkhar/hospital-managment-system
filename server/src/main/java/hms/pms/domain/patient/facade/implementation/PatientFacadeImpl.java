@@ -2,7 +2,7 @@ package hms.pms.domain.patient.facade.implementation;
 
 import hms.pms.application.dtos.queries.AddressCreateDTO;
 import hms.pms.application.dtos.queries.NextOfKinCreateDTO;
-import hms.pms.application.dtos.queries.PatientCreateDTO;
+import hms.pms.application.dtos.queries.PatientInfoCreateDTO;
 import hms.pms.application.services.DomainEventEmitter;
 import hms.pms.domain.patient.entities.Patient;
 import hms.pms.domain.patient.events.PatientCreated;
@@ -36,7 +36,7 @@ public class PatientFacadeImpl implements PatientFacade {
     }
 
     @Override
-    public void createPatient(PatientCreateDTO patientInfo) {
+    public void createPatient(PatientInfoCreateDTO patientInfo) {
         if (patientRepository.find(patientInfo.getInsuranceNumber()) != null) {
             String msg = "Creation failed: Patient with insurance number " + patientInfo.getInsuranceNumber() + " already exists.";
             logger.warn(msg);
@@ -58,7 +58,7 @@ public class PatientFacadeImpl implements PatientFacade {
     }
 
     @Override
-    public void updatePatient(UUID patientID, PatientCreateDTO patientInfo) {
+    public void updatePatient(UUID patientID, PatientInfoCreateDTO patientInfo) {
         Patient patient = patientRepository.find(patientID);
         if (patient == null) {
             String msg = "Update failed: Patient not found with ID " + patientID;
@@ -81,7 +81,7 @@ public class PatientFacadeImpl implements PatientFacade {
         }
     }
 
-    private void setPatientDetails(Patient patient, PatientCreateDTO patientInfo) {
+    private void setPatientDetails(Patient patient, PatientInfoCreateDTO patientInfo) {
         AddressCreateDTO addressInfo = patientInfo.getAddressInfo();
         patient.setAddress(addressInfo);
 

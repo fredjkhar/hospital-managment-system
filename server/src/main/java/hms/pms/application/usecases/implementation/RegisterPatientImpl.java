@@ -1,6 +1,6 @@
 package hms.pms.application.usecases.implementation;
 
-import hms.pms.application.dtos.queries.PatientCreateDTO;
+import hms.pms.application.dtos.queries.PatientInfoCreateDTO;
 import hms.pms.application.usecases.RegisterPatient;
 import hms.pms.domain.patient.facade.PatientFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class RegisterPatientImpl implements RegisterPatient {
     }
 
     @Override
-    public void registerPatient(PatientCreateDTO patientInfo) {
+    public void registerPatient(PatientInfoCreateDTO patientInfo) {
         patientFacade.createPatient(patientInfo);
     }
 }

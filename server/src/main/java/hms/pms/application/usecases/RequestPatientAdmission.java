@@ -1,9 +1,9 @@
 package hms.pms.application.usecases;
 
-import hms.pms.application.dtos.queries.PatientAdmissionFromRequestListCreateDTO;
+import hms.pms.application.dtos.queries.AdmissionRequestCreateDTO;
 
 import java.util.UUID;
 
 public interface RequestPatientAdmission {
-    void requestPatientAdmission(PatientAdmissionFromRequestListCreateDTO patientAdmissionRequest, UUID wardId);
+    void requestPatientAdmission(AdmissionRequestCreateDTO patientAdmissionRequest, UUID wardId);
 }

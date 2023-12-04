@@ -1,6 +1,7 @@
 package hms.pms.application.dtos.queries;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +16,7 @@ public class PrescriptionCreateDTO {
     private String drugName;
     private int unitsByDay;
     private int numberOfAdminsPerDay;
-    private List<AdministrationTimesCreateDTO> administrationTimes;
+    private List<AdministrationTimeCreateDTO> administrationTimes;
     private String methodOfAdministration;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date startDate;

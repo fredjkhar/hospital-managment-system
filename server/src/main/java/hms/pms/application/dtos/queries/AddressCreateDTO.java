@@ -1,21 +1,15 @@
 package hms.pms.application.dtos.queries;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class AddressCreateDTO {
     private String street;
     private String city;
     private String country;
     private String postalCode;
-
-    public AddressCreateDTO(String street, String city,
-                            String country, String postalCode) {
-        this.street = street;
-        this.city = city;
-        this.country = country;
-        this.postalCode = postalCode;
-    }
 }
