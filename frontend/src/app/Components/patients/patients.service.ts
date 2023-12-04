@@ -32,6 +32,20 @@ export class PatientsService {
     this.patients.splice(id, 1);
   }
 
+  getPatientsNotAssignedToWard(): Object[] {
+    //do some filtering here
+    return PatientsService.originalPatients
+  }
+
+  assignPatientToWard(wardId: any, patientId: any, patientAssignment: any): boolean {
+    if (true) {
+      console.log("successful assignment to ward ", wardId, " for patient ", patientId, " with additional info ", patientAssignment)
+      return true;
+    }
+    console.log("unsuccessful assignment to ward")
+    return false;
+  }
+
   editPatient(newPatient: any): boolean {
     const indexToModify = PatientsService.originalPatients.findIndex(e => e.id === newPatient.id)
     if (indexToModify != -1) {
