@@ -1,0 +1,29 @@
+<body>
+    <h2>Patient File</h2>
+    <div>
+        <h3>Patient details</h3>
+        <ul>
+            <li>Insurance number: {{ patient.id }}</li>
+            <li>Full name: {{ patient.fullname }}</li>
+            <li>Gender: {{ patient.gender }}</li>
+            <li>Address: {{ patient.address }}</li>
+            <li>Birthday: {{ patient.birthday }}</li>
+            <li>Email: {{ patient.email }}</li>
+            <li>Contact / Telephone number: {{ patient.contact }}</li>
+        </ul>
+        <h3>Patient prescriptions</h3>
+        <div *ngFor="let prescription of prescriptions">
+            <details>
+                <summary>{{ prescription.drugName }}</summary>
+                <ul>
+                    <li>Drug Number: {{ prescription.drugNumber }}</li>
+                    <li>Units per day: {{ prescription.unitsPerDay }}</li>
+                    <li>Administration number per day: {{ prescription.administrationNbrPerDay }}</li>
+                    <li>Administration method: {{ prescription.administrationMethod }}</li>
+                    <li>Start date: {{ prescription.startDate }}</li>
+                    <li>End date: {{ prescription.endDate }}</li>
+                </ul>
+            </details>
+        </div>
+    </div>
+</body>

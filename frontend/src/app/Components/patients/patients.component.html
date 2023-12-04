@@ -47,6 +47,9 @@
                 <button (click)="deletePatient(item)" title="Delete" class="delete-button">
                   <i class="material-icons">clear</i>
                 </button>
+                <button (click)="viewPatientFile(item)" title="ViewFile" class="view-button">
+                  <i class="material-icons">file_open</i>
+                </button>
               </td>
             </tr>
             <tr *ngIf="selectedPatient === item">
