@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { StaffService } from '../staff/staff.service';
 import { Router } from '@angular/router';
+import { Patient } from './patient.model';
 import { PatientsService } from './patients.service';
 
 @Component({
@@ -10,26 +11,26 @@ import { PatientsService } from './patients.service';
 })
 export class PatientsComponent {
   searchText: string = '';
-  
+  originalPatients = [
+    { Id: '1', fullname: 'rada', gender: 'm', address: '350 mt...', birthday: '11-12-2002', email: 'john.doe@example.com', contact: '123-456-7890' },
+    { Id: '2', fullname: 'Jane', gender: 'f', address: 'king edward', birthday: '11-12-2002', email: 'jane.smith@example.com', contact: '987-654-3210' },
+    { Id: '3', fullname: 'Jane', gender: 'f', address: 'king edward', birthday: '11-12-2002', email: 'jane.smith@example.com', contact: '987-654-3210' },
+  ];
   Patients: any[] = [];
   hasSearchResults: boolean = true;
+  selectedPatient: Patient | null = null;
 
-  constructor(private StaffService: StaffService, private router: Router, private patientsService: PatientsService) { }
+  constructor(private patientService: PatientsService, private router: Router) { }
 
   ngOnInit(): void {
-    this.loadStaff();
+    this.loadPatients();
   }
-
-  private loadStaff(): void {
-    // this.StaffService.getStaff().subscribe(
-    //   data => {
-    //     this.Patients = data;
-    //   },
-    //   error => {
-    //     console.error('Error loading Patients:', error);
-    //   }
-    // );
-    this.Patients = [...this.patientsService.getPatients()];
+  
+  loadPatients() {
+    // this.patientService.getPatients().subscribe((patients) => {
+    //   this.Patients = patients;
+    // });
+    this.Patients = this.originalPatients;
   }
 
   search(): void {
@@ -56,19 +57,16 @@ export class PatientsComponent {
     this.router.navigate(['patients', 'edit-patient', patient.id])
   }
 
-  deletePatient(patient: any): void {
-    this.StaffService.deletePatient(patient.id).subscribe(
-      () => {
-        this.Patients = this.Patients.filter(d => d.id !== patient.id);
-        console.log('Patient deleted:', patient);
-      },
-      error => {
-        console.error('Error deleting Patient:', error);
-      }
-    );
+  deletePatient(id: number) {
+    this.patientService.deletePatient(id);
+    this.loadPatients(); 
   }
   
   openRegistrationForm(): void {
     this.router.navigate(['/register-patient']);
+  }
+
+  showDetails(patient: Patient) {
+    this.selectedPatient = this.selectedPatient === patient ? null : patient;
   }
 }

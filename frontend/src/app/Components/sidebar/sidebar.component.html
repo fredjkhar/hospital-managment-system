@@ -9,38 +9,38 @@
 </head>
 
 <body *ngIf="showSidebar">
-
-  <div id="mySidebar" class="sidebar">
-    <div class="sidebar-container">
-      <a routerLink='/dashboard'>
-        <i class="material-icons">dashboard</i>
-        <span class="icon-text">Home</span>
-      </a><br>
-      <a *ngIf="showDoctorsLink" routerLink='/doctors'>
-        <i class="material-icons">medical_services</i>
-        <span class="icon-text">Doctors</span>
-      </a><br>
-      <a routerLink='/patients'>
-        <i class="material-icons">person</i>
-        <span class="icon-text">Patients</span>
-      </a><br>
-      <a *ngIf="showDepartmentsLink" routerLink='/departments'>
-        <i class="material-icons">domain</i>
-        <span class="icon-text">Department</span>
-      </a><br>
-      <a routerLink='/prescriptions'>
-        <i class="material-icons">description</i>
-        <span class="icon-text">Prescription</span>
-      </a><br>
-      <a routerLink='/appointments'>
-        <i class="material-icons">event</i>
-        <span class="icon-text">Appointments</span>
-      </a><br>
-      <a routerLink='/login'>
-        <i class="material-icons">logout</i>
-        <span class="icon-text">Logout</span>
-      </a>
+  <div id="mySidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+    <div style="margin-top: -120px; margin-left: 22px;" >
+      <img src="/assets/logo.png" style="width: auto; height: 60px;"/>
     </div>
+    <a routerLink='/dashboard' style="margin-top: 60px;">
+      <i class="material-icons">dashboard</i>
+      <span class="icon-text">Home</span>
+    </a><br>
+    <a *ngIf="showDoctorsLink" routerLink='/doctors'>
+      <i class="material-icons">medical_services</i>
+      <span class="icon-text">Doctors</span>
+    </a><br>
+    <a routerLink='/patients'>
+      <i class="material-icons">person</i>
+      <span class="icon-text">Patients</span>
+    </a><br>
+    <a *ngIf="showDepartmentsLink" routerLink='/departments'>
+      <i class="material-icons">domain</i>
+      <span class="icon-text">Department</span>
+    </a><br>
+    <a routerLink='/prescriptions'>
+      <i class="material-icons">description</i>
+      <span class="icon-text">Prescription</span>
+    </a><br>
+    <a routerLink='/appointments'>
+      <i class="material-icons">event</i>
+      <span class="icon-text">Appointments</span>
+    </a><br>
+    <a routerLink='/login'>
+      <i class="material-icons">logout</i>
+      <span class="icon-text">Logout</span>
+    </a>
   </div>
 
 </body>
