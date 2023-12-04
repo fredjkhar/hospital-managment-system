@@ -71,4 +71,8 @@ export class PatientsComponent {
   openRegistrationForm(): void {
     this.router.navigate(['/register-patient']);
   }
+
+  viewPatientFile(patient: any): void {
+    this.router.navigate(['patients', 'view-patient', patient.id])
+  }
 }

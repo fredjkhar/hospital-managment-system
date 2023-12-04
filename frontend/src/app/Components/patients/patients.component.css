@@ -92,6 +92,20 @@ button.delete-button:hover {
   cursor: pointer;
   border-radius: 20%;
 }
+button.view-button {
+  background-color: transparent;
+  color: grey;
+  border: none;
+  cursor: pointer;
+}
+
+button.view-button:hover {
+  background-color: grey;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 20%;
+}
 
 button i {
   margin-right: 5px;
