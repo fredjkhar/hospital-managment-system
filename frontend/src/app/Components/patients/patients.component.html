@@ -14,6 +14,7 @@
       <table class="patient-table">
         <thead>
           <tr>
+            <th></th>
             <th>Id</th>
             <th>Full Name</th>
             <th>Gender</th>
@@ -25,9 +26,14 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngIf="Patients.length > 0; else noResults">
-            <tr *ngFor="let item of Patients">
-              <td>{{ item.id }}</td>
+          <ng-container *ngFor="let item of Patients; let i = index">
+            <tr>
+            <td>
+                <button (click)="showDetails(item)" title="Show Details" class="details-button">
+                  <i class="material-icons">info</i>
+                </button>
+              </td>
+              <td>{{ item.Id }}</td>
               <td>{{ item.fullname }}</td>
               <td>{{ item.gender }}</td>
               <td>{{ item.birthday }}</td>
@@ -46,10 +52,19 @@
                 </button>
               </td>
             </tr>
+            <tr *ngIf="selectedPatient === item">
+              <td colspan="9">
+                <div class="details-container">
+                  <p>Status : {{ selectedPatient?.status }}</p>
+                  <p>Admited the : {{ selectedPatient?.admit }}</p>
+                  <p>Discharged the: {{ selectedPatient?.discharge }}</p>
+                </div>
+              </td>
+            </tr>
           </ng-container>
           <ng-template #noResults>
             <tr>
-              <td colspan="8" style="text-align: center;">No matching results</td>
+              <td colspan="9" style="text-align: center;">No matching results</td>
             </tr>
           </ng-template>
         </tbody>

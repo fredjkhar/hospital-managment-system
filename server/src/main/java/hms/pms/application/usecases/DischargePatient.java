@@ -1,9 +1,9 @@
 package hms.pms.application.usecases;
 
-import hms.pms.application.dtos.queries.PatientDischargeCreateDTO;
+import hms.pms.application.dtos.queries.DischargeCreateDTO;
 
 import java.util.UUID;
 
 public interface DischargePatient {
-    void dischargePatient(UUID wardId, PatientDischargeCreateDTO patientDischargeInfo);
+    void dischargePatient(UUID wardId, DischargeCreateDTO patientDischargeInfo);
 }

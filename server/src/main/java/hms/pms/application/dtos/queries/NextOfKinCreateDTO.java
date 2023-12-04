@@ -1,5 +1,6 @@
 package hms.pms.application.dtos.queries;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

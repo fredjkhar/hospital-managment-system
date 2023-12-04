@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
+import { Patient } from './patient.model';
+import { Observable, of } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatientsService {
+  private apiUrl = 'BACKEND_API_URL';
+
+  private patients: Patient[] = [];
+
   static originalPatients = [
     { id: '1', fullname: 'rada', gender: 'm', address: '350 mt...', birthday: '11-12-2002', email: 'john.doe@example.com', contact: '123-456-7890' },
     { id: '2', fullname: 'Jane', gender: 'f', address: 'king edward', birthday: '11-12-2002', email: 'jane.smith@example.com', contact: '987-654-3210' },
@@ -14,11 +21,25 @@ export class PatientsService {
     { id: '3', patientId: '1', drugNumber: '1', drugName: 'Advil', unitsPerDay: 5, administrationNbrPerDay: 5, administrationMethod: 'IV', startDate: '2022-01-01', endDate: '2023-01-01' },
     { id: '4', patientId: '1', drugNumber: '1', drugName: 'Morphine', unitsPerDay: 5, administrationNbrPerDay: 5, administrationMethod: 'IV', startDate: '2022-01-01', endDate: '2023-01-01' },
   ];
-  constructor() { }
 
-  getPatients(): Object[] {
-    //should get stuff from DB later on
-    //ideally we would have a Patient[] as the return type, but shouldn't be a big deal rn
+  constructor(private http: HttpClient) { }
+
+  getPatients(): Observable<any[]> {
+    const userRoleProperty = this.http.get<any[]>(`${this.apiUrl}/patients`);
+    return userRoleProperty;
+  }
+
+  getPatientById(id: number): Observable<Patient | undefined> {
+    const patient = this.patients.find((p) => p.Id === id);
+    return of(patient);
+  }
+
+  deletePatient(id: number): void {
+    this.patients.splice(id, 1);
+  }
+
+  getPatientsNotAssignedToWard(): Object[] {
+    //do some filtering here
     return PatientsService.originalPatients
   }
 
@@ -29,6 +50,15 @@ export class PatientsService {
 
   getPatientPrescriptions(patientId: any): any[] {
     return PatientsService.placeholderPrescriptions.filter(prescription => prescription.patientId == patientId)
+  }
+
+  assignPatientToWard(wardId: any, patientId: any, patientAssignment: any): boolean {
+    if (true) {
+      console.log("successful assignment to ward ", wardId, " for patient ", patientId, " with additional info ", patientAssignment)
+      return true;
+    }
+    console.log("unsuccessful assignment to ward")
+    return false;
   }
 
   editPatient(newPatient: any): boolean {

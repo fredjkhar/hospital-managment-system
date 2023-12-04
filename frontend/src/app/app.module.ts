@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditPatientComponent } from './Components/patients/edit-patient/edit-patient.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ViewPatientComponent } from './Components/patients/view-patient/view-patient.component';
+import { AddPatientComponent } from './Components/ward/add-patient/add-patient.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ViewPatientComponent } from './Components/patients/view-patient/view-pa
     PatientsComponent,
     StaffComponent,
     EditPatientComponent,
-    ViewPatientComponent
+    ViewPatientComponent,
+    AddPatientComponent
   ],
   imports: [
     BrowserModule,

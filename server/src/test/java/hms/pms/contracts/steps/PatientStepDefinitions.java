@@ -1,6 +1,6 @@
 package hms.pms.contracts.steps;
 
-import hms.pms.application.dtos.queries.PatientAdmissionCreateDTO;
+import hms.pms.application.dtos.queries.AdmissionCreateDTO;
 import hms.pms.contracts.testStubs.factories.AdmissionFactoryStub;
 import hms.pms.contracts.testStubs.factories.AdmissionRequestFactoryStub;
 import hms.pms.contracts.testStubs.factories.DischargeFactoryStub;
@@ -59,8 +59,8 @@ public class PatientStepDefinitions {
     private Bed bed = null;
     private Bed invalidBed = null;
     private Ward wardFull = null;
-    private PatientAdmissionCreateDTO patientAdmissionInfo;
-    private PatientAdmissionCreateDTO patientAdmissionInfo_invalidBed;
+    private AdmissionCreateDTO patientAdmissionInfo;
+    private AdmissionCreateDTO patientAdmissionInfo_invalidBed;
 
     private WardFacade wardFacade;
 
@@ -115,7 +115,7 @@ public class PatientStepDefinitions {
     public void the_charge_nurse_enters_all_remaining_admission_information() {
         UUID roomNbr = room == null  ? UUID.randomUUID() : room.getRoomNbr();
         UUID bedNbr = bed == null ? UUID.randomUUID() : bed.getBedNbr();
-        patientAdmissionInfo = new PatientAdmissionCreateDTO(patient.getPatientId(), UUID.randomUUID(),
+        patientAdmissionInfo = new AdmissionCreateDTO(patient.getPatientId(), UUID.randomUUID(),
                  roomNbr, bedNbr, "OHIP", "He's sick", 5);
         Assertions.assertNotNull(patientAdmissionInfo);
     }
@@ -129,7 +129,7 @@ public class PatientStepDefinitions {
                 room = r;
             }
         }
-        patientAdmissionInfo_invalidBed = new PatientAdmissionCreateDTO(patient.getPatientId(), UUID.randomUUID(),
+        patientAdmissionInfo_invalidBed = new AdmissionCreateDTO(patient.getPatientId(), UUID.randomUUID(),
                 room.getRoomNbr(), invalidBed.getBedNbr(), "OHIP", "He's sick", 5);
         Assertions.assertNotNull(patientAdmissionInfo_invalidBed);
     }

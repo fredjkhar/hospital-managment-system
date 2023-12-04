@@ -93,6 +93,21 @@ button.delete-button:hover {
   border-radius: 20%;
 }
 
+button.add-button {
+  background-color: transparent;
+  color: lightgreen;
+  border: none;
+  cursor: pointer;
+}
+
+button.add-button:hover {
+  background-color: lightgreen;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 20%;
+}
+
 button i {
   margin-right: 5px;
 }

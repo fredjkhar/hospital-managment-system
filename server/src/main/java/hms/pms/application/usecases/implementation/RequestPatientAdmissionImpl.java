@@ -1,6 +1,6 @@
 package hms.pms.application.usecases.implementation;
 
-import hms.pms.application.dtos.queries.PatientAdmissionFromRequestListCreateDTO;
+import hms.pms.application.dtos.queries.AdmissionRequestCreateDTO;
 import hms.pms.application.usecases.RequestPatientAdmission;
 import hms.pms.domain.ward.entities.Ward;
 import hms.pms.domain.ward.facade.WardFacade;
@@ -25,7 +25,7 @@ public class RequestPatientAdmissionImpl implements RequestPatientAdmission {
     }
 
     @Override
-    public void requestPatientAdmission(PatientAdmissionFromRequestListCreateDTO patientAdmissionRequest, UUID wardId) {
+    public void requestPatientAdmission(AdmissionRequestCreateDTO patientAdmissionRequest, UUID wardId) {
         Ward ward = wardRepository.find(wardId);
 
         if (ward == null) {
