@@ -20,6 +20,7 @@ import { LoginComponent } from './Components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditPatientComponent } from './Components/patients/edit-patient/edit-patient.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AddPrescriptionComponent } from './Components/prescription/add-prescription/add-prescription.component';
 import { ViewPatientComponent } from './Components/patients/view-patient/view-patient.component';
 import { AddPatientComponent } from './Components/ward/add-patient/add-patient.component';
 import { RequestPatientComponent } from './Components/ward/request-patient/request-patient.component';
@@ -39,6 +40,7 @@ import { RequestPatientComponent } from './Components/ward/request-patient/reque
     PatientsComponent,
     StaffComponent,
     EditPatientComponent,
+    AddPrescriptionComponent,
     ViewPatientComponent,
     AddPatientComponent,
     RequestPatientComponent

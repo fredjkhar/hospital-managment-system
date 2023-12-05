@@ -48,7 +48,7 @@ export class PrescriptionComponent {
   }
 
   openAddPrescriptionForm(): void {
-    this.router.navigate(['/prescription/add-prescription']);
+    this.router.navigate(['prescriptions','add-prescription']);
   }
 
   dateComparison(date: string, compareTo: string): boolean {

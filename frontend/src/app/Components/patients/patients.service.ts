@@ -79,4 +79,8 @@ export class PatientsService {
     }
     return false
   }
+
+  addPrescription(newPrescription: any): any {
+    console.log(newPrescription)
+  }
 }

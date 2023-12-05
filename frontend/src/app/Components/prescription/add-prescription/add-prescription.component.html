@@ -1,0 +1,70 @@
+<body>
+    <div class="add-prescription-container">
+        <h2>Add Prescription</h2>
+        <form [formGroup]="addPrescriptionForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="patientId">Patient ID</label>
+                <select id="patientId" formControlName="patientId" required (focus)="patientIdSelectorWasClicked()">
+                    <option value="-1" selected disabled>Select a patient</option>
+                    <option *ngFor="let patient of patients" [value]="patient.id">{{ patient.fullname }}
+                    </option>
+                </select>
+                <div [hidden]="(patientId.pristine && !patientIdSelectorClicked) || patientId.valid" class="alert alert-danger">
+                    Patient is required.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="drugNumber">Drug Number</label>
+                <input type="number" id="drugNumber" formControlName="drugNumber" required>
+                <div [hidden]="drugNumber.pristine || drugNumber.valid" class="alert alert-danger">
+                    Drug number is required and must be a non-negative integer.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="drugName">Drug Name</label>
+                <input type="text" id="drugName" formControlName="drugName" required>
+                <div [hidden]="drugName.pristine || drugName.valid" class="alert alert-danger">
+                    Drug name is required and must only include normal characters.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="unitsPerDay">Units Per Day</label>
+                <input type="number" id="unitsPerDay" formControlName="unitsPerDay" required>
+                <div [hidden]="unitsPerDay.pristine || unitsPerDay.valid" class="alert alert-danger">
+                    Units Per Day is required and must be a non-negative number.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="administrationNbrPerDay">Administration Number Per Day</label>
+                <input type="number" id="administrationNbrPerDay" formControlName="administrationNbrPerDay" required>
+                <div [hidden]="administrationNbrPerDay.pristine || administrationNbrPerDay.valid" class="alert alert-danger">
+                    Administration Number Per Day is required and must be a non-negative integer.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="administrationMethod">Administration Method</label>
+                <input type="text" id="administrationMethod" formControlName="administrationMethod" required>
+                <div [hidden]="administrationMethod.pristine || administrationMethod.valid" class="alert alert-danger">
+                    Administration Method is required and must only include normal characters.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="startDate">Start Date</label>
+                <input type="date" id="startDate" formControlName="startDate" required>
+                <div [hidden]="startDate.pristine || startDate.valid" class="alert alert-danger">
+                    Start Date is required.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="endDate">End Date</label>
+                <input type="date" id="endDate" formControlName="endDate" required>
+                <div [hidden]="endDate.pristine || endDate.valid" class="alert alert-danger">
+                    End Date is required.
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" [disabled]="addPrescriptionForm.invalid">Register</button>
+            </div>
+        </form>
+    </div>
+</body>
