@@ -101,4 +101,8 @@ export class WardComponent {
   addPatientToWard(ward: any): void {
     this.router.navigate(['departments', 'add-patient', ward.id])
   }
+
+  requestPatientAdmissionToWard(ward: any): void {
+    this.router.navigate(['departments', 'request-patient', ward.id])
+  }
 }
