@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl} from '@angular/forms';
 import { StaffService } from '../../staff/staff.service';
 import { PatientsService } from '../../patients/patients.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-prescription',
@@ -10,7 +11,7 @@ import { PatientsService } from '../../patients/patients.service';
 })
 export class AddPrescriptionComponent {
   addPrescriptionForm: FormGroup;
-  patients: Array<any> = [];
+  patients: any[] = [];
   patientIdSelectorClicked: boolean = false;
 
   constructor(private builder: FormBuilder, private staffService: StaffService, private patientsService: PatientsService) {
@@ -36,7 +37,9 @@ get startDate() : AbstractControl<string> { return <AbstractControl>this.addPres
 get endDate() : AbstractControl<string> { return <AbstractControl>this.addPrescriptionForm.get('endDate'); }
 
   ngOnInit(): void {
-    this.patients = this.patientsService.getPatients()
+    this.patientsService.getPatients().subscribe(patients => {
+      this.patients = patients
+    })
   }
 
   onSubmit() {

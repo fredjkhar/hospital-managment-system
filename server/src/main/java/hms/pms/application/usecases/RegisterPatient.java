@@ -1,7 +1,7 @@
 package hms.pms.application.usecases;
 
-import hms.pms.application.dtos.queries.PatientCreateDTO;
+import hms.pms.application.dtos.queries.PatientInfoCreateDTO;
 
 public interface RegisterPatient {
-    void registerPatient(PatientCreateDTO patientInfo);
+    void registerPatient(PatientInfoCreateDTO patientInfo);
 }

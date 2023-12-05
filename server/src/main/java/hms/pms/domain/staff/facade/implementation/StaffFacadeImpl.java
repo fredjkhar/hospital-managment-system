@@ -5,6 +5,8 @@ import hms.pms.application.services.DomainEventEmitter;
 import hms.pms.domain.staff.entities.Staff;
 import hms.pms.domain.staff.events.StaffCreated;
 import hms.pms.domain.staff.events.StaffCreationFailed;
+import hms.pms.domain.staff.events.StaffUpdateFailed;
+import hms.pms.domain.staff.events.StaffUpdated;
 import hms.pms.domain.staff.facade.StaffFacade;
 import hms.pms.domain.staff.factories.StaffFactory;
 import hms.pms.domain.staff.repositories.StaffRepository;
@@ -13,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class StaffFacadeImpl implements StaffFacade {
 
@@ -44,5 +47,25 @@ public class StaffFacadeImpl implements StaffFacade {
         staffRepository.save(staff);
         logger.info("Staff account created successfully: " + staff.getId());
         eventEmitter.emit(new StaffCreated(staff.getId(), new Date()));
+    }
+
+    @Override
+    public void updateStaffAccount(UUID patientId, StaffInfoCreateDTO staffInfo) {
+        Staff staff = staffRepository.find(patientId);
+        if (staff == null) {
+            logger.warn("Failed to update staff account: Staff with id " + patientId + " does not exist");
+            eventEmitter.emit(new StaffUpdateFailed(patientId, new Date(), "Staff does not exist"));
+            return;
+        }
+
+        staff.setFirstName(staffInfo.getFirstName());
+        staff.setLastName(staffInfo.getLastName());
+        staff.setEmail(staffInfo.getEmail());
+        staff.setPassword(staffInfo.getPassword());
+        staff.setRole(staffInfo.getRole());
+
+        staffRepository.save(staff);
+        logger.info("Staff account updated successfully: " + staff.getId());
+        eventEmitter.emit(new StaffUpdated(staff.getId(), new Date()));
     }
 }

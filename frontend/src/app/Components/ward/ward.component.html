@@ -38,6 +38,12 @@
                           <button (click)="deleteWard(item)" title="Delete" class="delete-button">
                               <i class="material-icons">clear</i>
                           </button>
+                          <button *ngIf="item.status == WARD_COMPLETE" (click)="addPatientToWard(item)" title="Add Patient" class="add-button">
+                              <i class="material-icons">person_add</i>
+                          </button>
+                          <button *ngIf="item.status != WARD_COMPLETE" (click)="requestPatientAdmissionToWard(item)" title="Request Patient Admission" class="request-button">
+                              <i class="material-icons">group_add</i>
+                          </button>
                       </td>
                   </tr>
               </ng-container>

@@ -1,8 +1,8 @@
 package hms.pms.domain.ward.facade.implementation;
 
-import hms.pms.application.dtos.queries.PatientAdmissionCreateDTO;
-import hms.pms.application.dtos.queries.PatientAdmissionFromRequestListCreateDTO;
-import hms.pms.application.dtos.queries.PatientDischargeCreateDTO;
+import hms.pms.application.dtos.queries.AdmissionCreateDTO;
+import hms.pms.application.dtos.queries.AdmissionRequestCreateDTO;
+import hms.pms.application.dtos.queries.DischargeCreateDTO;
 import hms.pms.application.services.DomainEventEmitter;
 import hms.pms.domain.patient.repositories.PatientRepository;
 import hms.pms.domain.ward.entities.*;
@@ -55,7 +55,7 @@ public class WardFacadeImpl implements WardFacade {
     }
 
     @Override
-    public void admitPatient(UUID wardId, PatientAdmissionCreateDTO admissionInfo) {
+    public void admitPatient(UUID wardId, AdmissionCreateDTO admissionInfo) {
         Ward ward = getWard(wardId);
         if (ward == null || Objects.equals(ward.getStatus(), "complete")) {
             logAndEmitAdmissionFailed("Ward is null or complete", wardId, admissionInfo);
@@ -93,28 +93,11 @@ public class WardFacadeImpl implements WardFacade {
         bedRepository.save(bed);
 
         wardRepository.save(ward);
-        eventEmitter.emit(new AdmissionCreated(UUID.randomUUID(), new Date(), patientId, wardId, admission.getRoomNbr(), admission.getBedNbr()));
+        eventEmitter.emit(new AdmissionSuccessful(UUID.randomUUID(), new Date(), patientId, wardId, admission.getRoomNbr(), admission.getBedNbr()));
     }
-
-    private void logAndEmitAdmissionFailed(String message, UUID wardId, PatientAdmissionCreateDTO admissionInfo) {
-        logger.error("Patient admission failed: " + message);
-        eventEmitter.emit(new AdmissionFailed(UUID.randomUUID(), new Date(), wardId, admissionInfo.getPatientId(), message));
-    }
-
-    private boolean validateRoomAndBedForAdmission(Ward ward, Admission admission) {
-        UUID roomNbr = admission.getRoomNbr();
-        Room room = roomRepository.find(roomNbr);
-        if (room == null || Objects.equals(room.getStatus(), "complete")) return false;
-        if (!isRoomPartOfWard(ward.getRooms(), roomNbr)) return false;
-
-        UUID bedNbr = admission.getBedNbr();
-        Bed bed = bedRepository.find(bedNbr);
-        return !(bed == null || Objects.equals(bed.getStatus(), "complete")) && isBedPartOfRoom(room.getBeds(), bedNbr);
-    }
-
 
     @Override
-    public void admitPatientFromRequestList(UUID wardId, PatientAdmissionFromRequestListCreateDTO patientAdmissionRequestInfo) {
+    public void admitPatientFromRequestList(UUID wardId, AdmissionRequestCreateDTO patientAdmissionRequestInfo) {
         Ward ward = getWard(wardId);
         if (ward == null || Objects.equals(ward.getStatus(), "complete")) {
             logAndEmitAdmissionRequestListFailed("Ward is null or complete", wardId, patientAdmissionRequestInfo);
@@ -148,12 +131,18 @@ public class WardFacadeImpl implements WardFacade {
         }
 
         if (incompleteRoom == null || incompleteBed == null) {
-            logAndEmitAdmissionRequestListFailed("Incomplete room or bed not found", wardId, patientAdmissionRequestInfo);
+            logAndEmitAdmissionRequestListFailed("Target room or bed not found", wardId, patientAdmissionRequestInfo);
             return;
         }
 
-        if (!ward.admitPatientFromRequestList(admissionRequest)) {
-            logAndEmitAdmissionRequestListFailed("Failed to admit patient from request list in the ward system", wardId, patientAdmissionRequestInfo);
+        if (!ward.removePatientFromRequestList(admissionRequest)) {
+            logAndEmitAdmissionRequestListFailed("Failed to remove patient from request list in the ward system", wardId, patientAdmissionRequestInfo);
+            return;
+        }
+
+        Admission admission = admissionFactory.createAdmission(admissionRequest, incompleteRoom.getRoomNbr(), incompleteBed.getBedNbr(), patientAdmissionRequestInfo.getInsuranceNumber());
+        if (!ward.admitPatient(admission)) {
+            logAndEmitAdmissionFailed("Failed to admit patient in the ward system", wardId, admission);
             return;
         }
 
@@ -163,22 +152,22 @@ public class WardFacadeImpl implements WardFacade {
         bedRepository.save(incompleteBed);
 
         wardRepository.save(ward);
-        eventEmitter.emit(new AdmissionFromRequestListCreated(UUID.randomUUID(), new Date(), patientId, wardId, incompleteRoom.getRoomNbr(), incompleteBed.getBedNbr()));
+        eventEmitter.emit(new AdmissionFromRequestListSuccessful(UUID.randomUUID(), new Date(), patientId, wardId, incompleteRoom.getRoomNbr(), incompleteBed.getBedNbr()));
     }
 
     @Override
-    public void addPatientToRequestList(UUID wardId, PatientAdmissionFromRequestListCreateDTO patientAdmissionInfo) {
+    public void addPatientToRequestList(UUID wardId, AdmissionRequestCreateDTO patientAdmissionInfo) {
         Ward ward = getWard(wardId);
         if (ward == null) {
             logger.error("Ward not found for ID " + wardId);
-            eventEmitter.emit(new AdmissionRequestListAdditionFailed(UUID.randomUUID(), new Date(), wardId, patientAdmissionInfo.getPatientId(), "Ward not found"));
+            eventEmitter.emit(new AdmissionFromRequestListFailed(UUID.randomUUID(), new Date(), wardId, patientAdmissionInfo.getPatientId(), "Ward not found"));
             return;
         }
 
         UUID patientId = patientAdmissionInfo.getPatientId();
         if (ward.getAdmissionRequest(patientId) != null || ward.getAdmission(patientId) != null) {
             logger.error("Patient already in request list or admitted.");
-            eventEmitter.emit(new AdmissionRequestListAdditionFailed(UUID.randomUUID(), new Date(), wardId, patientId, "Patient already in request list or admitted"));
+            eventEmitter.emit(new AdmissionRequestFailed(UUID.randomUUID(), new Date(), wardId, patientId, "Patient already in request list or admitted"));
             return;
         }
 
@@ -188,11 +177,11 @@ public class WardFacadeImpl implements WardFacade {
         logger.info("Patient added to admission request list for ward " + wardId);
 
         wardRepository.save(ward);
-        eventEmitter.emit(new AdmissionRequestListAdded(UUID.randomUUID(), new Date(), wardId, patientId));
+        eventEmitter.emit(new AdmissionRequestCreated(UUID.randomUUID(), new Date(), wardId, patientId));
     }
 
     @Override
-    public void dischargePatient(UUID wardId, PatientDischargeCreateDTO patientDischargeInfo) {
+    public void dischargePatient(UUID wardId, DischargeCreateDTO patientDischargeInfo) {
         Ward ward = getWard(wardId);
         if (ward == null) {
             logAndEmitDischargeFailed("Ward not found", wardId, patientDischargeInfo);
@@ -211,7 +200,7 @@ public class WardFacadeImpl implements WardFacade {
             return;
         }
 
-        Discharge discharge = dischargeFactory.createDischarge(patientId, patientDischargeInfo.getDischargeSummary());
+        Discharge discharge = dischargeFactory.createDischarge(patientDischargeInfo);
 
         if (!validateRoomAndBedForDischarge(ward, admission, patientDischargeInfo)) {
             logAndEmitDischargeFailed("Invalid room or bed for discharge", wardId, patientDischargeInfo);
@@ -229,7 +218,28 @@ public class WardFacadeImpl implements WardFacade {
         eventEmitter.emit(new DischargeCreated(UUID.randomUUID(), new Date(), patientId, wardId, admission.getRoomNbr(), admission.getBedNbr()));
     }
 
-    private void logAndEmitAdmissionRequestListFailed(String message, UUID wardId, PatientAdmissionFromRequestListCreateDTO patientAdmissionRequestInfo) {
+    private void logAndEmitAdmissionFailed(String message, UUID wardId, AdmissionCreateDTO admissionInfo) {
+        logger.error("Patient admission failed: " + message);
+        eventEmitter.emit(new AdmissionFailed(UUID.randomUUID(), new Date(), wardId, admissionInfo.getPatientId(), message));
+    }
+
+    private void logAndEmitAdmissionFailed(String message, UUID wardId, Admission admission) {
+        logger.error("Patient admission failed: " + message);
+        eventEmitter.emit(new AdmissionFailed(UUID.randomUUID(), new Date(), wardId, admission.getPatientId(), message));
+    }
+
+    private boolean validateRoomAndBedForAdmission(Ward ward, Admission admission) {
+        UUID roomNbr = admission.getRoomNbr();
+        Room room = roomRepository.find(roomNbr);
+        if (room == null || Objects.equals(room.getStatus(), "complete")) return false;
+        if (!isRoomPartOfWard(ward.getRooms(), roomNbr)) return false;
+
+        UUID bedNbr = admission.getBedNbr();
+        Bed bed = bedRepository.find(bedNbr);
+        return !(bed == null || Objects.equals(bed.getStatus(), "complete")) && isBedPartOfRoom(room.getBeds(), bedNbr);
+    }
+
+    private void logAndEmitAdmissionRequestListFailed(String message, UUID wardId, AdmissionRequestCreateDTO patientAdmissionRequestInfo) {
         logger.error("Admission from request list failed: " + message);
         eventEmitter.emit(new AdmissionFromRequestListFailed(UUID.randomUUID(), new Date(), wardId, patientAdmissionRequestInfo.getPatientId(), message));
     }
@@ -244,12 +254,12 @@ public class WardFacadeImpl implements WardFacade {
         return null;
     }
 
-    private void logAndEmitDischargeFailed(String message, UUID wardId, PatientDischargeCreateDTO patientDischargeInfo) {
+    private void logAndEmitDischargeFailed(String message, UUID wardId, DischargeCreateDTO patientDischargeInfo) {
         logger.error("Patient discharge failed: " + message);
         eventEmitter.emit(new DischargeFailed(UUID.randomUUID(), new Date(), wardId, patientDischargeInfo.getPatientId(), message));
     }
 
-    private boolean validateRoomAndBedForDischarge(Ward ward, Admission admission, PatientDischargeCreateDTO patientDischargeInfo) {
+    private boolean validateRoomAndBedForDischarge(Ward ward, Admission admission, DischargeCreateDTO patientDischargeInfo) {
         UUID roomNbr = admission.getRoomNbr();
         Room room = roomRepository.find(roomNbr);
         if (room == null || Objects.equals(room.getStatus(), "complete")) return false;

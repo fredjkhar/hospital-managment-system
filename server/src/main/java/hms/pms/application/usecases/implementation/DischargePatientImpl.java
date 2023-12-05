@@ -1,6 +1,6 @@
 package hms.pms.application.usecases.implementation;
 
-import hms.pms.application.dtos.queries.PatientDischargeCreateDTO;
+import hms.pms.application.dtos.queries.DischargeCreateDTO;
 import hms.pms.application.usecases.DischargePatient;
 import hms.pms.domain.patient.entities.Patient;
 import hms.pms.domain.patient.repositories.PatientRepository;
@@ -29,7 +29,7 @@ public class DischargePatientImpl implements DischargePatient {
     }
 
     @Override
-    public void dischargePatient(UUID wardId, PatientDischargeCreateDTO patientDischargeInfo) {
+    public void dischargePatient(UUID wardId, DischargeCreateDTO patientDischargeInfo) {
         UUID patientId = patientDischargeInfo.getPatientId();
 
         Patient patient = patientRepository.find(patientId);
