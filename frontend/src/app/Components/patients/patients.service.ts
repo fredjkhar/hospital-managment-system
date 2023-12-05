@@ -61,6 +61,15 @@ export class PatientsService {
     return false;
   }
 
+  requestPatientToWard(wardId: any, patientId: any, patientRequest: any): boolean {
+    if (true) {
+      console.log("successful request of admission to ward ", wardId, " for patient ", patientId, " with additional info ", patientRequest)
+      return true;
+    }
+    console.log("unsuccessful request of admission to ward")
+    return false;
+  }
+
   editPatient(newPatient: any): boolean {
     const indexToModify = PatientsService.originalPatients.findIndex(e => e.id === newPatient.id)
     if (indexToModify != -1) {

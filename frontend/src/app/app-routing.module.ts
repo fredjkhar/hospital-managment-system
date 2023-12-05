@@ -13,6 +13,7 @@ import { StaffComponent } from './Components/staff/staff.component';
 import { EditPatientComponent } from './Components/patients/edit-patient/edit-patient.component';
 import { ViewPatientComponent } from './Components/patients/view-patient/view-patient.component';
 import { AddPatientComponent } from './Components/ward/add-patient/add-patient.component';
+import { RequestPatientComponent } from './Components/ward/request-patient/request-patient.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'appointments', component: AppointmentsComponent },
   { path: 'departments', component: WardComponent },
   { path: 'departments/add-patient/:id', component: AddPatientComponent },
+  { path: 'departments/request-patient/:id', component: RequestPatientComponent },
   { path: 'prescriptions', component: PrescriptionComponent },
   { path: 'doctors', component: DoctorsComponent },
   { path: 'patients', component: PatientsComponent },

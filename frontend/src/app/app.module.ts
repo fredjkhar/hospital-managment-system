@@ -22,6 +22,7 @@ import { EditPatientComponent } from './Components/patients/edit-patient/edit-pa
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ViewPatientComponent } from './Components/patients/view-patient/view-patient.component';
 import { AddPatientComponent } from './Components/ward/add-patient/add-patient.component';
+import { RequestPatientComponent } from './Components/ward/request-patient/request-patient.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AddPatientComponent } from './Components/ward/add-patient/add-patient.c
     StaffComponent,
     EditPatientComponent,
     ViewPatientComponent,
-    AddPatientComponent
+    AddPatientComponent,
+    RequestPatientComponent
   ],
   imports: [
     BrowserModule,

@@ -108,6 +108,21 @@ button.add-button:hover {
   border-radius: 20%;
 }
 
+button.request-button {
+  background-color: transparent;
+  color: orange;
+  border: none;
+  cursor: pointer;
+}
+
+button.request-button:hover {
+  background-color: orange;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 20%;
+}
+
 button i {
   margin-right: 5px;
 }

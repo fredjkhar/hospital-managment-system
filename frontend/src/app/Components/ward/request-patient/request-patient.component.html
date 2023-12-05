@@ -1,0 +1,28 @@
+<body>
+    <div class="request-patient-container">
+      <h2>Add Patient to Ward</h2>
+      <form [formGroup]="requestPatientAdmissionToWardForm" (ngSubmit)="onSubmit()">
+        <select id="patientId" formControlName="patientId" required>
+            <option value="-1" selected disabled>Select a patient</option>
+            <option *ngFor="let patient of assignablePatients" [value]="patient.id">{{ patient.fullname }}
+            </option>
+        </select>
+        <div class="form-group">
+          <label for="localDoctor">Local Doctor</label>
+          <input type="text" id="localDoctor" formControlName="localDoctor" required>
+        </div>
+        <div class="form-group">
+          <label for="priority">Priority</label>
+          <input type="number" id="priority" formControlName="priority" required>
+        </div>
+        <div class="form-group">
+          <label for="rationale">Rationale</label>
+          <input type="text" id="rationale" formControlName="rationale" required>
+        </div>
+        <div class="form-group">
+          <button type="submit" [disabled]="requestPatientAdmissionToWardForm.invalid">Add to ward</button>
+        </div>
+      </form>
+    </div>
+  </body>
+  
