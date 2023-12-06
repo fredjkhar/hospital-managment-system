@@ -13,16 +13,16 @@ public class AdmissionRequestJpaEntity {
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Column(name = "patientid", nullable = false)
+    @Column(name = "patient_id", nullable = false)
     private UUID patientId;
 
-    @Column(name = "rationaleforrequest", nullable = false)
+    @Column(name = "rationale_for_request", nullable = false)
     private String rationaleForRequest;
 
-    @Column(name = "priorityassessment", nullable = false)
+    @Column(name = "priority_assessment", nullable = false)
     private int priorityAssessment;
 
-    @Column(name = "localdoctorid", nullable = false)
+    @Column(name = "local_doctor_id", nullable = false)
     private UUID localDoctorId;
 
     @ManyToOne(fetch = FetchType.LAZY)

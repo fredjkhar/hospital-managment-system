@@ -10,7 +10,7 @@ public class BedJpaEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "bednbr", nullable = false)
+    @Column(name = "bed_nbr", nullable = false)
     private UUID bedNbr;
 
     @Column(name = "status", nullable = false)

@@ -13,7 +13,7 @@ public class StaffJpaEntity {
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Column(name = "employeenbr", nullable = false, unique = true)
+    @Column(name = "employee_nbr", nullable = false, unique = true)
     private UUID employeeNbr;
 
     @Column(name = "firstname", nullable = false)

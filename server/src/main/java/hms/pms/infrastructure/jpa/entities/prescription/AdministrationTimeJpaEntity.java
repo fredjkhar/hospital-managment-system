@@ -12,9 +12,9 @@ public class AdministrationTimeJpaEntity {
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Column(name = "timeofday", nullable = false)
+    @Column(name = "time_of_day", nullable = false)
     private String timeOfDay;
 
-    @Column(name = "unitsadministered", nullable = false)
+    @Column(name = "units_administered", nullable = false)
     private int unitsAdministered;
 }

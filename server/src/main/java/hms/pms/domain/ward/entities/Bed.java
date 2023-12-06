@@ -10,7 +10,8 @@ import java.util.UUID;
 public class Bed {
     private static final String STATUS_COMPLETE = "complete";
     private static final String STATUS_INCOMPLETE = "incomplete";
-    private final UUID bedNbr;
+
+    private UUID bedNbr;
     private String status;
 
     public Bed(UUID bedNbr) {
