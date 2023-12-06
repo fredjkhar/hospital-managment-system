@@ -38,7 +38,7 @@ public class WardJpaEntity {
     private List<AdmissionJpaEntity> admissions;
 
     @OneToMany(mappedBy = "ward", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<DischargeJpaEntity> dischargeInfos;
+    private List<DischargeJpaEntity> dischargeInformation;
 
     @OneToMany(mappedBy = "ward", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AdmissionRequestJpaEntity> admissionRequests;
