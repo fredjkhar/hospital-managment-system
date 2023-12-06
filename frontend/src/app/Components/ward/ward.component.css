@@ -152,6 +152,7 @@ button i {
 }
 
 .nurse-details {
+  width: 260px;
   position: fixed;
   top: 50%;
   left: 50%;

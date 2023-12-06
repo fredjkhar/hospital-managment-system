@@ -20,6 +20,7 @@ export class WardComponent {
   hasSearchResults: boolean = true;
   Nurse = [
     { userRole: 'nurse', name: 'Leila', telExt: '2145', bipExt: '1234', dept: 'Cardiology' },
+    { userRole: 'nurse', name: 'Assia', telExt: '2145', bipExt: '1234', dept: 'Emergency' },
     { userRole: 'dr', name: 'b', telExt: '1224', bipExt: '123', dept: 'O' },
   ];
   selectedNurse: any;

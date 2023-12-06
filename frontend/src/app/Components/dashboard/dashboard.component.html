@@ -1,2 +1,40 @@
-<body><p>dashboard</p>
+  <body>
+    <div class="dashboard">
+    <div class="card">
+        <i class="material-icons" style="color:green">person</i>
+        <h2>Total Patients</h2>
+      <p>{{ totalPatients }}</p>
+    </div>
+  
+    <div class="card">
+        <i class="material-icons" style="color:rgb(106, 178, 238)">medical_services</i>
+        <h2>Total Doctors</h2>
+      <p>{{ totalDoctors }}</p>
+    </div>
+  
+    <div class="card" style="width: 260px;">
+        <i class="material-icons" style="color:grey">event</i>
+        <h2 style="width: 220px;">Appointments Today</h2>
+      <p>{{ appointmentsToday }}</p>
+    </div>
+  </div>
+
+  <div class="dashboard-1">
+  <div style=" margin-left: 120px;
+  margin-top: 59px;
+  height: 500px;
+  width: 500px;
+">
+    <h2>Monthly Activity Chart</h2>
+    <canvas #myChart style="display: block;box-sizing: border-box;height: 500px;width: 500px;padding-bottom: 50px;" ></canvas>
+  </div>
+
+  <div class="card" style="width: 440px; margin-right: 55px; margin-top: 90px; ">
+    <h2 style="color:rgb(225, 89, 89)">News</h2>
+    <div class="news-item" *ngFor="let news of newsList">
+      <h3 style="color:rgb(225, 89, 89)">{{ news.title }}</h3>
+      <p>{{ news.description }}</p>
+    </div>
+</div>
+</div>
 </body>
