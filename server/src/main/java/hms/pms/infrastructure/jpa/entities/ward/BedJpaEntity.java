@@ -10,9 +10,10 @@ public class BedJpaEntity {
 
     @Id
     @GeneratedValue
+    @Column(name = "bed_nbr", nullable = false)
     private UUID bedNbr;
 
-    @Column(nullable = false)
+    @Column(name = "status", nullable = false)
     private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 public class Discharge {
-    private final UUID id;
-    private final UUID patientId;
-    private final String dischargeSummary;
+    private UUID id;
+    private UUID patientId;
+    private String dischargeSummary;
 }

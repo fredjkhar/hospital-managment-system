@@ -7,5 +7,7 @@ import java.util.UUID;
 public interface AdmissionRepository {
     Admission find(UUID admissionId);
 
+    Admission findByPatientId(UUID patientId);
+
     void save(Admission admission);
 }

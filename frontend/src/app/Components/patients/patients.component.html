@@ -33,7 +33,7 @@
                   <i class="material-icons">info</i>
                 </button>
               </td>
-              <td>{{ item.Id }}</td>
+              <td>{{ item.id }}</td>
               <td>{{ item.fullname }}</td>
               <td>{{ item.gender }}</td>
               <td>{{ item.birthday }}</td>
@@ -46,6 +46,9 @@
                 </button>
                 <button (click)="deletePatient(item)" title="Delete" class="delete-button">
                   <i class="material-icons">clear</i>
+                </button>
+                <button (click)="viewPatientFile(item)" title="ViewFile" class="view-button">
+                  <i class="material-icons">file_open</i>
                 </button>
               </td>
             </tr>

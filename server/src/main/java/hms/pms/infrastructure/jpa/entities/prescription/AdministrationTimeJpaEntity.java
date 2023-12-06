@@ -9,11 +9,12 @@ import java.util.UUID;
 public class AdministrationTimeJpaEntity {
     @Id
     @GeneratedValue
+    @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(name = "time_of_day", nullable = false)
     private String timeOfDay;
 
-    @Column(nullable = false)
+    @Column(name = "units_administered", nullable = false)
     private int unitsAdministered;
 }

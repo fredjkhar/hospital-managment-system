@@ -11,9 +11,7 @@ import hms.pms.domain.ward.facade.WardFacade;
 import hms.pms.domain.ward.factories.AdmissionFactory;
 import hms.pms.domain.ward.factories.AdmissionRequestFactory;
 import hms.pms.domain.ward.factories.DischargeFactory;
-import hms.pms.domain.ward.repositories.BedRepository;
-import hms.pms.domain.ward.repositories.RoomRepository;
-import hms.pms.domain.ward.repositories.WardRepository;
+import hms.pms.domain.ward.repositories.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +27,8 @@ public class WardFacadeImpl implements WardFacade {
     private final RoomRepository roomRepository;
     private final BedRepository bedRepository;
     private final PatientRepository patientRepository;
+    private final AdmissionRepository admissionRepository;
+    private final AdmissionRequestRepository admissionRequestRepository;
     private final AdmissionFactory admissionFactory;
     private final AdmissionRequestFactory admissionRequestFactory;
     private final DischargeFactory dischargeFactory;
@@ -37,12 +37,15 @@ public class WardFacadeImpl implements WardFacade {
     @Autowired
     public WardFacadeImpl(WardRepository wardRepository, RoomRepository roomRepository,
                           BedRepository bedRepository, PatientRepository patientRepository,
+                          AdmissionRepository admissionRepository, AdmissionRequestRepository admissionRequestRepository,
                           AdmissionFactory admissionFactory, AdmissionRequestFactory admissionRequestFactory,
                           DischargeFactory dischargeFactory, DomainEventEmitter eventEmitter) {
         this.wardRepository = wardRepository;
         this.roomRepository = roomRepository;
         this.bedRepository = bedRepository;
         this.patientRepository = patientRepository;
+        this.admissionRepository = admissionRepository;
+        this.admissionRequestRepository = admissionRequestRepository;
         this.admissionFactory = admissionFactory;
         this.admissionRequestFactory = admissionRequestFactory;
         this.dischargeFactory = dischargeFactory;
@@ -68,8 +71,9 @@ public class WardFacadeImpl implements WardFacade {
             return;
         }
 
-        Admission admission = ward.getAdmission(patientId);
-        if (admission != null) {
+        UUID admissionId = admissionInfo.getId();
+        Admission admission = admissionRepository.find(admissionId);
+        if (admissionId != null && admission != null) {
             logAndEmitAdmissionFailed("Admission already exists for patient", wardId, admissionInfo);
             return;
         }
@@ -80,7 +84,7 @@ public class WardFacadeImpl implements WardFacade {
             return;
         }
 
-        if (!ward.admitPatient(admission)) {
+        if (!ward.admitPatient(admissionId)) {
             logAndEmitAdmissionFailed("Failed to admit patient in the ward system", wardId, admissionInfo);
             return;
         }
@@ -110,7 +114,8 @@ public class WardFacadeImpl implements WardFacade {
             return;
         }
 
-        AdmissionRequest admissionRequest = ward.getAdmissionRequest(patientId);
+        UUID admissionRequestId = patientAdmissionRequestInfo.getId();
+        AdmissionRequest admissionRequest = admissionRequestRepository.find(admissionRequestId);
         if (admissionRequest == null) {
             logAndEmitAdmissionRequestListFailed("Admission request not found", wardId, patientAdmissionRequestInfo);
             return;
@@ -135,13 +140,13 @@ public class WardFacadeImpl implements WardFacade {
             return;
         }
 
-        if (!ward.removePatientFromRequestList(admissionRequest)) {
+        if (!ward.removePatientFromRequestList(admissionRequestId)) {
             logAndEmitAdmissionRequestListFailed("Failed to remove patient from request list in the ward system", wardId, patientAdmissionRequestInfo);
             return;
         }
 
         Admission admission = admissionFactory.createAdmission(admissionRequest, incompleteRoom.getRoomNbr(), incompleteBed.getBedNbr(), patientAdmissionRequestInfo.getInsuranceNumber());
-        if (!ward.admitPatient(admission)) {
+        if (!ward.admitPatient(admission.getId())) {
             logAndEmitAdmissionFailed("Failed to admit patient in the ward system", wardId, admission);
             return;
         }
@@ -173,7 +178,7 @@ public class WardFacadeImpl implements WardFacade {
 
         AdmissionRequest admissionRequest = admissionRequestFactory.createAdmissionRequest(patientAdmissionInfo);
 
-        ward.getAdmissionRequests().add(admissionRequest);
+        ward.getAdmissionRequests().add(admissionRequest.getId());
         logger.info("Patient added to admission request list for ward " + wardId);
 
         wardRepository.save(ward);
@@ -194,14 +199,13 @@ public class WardFacadeImpl implements WardFacade {
             return;
         }
 
-        Admission admission = ward.getAdmission(patientId);
+        Admission admission = admissionRepository.findByPatientId(patientId);
         if (admission == null) {
             logAndEmitDischargeFailed("Admission not found", wardId, patientDischargeInfo);
             return;
         }
 
         Discharge discharge = dischargeFactory.createDischarge(patientDischargeInfo);
-
         if (!validateRoomAndBedForDischarge(ward, admission, patientDischargeInfo)) {
             logAndEmitDischargeFailed("Invalid room or bed for discharge", wardId, patientDischargeInfo);
             return;
@@ -209,7 +213,7 @@ public class WardFacadeImpl implements WardFacade {
 
         processRoomAndBedRelease(admission);
 
-        if (!ward.dischargePatient(discharge, admission)) {
+        if (!ward.dischargePatient(discharge.getId(), admission.getId())) {
             logAndEmitDischargeFailed("Failed to discharge patient in the ward system", wardId, patientDischargeInfo);
             return;
         }

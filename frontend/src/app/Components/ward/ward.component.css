@@ -93,6 +93,51 @@ button.delete-button:hover {
   border-radius: 20%;
 }
 
+button.add-button {
+  background-color: transparent;
+  color: lightgreen;
+  border: none;
+  cursor: pointer;
+}
+
+button.add-button:hover {
+  background-color: lightgreen;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 20%;
+}
+
+button.request-button {
+  background-color: transparent;
+  color: orange;
+  border: none;
+  cursor: pointer;
+}
+
+button.request-button:hover {
+  background-color: orange;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 20%;
+}
+
+button.admit-request-button {
+  background-color: transparent;
+  color: violet;
+  border: none;
+  cursor: pointer;
+}
+
+button.admit-request-button:hover {
+  background-color: violet;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 20%;
+}
+
 button i {
   margin-right: 5px;
 }
@@ -107,6 +152,7 @@ button i {
 }
 
 .nurse-details {
+  width: 260px;
   position: fixed;
   top: 50%;
   left: 50%;

@@ -12,9 +12,9 @@ import { PatientsService } from './patients.service';
 export class PatientsComponent {
   searchText: string = '';
   originalPatients = [
-    { Id: '1', fullname: 'rada', gender: 'm', address: '350 mt...', birthday: '11-12-2002', email: 'john.doe@example.com', contact: '123-456-7890' },
-    { Id: '2', fullname: 'Jane', gender: 'f', address: 'king edward', birthday: '11-12-2002', email: 'jane.smith@example.com', contact: '987-654-3210' },
-    { Id: '3', fullname: 'Jane', gender: 'f', address: 'king edward', birthday: '11-12-2002', email: 'jane.smith@example.com', contact: '987-654-3210' },
+    { id: '1', fullname: 'rada', gender: 'm', address: '350 mt...', birthday: '11-12-2002', email: 'john.doe@example.com', contact: '123-456-7890' },
+    { id: '2', fullname: 'Jane', gender: 'f', address: 'king edward', birthday: '11-12-2002', email: 'jane.smith@example.com', contact: '987-654-3210' },
+    { id: '3', fullname: 'Jane', gender: 'f', address: 'king edward', birthday: '11-12-2002', email: 'jane.smith@example.com', contact: '987-654-3210' },
   ];
   Patients: any[] = [];
   hasSearchResults: boolean = true;
@@ -25,7 +25,7 @@ export class PatientsComponent {
   ngOnInit(): void {
     this.loadPatients();
   }
-  
+
   loadPatients() {
     // this.patientService.getPatients().subscribe((patients) => {
     //   this.Patients = patients;
@@ -34,23 +34,23 @@ export class PatientsComponent {
   }
 
   search(): void {
-    console.log('Search called', this.searchText); 
+    console.log('Search called', this.searchText);
     if (this.searchText.trim() === '') {
       this.Patients = [...this.Patients];
     } else {
       this.Patients = this.Patients.filter(item => {
         return (
-        item.Id.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        item.fullname.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        item.gender.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        item.address.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        item.birthday.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        item.email.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        item.contact.toLowerCase().includes(this.searchText.toLowerCase())
-      );
-    });
-  }
-  this.hasSearchResults = this.Patients.length > 0;
+          item.id.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          item.fullname.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          item.gender.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          item.address.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          item.birthday.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          item.email.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          item.contact.toLowerCase().includes(this.searchText.toLowerCase())
+        );
+      });
+    }
+    this.hasSearchResults = this.Patients.length > 0;
   }
 
   editPatient(patient: any): void {
@@ -59,11 +59,15 @@ export class PatientsComponent {
 
   deletePatient(id: number) {
     this.patientService.deletePatient(id);
-    this.loadPatients(); 
+    this.loadPatients();
   }
-  
+
   openRegistrationForm(): void {
     this.router.navigate(['/register-patient']);
+  }
+
+  viewPatientFile(patient: any): void {
+    this.router.navigate(['patients', 'view-patient', patient.id])
   }
 
   showDetails(patient: Patient) {

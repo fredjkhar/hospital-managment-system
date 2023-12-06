@@ -10,8 +10,8 @@ import java.util.UUID;
 public class Room {
     private static final String STATUS_COMPLETE = "complete";
     private static final String STATUS_INCOMPLETE = "incomplete";
-    private final UUID roomNbr;
-    private final UUID[] beds;
+    private UUID roomNbr;
+    private UUID[] beds;
     private String status;
     private int occupiedBeds;
 
