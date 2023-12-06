@@ -12,32 +12,32 @@ import java.util.UUID;
 public class PrescriptionJpaEntity {
     @Id
     @GeneratedValue
-    @Column(name = "prescriptionid", nullable = false)
+    @Column(name = "prescription_id", nullable = false)
     private UUID prescriptionId;
 
-    @Column(name = "drugnumber", nullable = false)
+    @Column(name = "drug_number", nullable = false)
     private String drugNumber;
 
-    @Column(name = "drugname", nullable = false)
+    @Column(name = "drug_name", nullable = false)
     private String drugName;
 
-    @Column(name = "unitsbyday", nullable = false)
+    @Column(name = "units_by_day", nullable = false)
     private int unitsByDay;
 
-    @Column(name = "numberofadminsperday", nullable = false)
+    @Column(name = "number_of_admins_per_day", nullable = false)
     private int numberOfAdminsPerDay;
 
-    @Column(name = "methodofadministration", nullable = false)
+    @Column(name = "method_of_administration", nullable = false)
     private String methodOfAdministration;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
-    @Column(name = "startdate")
+    @Column(name = "start_date")
     private Date startDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
-    @Column(name = "finishdate")
+    @Column(name = "finish_date")
     private Date finishDate;
 
     @Column(name = "patient_id")

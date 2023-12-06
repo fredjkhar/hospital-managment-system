@@ -11,13 +11,13 @@ public class RoomJpaEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "roomnbr", nullable = false)
+    @Column(name = "room_nbr", nullable = false)
     private UUID roomNbr;
 
     @Column(name = "status", nullable = false)
     private String status;
 
-    @Column(name = "occupiedbeds", nullable = false)
+    @Column(name = "occupied_beds", nullable = false)
     private int occupiedBeds;
 
     @ManyToOne(fetch = FetchType.LAZY)
