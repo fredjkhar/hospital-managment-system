@@ -80,6 +80,10 @@ export class PatientsService {
     return false
   }
 
+  getPatientAdmissionRequestsFromWard(wardId: any): Observable<any> {
+    return this.http.get<any[]>(`${this.apiUrl}/ward/${wardId}/requests`);
+  }
+
   addPrescription(newPrescription: any): any {
     console.log(newPrescription)
   }
