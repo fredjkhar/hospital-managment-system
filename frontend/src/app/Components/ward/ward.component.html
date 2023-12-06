@@ -26,7 +26,7 @@
                   <tr *ngFor="let item of Wards">
                       <td>{{ item.id }}</td>
                       <td>{{ item.name }}</td>
-                      <td id='nurse' (click)="showNurseDetails(item.nurse, item.name, 'nurse')">{{ item.nurse }}</td>
+                      <td id='nurse' (click)="showNurseDetails(item.nurse.name, item.name, 'nurse')">{{ item.nurse.name }}</td>
                       <td>{{ item.location }}</td>
                       <td>{{ item.beds }}</td>
                       <td>{{ item.telExt }}</td>

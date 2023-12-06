@@ -36,10 +36,10 @@
               <td>{{ item.id }}</td>
               <td>{{ item.fullname }}</td>
               <td>{{ item.gender }}</td>
-              <td>{{ item.birthday }}</td>
+              <td>{{ item.dob | date :'y-MM-dd' }}</td>
               <td>{{ item.address }}</td>
               <td>{{ item.email }}</td>
-              <td>{{ item.contact }}</td>
+              <td>{{ item.tel }}</td>
               <td>
                 <button (click)="editPatient(item)" title="Edit" class="edit-button">
                   <i class="material-icons">edit</i>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { StaffService } from '../staff/staff.service';
+import { PatientsService } from '../patients/patients.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,22 +26,16 @@ export class WardComponent {
   ];
   selectedNurse: any;
 
-  constructor(private StaffService: StaffService, private router: Router) { }
+  constructor(private StaffService: StaffService, private router: Router, private patientsService: PatientsService) { }
 
   ngOnInit(): void {
     this.loadStaff();
   }
 
   private loadStaff(): void {
-    // this.StaffService.getStaff().subscribe(
-    //   data => {
-    //     this.Doctors = data;
-    //   },
-    //   error => {
-    //     console.error('Error loading Doctors:', error);
-    //   }
-    // );
-    this.Wards = [...this.originalWards];
+    this.patientsService.getWards().subscribe((wards) => {
+      this.Wards = wards
+    })
   }
 
   search(): void {

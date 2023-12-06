@@ -12,16 +12,15 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
   styleUrls: ['./edit-patient.component.css']
 })
 export class EditPatientComponent {
-  private routeSub?: Subscription;
   id: string;
   patientForm: FormGroup;
 
   get fullname(): AbstractControl<string> { return <AbstractControl>this.patientForm.get('fullname'); }
   get gender(): AbstractControl<string> { return <AbstractControl>this.patientForm.get('gender'); }
   get address(): AbstractControl<string> { return <AbstractControl>this.patientForm.get('address'); }
-  get birthday(): AbstractControl<string> { return <AbstractControl>this.patientForm.get('birthday'); }
+  get dob(): AbstractControl<string> { return <AbstractControl>this.patientForm.get('birthday'); }
   get email(): AbstractControl<string> { return <AbstractControl>this.patientForm.get('email'); }
-  get contact(): AbstractControl<string> { return <AbstractControl>this.patientForm.get('contact'); }
+  get tel(): AbstractControl<string> { return <AbstractControl>this.patientForm.get('contact'); }
 
   constructor(private builder: FormBuilder, private patientsService: PatientsService, private route: ActivatedRoute) {
     this.id = ''
@@ -29,19 +28,23 @@ export class EditPatientComponent {
       fullname: ['', [Validators.required]],
       gender: ['', Validators.required],
       address: ['', [Validators.required]],
-      birthday: ['', [Validators.required]],
+      dob: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       
       //phone number validator might be overkill
-      contact: ['', [Validators.required, Validators.pattern('[1-9]\\d{2}[1-9]\\d{6}')]], 
+      tel: ['', [Validators.required, Validators.pattern('[1-9]\\d{2}[1-9]\\d{6}')]], 
     });
   }
 
   ngOnInit(): void {
-    this.routeSub = this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => {
       this.id = params['id'];
     });
-    console.log(this.id)
+    this.patientsService.getPatients().subscribe(patients => {
+      let patient = patients.find(patient => patient.id == this.id)
+      this.patientForm.setValue(patient)
+      console.log(patient)
+    })
   }
 
   onSubmit() {
@@ -50,9 +53,9 @@ export class EditPatientComponent {
       fullname: this.patientForm.value.fullname,
       gender: this.patientForm.value.gender,
       address: this.patientForm.value.address,
-      birthday: this.patientForm.value.birthday,
+      dob: this.patientForm.value.dob,
       email: this.patientForm.value.email,
-      contact: this.patientForm.value.contact
+      tel: this.patientForm.value.tel
     }
     this.patientsService.editPatient(editedPatient)
     console.log("submitted ", editedPatient)

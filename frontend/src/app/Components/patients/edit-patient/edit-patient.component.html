@@ -25,9 +25,9 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="birthday">Birthday:</label>
-                <input type="text" class="form-control" id="birthday" formControlName="birthday">
-                <div [hidden]="birthday.pristine || birthday.valid" class="alert alert-danger">
+                <label for="dob">Birthday:</label>
+                <input type="text" class="form-control" id="dob" formControlName="dob">
+                <div [hidden]="dob.pristine || dob.valid" class="alert alert-danger">
                     Birthday is required.
                 </div>
             </div>
@@ -39,9 +39,9 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="contact">Contact number:</label>
-                <input type="text" class="form-control" id="contact" formControlName="contact">
-                <div [hidden]="contact.pristine || contact.valid" class="alert alert-danger">
+                <label for="tel">Contact number:</label>
+                <input type="text" class="form-control" id="tel" formControlName="tel">
+                <div [hidden]="tel.pristine || tel.valid" class="alert alert-danger">
                     Contact number is required, and must be a valid 10 digit number (without spaces).
                 </div>
             </div>
