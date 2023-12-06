@@ -19,7 +19,8 @@ export class WardComponent {
   // Nurse: any[] = [];
   hasSearchResults: boolean = true;
   Nurse = [
-    { userRole: 'nurse', name: 'leila', telExt: '2145', bipExt: '1234', dept: 'Cardiology' },
+    { userRole: 'nurse', name: 'Leila', telExt: '2145', bipExt: '1234', dept: 'Cardiology' },
+    { userRole: 'nurse', name: 'Assia', telExt: '2145', bipExt: '1234', dept: 'Emergency' },
     { userRole: 'dr', name: 'b', telExt: '1224', bipExt: '123', dept: 'O' },
   ];
   selectedNurse: any;
@@ -97,4 +98,9 @@ export class WardComponent {
   requestPatientAdmissionToWard(ward: any): void {
     this.router.navigate(['departments', 'request-patient', ward.id])
   }
+
+  admitPatientsFromRequest(ward: any): void {
+    this.router.navigate(['departments', 'admit-patient-request', ward.id])
+  }
+
 }

@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
     selector: 'app-nurse-details-dialog',
     template: `
-      <h2>Nurse Details</h2>
+      <h4>Nurse Details</h4>
       <p>Name: {{ data.name }}</p>
       <p>Telephone Extension: {{ data.telExt }}</p>
       <p>Bipper Extension: {{ data.bipExt }}</p>

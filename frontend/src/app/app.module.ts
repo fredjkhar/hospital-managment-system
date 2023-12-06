@@ -25,6 +25,7 @@ import { ViewPatientComponent } from './Components/patients/view-patient/view-pa
 import { AddPatientComponent } from './Components/ward/add-patient/add-patient.component';
 import { RequestPatientComponent } from './Components/ward/request-patient/request-patient.component';
 import { DischargePatientComponent } from './Components/ward/discharge-patient/discharge-patient.component';
+import { AdmitPatientRequestComponent } from './Components/ward/admit-patient-request/admit-patient-request.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { DischargePatientComponent } from './Components/ward/discharge-patient/d
     ViewPatientComponent,
     AddPatientComponent,
     RequestPatientComponent,
-    DischargePatientComponent
+    DischargePatientComponent,
+    AdmitPatientRequestComponent
   ],
   imports: [
     BrowserModule,
