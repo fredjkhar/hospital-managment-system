@@ -11,8 +11,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AppointmentsComponent {
   searchText: string = '';
   originalAppointments = [
-    { Id: '1', patient: 'rada', doctor: 'd2erm', date: '11-12-2002', reasonVisit: 'sdfbejknwdq', location: 'qc'},
-    { Id: '2', patient: 'Jane', doctor: 'fqdw', date: '11-12-2002', reasonVisit: 'qdewfregthryu,ikyujtyhrtge', location: 'On'},
+    { id: '1', patient: 'rada', doctor: 'd2erm', date: '11-12-2002', reasonVisit: 'sdfbejknwdq', location: 'qc'},
+    { id: '2', patient: 'Jane', doctor: 'fqdw', date: '11-12-2002', reasonVisit: 'qdewfregthryu,ikyujtyhrtge', location: 'On'},
   ];
   Appointments: any[] = [];
   hasSearchResults: boolean = true;
@@ -60,7 +60,7 @@ export class AppointmentsComponent {
     } else {
       this.Appointments = this.originalAppointments.filter(item => {
         return (
-        item.Id.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        item.id.toLowerCase().includes(this.searchText.toLowerCase()) ||
         item.patient.toLowerCase().includes(this.searchText.toLowerCase()) ||
         item.doctor.toLowerCase().includes(this.searchText.toLowerCase()) ||
         item.date.toLowerCase().includes(this.searchText.toLowerCase()) ||

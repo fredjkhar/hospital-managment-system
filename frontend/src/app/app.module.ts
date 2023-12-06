@@ -24,6 +24,7 @@ import { AddPrescriptionComponent } from './Components/prescription/add-prescrip
 import { ViewPatientComponent } from './Components/patients/view-patient/view-patient.component';
 import { AddPatientComponent } from './Components/ward/add-patient/add-patient.component';
 import { RequestPatientComponent } from './Components/ward/request-patient/request-patient.component';
+import { AdmitPatientRequestComponent } from './Components/ward/admit-patient-request/admit-patient-request.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { RequestPatientComponent } from './Components/ward/request-patient/reque
     AddPrescriptionComponent,
     ViewPatientComponent,
     AddPatientComponent,
-    RequestPatientComponent
+    RequestPatientComponent,
+    AdmitPatientRequestComponent
   ],
   imports: [
     BrowserModule,
