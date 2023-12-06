@@ -21,4 +21,8 @@ export class LoginComponent {
       console.log('login failed. Please check your credentials.');
     }
   }
+
+  register(): void {
+    this.router.navigate(['register'])
+  }
 }

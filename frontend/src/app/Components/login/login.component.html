@@ -10,8 +10,10 @@
       <label for="password">Password:</label>
       <input type="password" id="password" [(ngModel)]="password" />
     </div>
-  
-    <button class="login-button" (click)="login()">Login</button>
-    <h2></h2>
+    <div class="d-flex justify-content-around">
+      <button class="login-button" (click)="login()">Login</button>
+      <button class="login-button" (click)="register()">Register</button>
+    </div>
+      <h2></h2>
 
   </div>
