@@ -69,6 +69,16 @@ public class BeanConfiguration {
     }
 
     @Bean
+    public ConsultPatientFile consultPatientFileUseCase(PatientRepository patientRepository) {
+        return new ConsultPatientFileImpl(patientRepository);
+    }
+
+    @Bean
+    public VisualizeWard visualizeWardUseCase(WardRepository wardRepository){
+        return new VisualizeWardImpl(wardRepository);
+    }
+
+    @Bean
     public WardFacade wardFacade(WardRepository wardRepository, RoomRepository roomRepository,
                                  BedRepository bedRepository, PatientRepository patientRepository,
                                  AdmissionRepository admissionRepository, AdmissionRequestRepository admissionRequestRepository,

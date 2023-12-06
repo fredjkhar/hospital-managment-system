@@ -1,12 +1,20 @@
 package hms.pms.infrastructure.services;
 
-import hms.pms.application.dtos.queries.AdmissionCreateDTO;
-import hms.pms.application.dtos.queries.AdmissionRequestCreateDTO;
-import hms.pms.application.dtos.queries.DischargeCreateDTO;
+import hms.pms.application.dtos.queries.*;
+import hms.pms.application.dtos.responses.PatientFileViewDTO;
+import hms.pms.application.dtos.responses.WardViewDTO;
+import hms.pms.application.dtos.responses.converters.PatientFileViewConverter;
 import hms.pms.application.usecases.*;
+import hms.pms.domain.patient.entities.Patient;
+import hms.pms.domain.patient.facade.PatientFacade;
+import hms.pms.domain.patient.repositories.PatientRepository;
+import hms.pms.domain.staff.facade.StaffFacade;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -21,9 +29,22 @@ public class Services {
     private final RequestPatientAdmission requestPatientAdmission;
     private final UpdatePatientFile updatePatientFile;
     private final VisualizeWard visualizeWard;
+    private final StaffFacade staffFacade;
+    private final PatientFacade patientFacade;
+    private final PatientRepository patientRepository;
+
+    private final PatientFileViewConverter patientFileViewConverter = Mappers.getMapper(PatientFileViewConverter.class);
+
+
 
     @Autowired
-    public Services(AdmitPatient admitPatient, AdmitPatientFromRequestList admitPatientFromRequestList, ConsultPatientFile consultPatientFile, DischargePatient dischargePatient, PrescribeMedication prescribeMedication, RegisterPatient registerPatient, RegisterStaff registerStaff, RequestPatientAdmission requestPatientAdmission, UpdatePatientFile updatePatientFile, VisualizeWard visualizeWard) {
+    public Services(AdmitPatient admitPatient, AdmitPatientFromRequestList admitPatientFromRequestList,
+                    ConsultPatientFile consultPatientFile, DischargePatient dischargePatient,
+                    PrescribeMedication prescribeMedication, RegisterPatient registerPatient,
+                    RegisterStaff registerStaff, RequestPatientAdmission requestPatientAdmission,
+                    UpdatePatientFile updatePatientFile, VisualizeWard visualizeWard,
+                    StaffFacade staffFacade, PatientFacade patientFacade,
+                    PatientRepository patientRepository) {
         this.admitPatient = admitPatient;
         this.admitPatientFromRequestList = admitPatientFromRequestList;
         this.consultPatientFile = consultPatientFile;
@@ -34,6 +55,9 @@ public class Services {
         this.requestPatientAdmission = requestPatientAdmission;
         this.updatePatientFile = updatePatientFile;
         this.visualizeWard = visualizeWard;
+        this.staffFacade = staffFacade;
+        this.patientFacade = patientFacade;
+        this.patientRepository = patientRepository;
     }
 
     public Boolean admitPatient(UUID wardId, AdmissionCreateDTO admissionCreateDTO) {
@@ -48,10 +72,9 @@ public class Services {
         return true;
     }
 
-    public Boolean consultPatientFile(UUID patientId) {
-        if (patientId == null) return false;
-        consultPatientFile.getPatientFile(patientId);
-        return true;
+    public PatientFileViewDTO consultPatientFile(UUID patientId) {
+        if (patientId == null) return null;
+        return consultPatientFile.getPatientFile(patientId);
     }
 
     public Boolean dischargePatient(UUID wardId, DischargeCreateDTO dischargeInfo) {
@@ -60,6 +83,55 @@ public class Services {
         return true;
     }
 
+    public Boolean prescribeMedication(UUID patientId, PrescriptionCreateDTO prescriptionCreateDTO) {
+        if (patientId == null || prescriptionCreateDTO == null) return false;
+        prescribeMedication.prescribeMedication(patientId, prescriptionCreateDTO);
+        return true;
+    }
 
+    public Boolean registerPatient(PatientInfoCreateDTO patientInfoCreateDTO) {
+        if (patientInfoCreateDTO == null) return false;
+        registerPatient.registerPatient(patientInfoCreateDTO);
+        return true;
+    }
+
+    public Boolean registerStaff(StaffInfoCreateDTO staffInfoCreateDTO) {
+        if (staffInfoCreateDTO == null) return false;
+        registerStaff.registerStaff(staffInfoCreateDTO);
+        return true;
+    }
+
+    public Boolean requestPatientAdmission(AdmissionRequestCreateDTO admissionRequestCreateDTO, UUID wardId) {
+        if (admissionRequestCreateDTO == null || wardId == null) return false;
+        requestPatientAdmission.requestPatientAdmission(admissionRequestCreateDTO, wardId);
+        return true;
+    }
+
+    public Boolean updatePatientFile(UUID patientId, PatientInfoCreateDTO patientInfoCreateDTO) {
+        if (patientInfoCreateDTO == null) return false;
+        updatePatientFile.updatePatientFile(patientId, patientInfoCreateDTO);
+        return true;
+    }
+
+    public WardViewDTO visualizeWard(UUID wardId) {
+        if (wardId == null) return null;
+        return visualizeWard.getWardView(wardId);
+    }
+
+    public Boolean updateStaff(UUID staffId, StaffInfoCreateDTO staffInfoCreateDTO) {
+        if (staffInfoCreateDTO == null) return false;
+        staffFacade.updateStaffAccount(staffId, staffInfoCreateDTO);
+        return true;
+    }
+
+    public List<PatientFileViewDTO> getPatientsList() {
+        List<Patient> patients = patientRepository.findAll();
+        List<PatientFileViewDTO> patientFileViewDTOS = new ArrayList<>();
+        for (Patient patient : patients) {
+            patientFileViewDTOS.add(patientFileViewConverter.toView(patient,
+                    patient.getAddress(), patient.getNextOfKin(), patient.getPrescriptions()));
+        }
+        return patientFileViewDTOS;
+    }
 
 }
