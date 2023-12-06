@@ -30,7 +30,7 @@ export class PatientsService {
   }
 
   getPatientById(id: number): Observable<Patient | undefined> {
-    const patient = this.patients.find((p) => p.Id === id);
+    const patient = this.patients.find((p) => p.id === id);
     return of(patient);
   }
 

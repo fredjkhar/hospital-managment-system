@@ -24,7 +24,7 @@
           <tbody>
               <ng-container *ngIf="Wards.length > 0; else noResults">
                   <tr *ngFor="let item of Wards">
-                      <td>{{ item.Id }}</td>
+                      <td>{{ item.id }}</td>
                       <td>{{ item.name }}</td>
                       <td id='nurse' (click)="showNurseDetails(item.nurse, item.name, 'nurse')">{{ item.nurse }}</td>
                       <td>{{ item.location }}</td>
