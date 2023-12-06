@@ -4,20 +4,15 @@ import hms.pms.application.dtos.responses.PatientFileViewDTO;
 import hms.pms.domain.patient.entities.Address;
 import hms.pms.domain.patient.entities.NextOfKin;
 import hms.pms.domain.patient.entities.Patient;
-import hms.pms.domain.prescription.Entities.Prescription;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 import java.util.UUID;
 
 @Mapper
 public interface PatientFileViewConverter {
-
-    PatientFileViewConverter INSTANCE = Mappers.getMapper(PatientFileViewConverter.class);
-
     @Mappings({
             @Mapping(source = "patient.patientId", target = "patientId"),
             @Mapping(source = "patient.insuranceNumber", target = "insuranceNumber"),

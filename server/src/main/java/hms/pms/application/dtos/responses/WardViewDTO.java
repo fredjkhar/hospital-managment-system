@@ -1,8 +1,5 @@
 package hms.pms.application.dtos.responses;
 
-import hms.pms.domain.ward.entities.Admission;
-import hms.pms.domain.ward.entities.AdmissionRequest;
-import hms.pms.domain.ward.entities.Discharge;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,8 +16,8 @@ public class WardViewDTO {
     private int occupiedBeds;
     private int extensionNumber;
     private String status;
-    private List<Admission> admissions;
-    private List<Discharge> dischargeInformation;
-    private List<AdmissionRequest> admissionRequests;
+    private List<UUID> admissions;
+    private List<UUID> dischargeInformation;
+    private List<UUID> admissionRequests;
     private UUID[] rooms;
 }
