@@ -55,7 +55,7 @@ public class PatientJpaEntity {
     @AttributeOverrides({
             @AttributeOverride(name = "firstName", column = @Column(name = "nok_first_name")),
             @AttributeOverride(name = "lastName", column = @Column(name = "nok_last_name")),
-            @AttributeOverride(name = "relationship", column = @Column(name = "nok_relationship")),
+            @AttributeOverride(name = "relationshipToPatient", column = @Column(name = "nok_relationship")),
             @AttributeOverride(name = "phoneNumber", column = @Column(name = "nok_phone_number")),
     })
     private NextOfKinJpaEntity nextOfKin;

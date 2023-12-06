@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,13 +19,13 @@ public class PatientInfoCreateDTO {
     private Date dateOfBirth;
     private String gender;
     private String maritalStatus;
-    private String externalDoctorId;
+    private UUID externalDoctorId;
     private NextOfKinCreateDTO nextOfKinInfo;
     private String primaryChargeNurseId;
 
     public PatientInfoCreateDTO(String insuranceNumber, String firstName, String lastName,
                                 AddressCreateDTO addressInfo, String phoneNumber, Date dateOfBirth,
-                                String gender, String maritalStatus, String externalDoctorId,
+                                String gender, String maritalStatus, UUID externalDoctorId,
                                 NextOfKinCreateDTO nextOfKinInfo, String primaryChargeNurseId) {
         this.insuranceNumber = insuranceNumber;
         this.firstName = firstName;

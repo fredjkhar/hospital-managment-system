@@ -5,7 +5,11 @@ import hms.pms.application.dtos.queries.converters.PatientInfoDTOConverter;
 import hms.pms.domain.patient.entities.Patient;
 import hms.pms.domain.patient.factories.PatientFactory;
 import org.mapstruct.factory.Mappers;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
+@Primary
+@Component
 public class PatientInfoDTOFactory implements PatientFactory {
 
     private final PatientInfoDTOConverter dtoConverter = Mappers.getMapper(PatientInfoDTOConverter.class);

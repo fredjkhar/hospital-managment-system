@@ -21,9 +21,9 @@ public class Ward {
     private int occupiedBeds;
     private int extensionNumber;
     private String status;
-    private List<Admission> admissions;
-    private List<Discharge> dischargeInformation;
-    private List<AdmissionRequest> admissionRequests;
+    private List<UUID> admissions;
+    private List<UUID> dischargeInformation;
+    private List<UUID> admissionRequests;
     private UUID[] rooms;
 
     public Ward(UUID wardId, String wardName, UUID chargeNurseId, String location,
@@ -42,49 +42,49 @@ public class Ward {
         this.rooms = rooms;
     }
 
-    public boolean admitPatient(Admission admission) {
+    public boolean admitPatient(UUID admissionId) {
         if (totalBeds == occupiedBeds) {
             return false;
         }
-        admissions.add(admission);
+        admissions.add(admissionId);
         occupiedBeds++;
         updateWardStatus();
         return true;
     }
 
-    public boolean removePatientFromRequestList(AdmissionRequest admissionRequest) {
-        if (totalBeds == occupiedBeds || !admissionRequests.contains(admissionRequest)) {
+    public boolean removePatientFromRequestList(UUID admissionRequestId) {
+        if (totalBeds == occupiedBeds || !admissionRequests.contains(admissionRequestId)) {
             return false;
         }
-        admissionRequests.remove(admissionRequest);
+        admissionRequests.remove(admissionRequestId);
         occupiedBeds++;
         updateWardStatus();
         return true;
     }
 
-    public boolean dischargePatient(Discharge discharge, Admission admission) {
-        if (!admissions.contains(admission) || dischargeInformation.contains(discharge)) {
+    public boolean dischargePatient(UUID dischargeId, UUID admissionId) {
+        if (!admissions.contains(admissionId) || dischargeInformation.contains(dischargeId)) {
             return false;
         }
-        dischargeInformation.add(discharge);
-        admissions.remove(admission);
+        dischargeInformation.add(dischargeId);
+        admissions.remove(admissionId);
         occupiedBeds--;
         updateWardStatus();
         return true;
     }
 
-    public Admission getAdmission(UUID patientId) {
-        return admissions.stream()
-                .filter(admission -> admission.getPatientId().equals(patientId))
-                .findFirst()
-                .orElse(null);
+    public UUID getAdmission(UUID patientId) {
+        if (admissions.contains(patientId)) {
+            return patientId;
+        }
+        return null;
     }
 
-    public AdmissionRequest getAdmissionRequest(UUID patientId) {
-        return admissionRequests.stream()
-                .filter(request -> request.getPatientId().equals(patientId))
-                .findFirst()
-                .orElse(null);
+    public UUID getAdmissionRequest(UUID patientId) {
+        if (admissionRequests.contains(patientId)) {
+            return patientId;
+        }
+        return null;
     }
 
     private void updateWardStatus() {
