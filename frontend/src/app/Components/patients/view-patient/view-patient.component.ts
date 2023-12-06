@@ -24,6 +24,9 @@ export class ViewPatientComponent {
     this.patientsService.getPatients().subscribe(patients => {
       this.patient = patients.find(patient => patient.id == this.id)
     })
+    this.patientsService.getPrescriptions().subscribe(prescriptions => {
+      this.prescriptions = prescriptions.filter((prescription: any) => prescription.patientId == this.id)
+    })
     // this.patientsService.getPatientById(this.id)
   }
 }

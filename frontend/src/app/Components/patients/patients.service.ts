@@ -42,7 +42,7 @@ export class PatientsService {
   }
 
   getPatients(): Observable<any[]> {
-    return collectionData(this.patients, { idField: 'dbid'})
+    return collectionData(this.patients, { idField: 'dbid' })
   }
 
   //doesnt work rn, check viewpatient to see what to do
@@ -94,14 +94,15 @@ export class PatientsService {
     return false;
   }
 
-  editPatient(newPatient: any): boolean {
-    const indexToModify = PatientsService.originalPatients.findIndex(e => e.id === newPatient.id)
-    if (indexToModify != -1) {
-      PatientsService.originalPatients[indexToModify] = newPatient
-      console.log(PatientsService.originalPatients)
-      return true
-    }
-    return false
+  editPatient(editedPatient: any): void {
+    // const indexToModify = PatientsService.originalPatients.findIndex(e => e.id === editedPatient.id)
+    // if (indexToModify != -1) {
+    //   PatientsService.originalPatients[indexToModify] = editedPatient
+    //   console.log(PatientsService.originalPatients)
+    //   return true
+    // }
+    // return false
+    setDoc(doc(this.patients, editedPatient.id), editedPatient)
   }
 
   getPatientAdmissionRequestsFromWard(wardId: any): Observable<any> {
@@ -109,14 +110,14 @@ export class PatientsService {
   }
 
   addPrescription(newPrescription: any): void {
-    setDoc(doc(this.prescriptions, newPrescription.id), newPrescription)
+    setDoc(doc(this.prescriptions, "" + newPrescription.drugNumber), newPrescription)
   }
 
   getPrescriptions(): Observable<any> {
-    return collectionData(this.prescriptions, { idField: 'id'})
+    return collectionData(this.prescriptions, { idField: 'id' })
   }
 
   getWards(): Observable<any[]> {
-    return collectionData(this.wards, { idField: 'dbid'})
+    return collectionData(this.wards, { idField: 'dbid' })
   }
 }

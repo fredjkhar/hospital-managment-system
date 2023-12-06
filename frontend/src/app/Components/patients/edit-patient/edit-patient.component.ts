@@ -13,6 +13,7 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 })
 export class EditPatientComponent {
   id: string;
+  isloading: boolean = true;
   patientForm: FormGroup;
 
   get fullname(): AbstractControl<string> { return <AbstractControl>this.patientForm.get('fullname'); }
@@ -30,9 +31,18 @@ export class EditPatientComponent {
       address: ['', [Validators.required]],
       dob: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
+      maritalStatus: ['', Validators.required],
+      familyDoctor: ['', Validators.required],
       
       //phone number validator might be overkill
-      tel: ['', [Validators.required, Validators.pattern('[1-9]\\d{2}[1-9]\\d{6}')]], 
+      // tel: ['', [Validators.required, Validators.pattern('[1-9]\\d{2}[1-9]\\d{6}')]], 
+      tel: ['', Validators.required],
+      nextOfKin: this.builder.group({
+        fullname: ['', Validators.required],
+        relationship: ['', Validators.required],
+        address: ['', Validators.required],
+        tel: ['', Validators.required],
+      })
     });
   }
 
@@ -42,22 +52,16 @@ export class EditPatientComponent {
     });
     this.patientsService.getPatients().subscribe(patients => {
       let patient = patients.find(patient => patient.id == this.id)
+      // console.log(patient)
+      delete patient.id
+      delete patient.dbid
       this.patientForm.setValue(patient)
-      console.log(patient)
+      this.isloading=false;
     })
   }
 
   onSubmit() {
-    const editedPatient = {
-      id: this.id,
-      fullname: this.patientForm.value.fullname,
-      gender: this.patientForm.value.gender,
-      address: this.patientForm.value.address,
-      dob: this.patientForm.value.dob,
-      email: this.patientForm.value.email,
-      tel: this.patientForm.value.tel
-    }
-    this.patientsService.editPatient(editedPatient)
-    console.log("submitted ", editedPatient)
+    this.patientsService.editPatient({id: this.id, ...this.patientForm.value})
+    // console.log("submitted ", this.patientForm.value)
   }
 }
