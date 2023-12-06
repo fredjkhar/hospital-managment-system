@@ -1,0 +1,36 @@
+<body>
+    <div>
+        <h2>Patient Admission Requests</h2>
+        <table class="patient-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Local Doctor</th>
+                    <th>Priority</th>
+                    <th>Rationale</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let adminReq of patientAdmissionRequests">
+                    <tr>
+                        <td>{{ adminReq.id }}</td>
+                        <td>{{ adminReq.localDoctor }}</td>
+                        <td>{{ adminReq.priority }}</td>
+                        <td>{{ adminReq.rationale }}</td>
+                        <td>
+                            <button (click)="admitPatient(adminReq.id)" title="Admit Patient" class="add-button">
+                                <i class="material-icons">person_add</i>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-template #noResults>
+                    <tr>
+                        <td colspan="9" style="text-align: center;">No matching results</td>
+                    </tr>
+                </ng-template>
+            </tbody>
+        </table>
+    </div>
+</body>

@@ -14,21 +14,25 @@ export class AddPatientComponent {
   assignablePatients: any[] = [];
 
   constructor(private route: ActivatedRoute, private patientsService: PatientsService, private builder: FormBuilder) {
+    let patientId;
+    this.route.queryParams.subscribe(qParams => {
+      patientId = qParams["patientId"]
+    })
+    this.route.params.subscribe(params => {
+      this.wardId = params['id']
+    })
     this.addPatientToWardForm = builder.group({
-      wardId: '',
-      patientId: ['', Validators.required],
+      wardId: this.wardId ?? '',
+      patientId: [patientId ?? '', Validators.required],
       localDoctor: ['', Validators.required],
       roomNumber: ['', Validators.required],
       bedNumber: ['', Validators.required],
       privateInsuranceNumber: ''
     })
+    console.log(this.addPatientToWardForm)
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.wardId = params['id']
-    })
-    this.addPatientToWardForm.patchValue({wardId: this.wardId})
     this.assignablePatients = this.patientsService.getPatientsNotAssignedToWard();
   }
 
