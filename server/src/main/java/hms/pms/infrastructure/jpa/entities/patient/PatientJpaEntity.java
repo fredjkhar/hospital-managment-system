@@ -12,51 +12,57 @@ import java.util.UUID;
 public class PatientJpaEntity {
     @Id
     @GeneratedValue
+    @Column(name= "patientid",nullable = false)
     private UUID patientId;
 
-    @Column(nullable = false)
+    @Column(name = "insurancenumber",nullable = false)
     private String insuranceNumber;
 
-    @Column(nullable = false)
+    @Column(name = "firstname", nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(name = "lastname", nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(name = "phonenumber", nullable = false)
     private String phoneNumber;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
+    @Column(name = "dateofbirth", nullable = false)
     private Date dateOfBirth;
 
-    @Column(nullable = false)
+    @Column(name = "gender", nullable = false)
     private char gender;
 
-    @Column(nullable = false)
+    @Column(name = "maritalstatus", nullable = false)
     private String maritalStatus;
 
-    @Column
+    @Column(name = "externaldoctorid")
     private UUID externalDoctorId;
 
-    @Column
+    @Column(name = "primarychargenurseid")
     private String primaryChargeNurseId;
 
-    @ElementCollection
-    @CollectionTable(name = "prescriptions", joinColumns = @JoinColumn(name = "patient_id"))
-    @Column(name = "prescription_id")
-    private List<UUID> prescriptions;
+    @Column(name = "address_street")
+    private String address_street;
 
-    @Embedded
-    private AddressJpaEntity address;
+    @Column(name = "address_city")
+    private String address_city;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "firstName", column = @Column(name = "nok_first_name")),
-            @AttributeOverride(name = "lastName", column = @Column(name = "nok_last_name")),
-            @AttributeOverride(name = "relationshipToPatient", column = @Column(name = "nok_relationship")),
-            @AttributeOverride(name = "phoneNumber", column = @Column(name = "nok_phone_number")),
-    })
-    private NextOfKinJpaEntity nextOfKin;
+    @Column(name = "address_state")
+    private String address_state;
+
+    @Column(name = "address_zipCode")
+    private String address_zipCode;
+
+    @Column(name = "nextofkin_name")
+    private String nextOfKin_name;
+
+    @Column(name = "nextofkin_phoneNumber")
+    private String nextOfkin_phoneNumber;
+
+    @Column(name = "nextofkin_relationship")
+    private String nextOfKin_relationship;
+
 }

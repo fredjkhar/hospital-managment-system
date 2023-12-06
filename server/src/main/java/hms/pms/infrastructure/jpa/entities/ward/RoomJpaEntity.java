@@ -11,15 +11,13 @@ public class RoomJpaEntity {
 
     @Id
     @GeneratedValue
+    @Column(name = "roomnbr", nullable = false)
     private UUID roomNbr;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<BedJpaEntity> beds;
-
-    @Column(nullable = false)
+    @Column(name = "status", nullable = false)
     private String status;
 
-    @Column(nullable = false)
+    @Column(name = "occupiedbeds", nullable = false)
     private int occupiedBeds;
 
     @ManyToOne(fetch = FetchType.LAZY)

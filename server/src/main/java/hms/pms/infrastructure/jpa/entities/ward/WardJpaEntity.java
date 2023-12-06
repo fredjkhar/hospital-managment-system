@@ -11,34 +11,35 @@ public class WardJpaEntity {
 
     @Id
     @GeneratedValue
+    @Column(name = "wardid")
     private UUID wardId;
 
-    @Column(nullable = false)
+    @Column(name = "wardname", nullable = false)
     private String wardName;
 
-    @Column
+    @Column(name = "chargenurseid")
     private UUID chargeNurseId;
 
-    @Column(nullable = false)
+    @Column(name = "location", nullable = false)
     private String location;
 
-    @Column(nullable = false)
+    @Column(name = "totalbeds", nullable = false)
     private int totalBeds;
 
-    @Column(nullable = false)
+    @Column(name = "occupiedbeds", nullable = false)
     private int occupiedBeds;
 
-    @Column(nullable = false)
+    @Column(name = "extensionnumber", nullable = false)
     private int extensionNumber;
 
-    @Column(nullable = false)
+    @Column(name = "status", nullable = false)
     private String status;
 
     @OneToMany(mappedBy = "ward", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AdmissionJpaEntity> admissions;
 
     @OneToMany(mappedBy = "ward", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<DischargeJpaEntity> dischargeInformation;
+    private List<DischargeJpaEntity> dischargeInfos;
 
     @OneToMany(mappedBy = "ward", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AdmissionRequestJpaEntity> admissionRequests;

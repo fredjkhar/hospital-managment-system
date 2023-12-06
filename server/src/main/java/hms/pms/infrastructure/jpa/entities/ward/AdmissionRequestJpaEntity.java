@@ -10,18 +10,19 @@ public class AdmissionRequestJpaEntity {
 
     @Id
     @GeneratedValue
+    @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(name = "patientid", nullable = false)
     private UUID patientId;
 
-    @Column(nullable = false, length = 128)
+    @Column(name = "rationaleforrequest", nullable = false)
     private String rationaleForRequest;
 
-    @Column(nullable = false)
+    @Column(name = "priorityassessment", nullable = false)
     private int priorityAssessment;
 
-    @Column(nullable = false)
+    @Column(name = "localdoctorid", nullable = false)
     private UUID localDoctorId;
 
     @ManyToOne(fetch = FetchType.LAZY)
