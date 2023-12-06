@@ -1,54 +1,78 @@
 package hms.pms.infrastructure.web;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import hms.pms.application.dtos.queries.*;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.UUID;
+
+@RestController
 @RequestMapping("/api")
 public class WebController {
 
-    public void admitPatient() {
+    @PostMapping("/admitPatient")
+    @ResponseBody
+    public String admitPatient(@RequestBody AdmissionCreateDTO admissionCreateDTO) {
+        return "Nice";
     }
 
-    public void dischargePatient() {
+    @PostMapping("/dischargePatient")
+    @ResponseBody
+    public String dischargePatient(@RequestBody DischargeCreateDTO dischargeCreateDTO) {
+        return "Nice";
     }
 
-    public void admitPatientFromRequestList() {
+    @PostMapping("/addPatientToRequestList")
+    @ResponseBody
+    public String addPatientToRequestList(@RequestBody AdmissionRequestCreateDTO admissionRequestCreateDTO) {
+        return "Nice";
     }
 
-    public void requestPatientAdmission() {
+    @GetMapping("/consultPatientFile/{patientId}")
+    public String consultPatientFile(@RequestParam(value = "patientId") UUID patientId) {
+        return "Nice";
     }
 
-    public void consultPatientFile() {
+    @PostMapping("/registerPatient")
+    @ResponseBody
+    public String registerPatient(@RequestBody PatientInfoCreateDTO patientInfoCreateDTO) {
+        return "Nice";
     }
 
-    public void registerPatient() {
+    @GetMapping("/getPatientsList")
+    public String getPatientsList() {
+        return "Nice";
     }
 
-    public void getPatientsList() {
+    @PostMapping("/updatePatientFile/{patientId}")
+    @ResponseBody
+    public String updatePatientFile(@RequestParam(value = "patientId") UUID patientId, @RequestBody PatientInfoCreateDTO patientInfoCreateDTO) {
+        return "Nice";
     }
 
-    public void updatePatientFile() {
+    @PostMapping("/updateStaff/{staffId}")
+    @ResponseBody
+    public String updateStaff(@RequestParam(value = "staffId") UUID staffId, @RequestBody StaffInfoCreateDTO staffInfoCreateDTO) {
+        return "Nice";
     }
 
-    public void updateStaff() {
+    @PostMapping("/registerStaff")
+    @ResponseBody
+    public String registerStaff(@RequestBody StaffInfoCreateDTO staffInfoCreateDTO) {
+        return "Nice";
     }
 
-    public void registerStaff() {
+    @GetMapping("/loginStaff/{staffId}")
+    public String loginStaff() {
+        return "Zween";
     }
 
-    public void loginStaff() {
+    @GetMapping("/logoutStaff/{staffId}")
+    public String logoutStaff() {
+        return "Zween";
     }
 
-    public void logoutStaff() {
+    @GetMapping("/getWard/{wardId}")
+    public String getWard(@RequestParam (value = "wardId") UUID wardId) {
+        return "Zween";
     }
-
-    public void getWard() {
-
-    }
-
-    public void prescribeMedication() {
-    }
-
-
 }

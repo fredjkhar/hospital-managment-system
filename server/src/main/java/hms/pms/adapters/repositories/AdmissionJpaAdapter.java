@@ -33,6 +33,11 @@ public class AdmissionJpaAdapter implements AdmissionRepository {
         return admissionRepository.findById(admissionId).map(converter::toModel).orElse(null);
     }
 
+    @Override
+    public Admission findByPatientId(UUID patientId) {
+        return admissionRepository.findByPatientId(patientId).map(converter::toModel).orElse(null);
+    }
+
     @CachePut(key = "#admission.getId()")
     @Override
     public void save(Admission admission) {

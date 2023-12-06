@@ -5,7 +5,11 @@ import hms.pms.application.dtos.queries.converters.StaffInfoDTOConverter;
 import hms.pms.domain.staff.entities.Staff;
 import hms.pms.domain.staff.factories.StaffFactory;
 import org.mapstruct.factory.Mappers;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
+@Primary
+@Component
 public class StaffInfoDTOFactory implements StaffFactory {
 
     private final StaffInfoDTOConverter dtoConverter = Mappers.getMapper(StaffInfoDTOConverter.class);

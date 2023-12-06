@@ -15,7 +15,7 @@ public class Prescription {
     private String drugName;
     private int unitsByDay;
     private int numberOfAdminsPerDay;
-    private UUID[] administrationTimes;
+    private AdministrationTime[] administrationTimes;
     private String methodOfAdministration;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date startDate;
@@ -23,7 +23,7 @@ public class Prescription {
     private Date finishDate;
 
     public Prescription(String drugNumber,
-                        String drugName, UUID[] administrationTimes, int unitsByDay,
+                        String drugName, AdministrationTime[] administrationTimes, int unitsByDay,
                         int numberOfAdminsPerDay, String methodOfAdministration,
                         Date startDate, Date finishDate) {
         this.prescriptionId = UUID.randomUUID();

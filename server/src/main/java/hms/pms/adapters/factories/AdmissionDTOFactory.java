@@ -6,9 +6,13 @@ import hms.pms.domain.ward.entities.Admission;
 import hms.pms.domain.ward.entities.AdmissionRequest;
 import hms.pms.domain.ward.factories.AdmissionFactory;
 import org.mapstruct.factory.Mappers;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Primary
+@Component
 public class AdmissionDTOFactory implements AdmissionFactory {
     private final AdmissionDTOConverter dtoConverter = Mappers.getMapper(AdmissionDTOConverter.class);
     @Override

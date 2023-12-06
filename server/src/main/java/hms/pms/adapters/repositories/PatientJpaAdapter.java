@@ -39,7 +39,9 @@ public class PatientJpaAdapter implements PatientRepository {
     @Transactional
     @Override
     public Patient find(String insuranceNumber) {
-        return null; //TODO to be implemented
+        return patientJpaRepository.findByInsuranceNumber(insuranceNumber)
+                .map(converter::toModel)
+                .orElse(null);
     }
 
     @CachePut(key = "#patient.getId()")
