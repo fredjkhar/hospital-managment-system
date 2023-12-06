@@ -66,16 +66,8 @@ export class WardComponent {
     console.log('Edit doctor:', ward);
   }
 
-  deleteWard(ward: any): void {
-    this.StaffService.deleteDoctor(ward.id).subscribe(
-      () => {
-        this.Wards = this.Wards.filter(d => d.id !== ward.id);
-        console.log('Doctor deleted:', ward);
-      },
-      error => {
-        console.error('Error deleting doctor:', error);
-      }
-    );
+  dischargePatientFromWard(ward: any): void {
+    this.router.navigate(['departments', 'discharge-patient', ward.id])
   }
 
   showNurseDetails(name: string, dept: string, userRole: string): void {

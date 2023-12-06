@@ -15,6 +15,7 @@ import { AddPrescriptionComponent } from './Components/prescription/add-prescrip
 import { ViewPatientComponent } from './Components/patients/view-patient/view-patient.component';
 import { AddPatientComponent } from './Components/ward/add-patient/add-patient.component';
 import { RequestPatientComponent } from './Components/ward/request-patient/request-patient.component';
+import { DischargePatientComponent } from './Components/ward/discharge-patient/discharge-patient.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'departments', component: WardComponent },
   { path: 'departments/add-patient/:id', component: AddPatientComponent },
   { path: 'departments/request-patient/:id', component: RequestPatientComponent },
+  { path: 'departments/discharge-patient/:id', component: DischargePatientComponent },
   { path: 'prescriptions', component: PrescriptionComponent },
   { path: 'doctors', component: DoctorsComponent },
   { path: 'patients', component: PatientsComponent },
