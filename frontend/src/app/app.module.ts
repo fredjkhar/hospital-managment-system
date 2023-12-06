@@ -24,6 +24,7 @@ import { AddPrescriptionComponent } from './Components/prescription/add-prescrip
 import { ViewPatientComponent } from './Components/patients/view-patient/view-patient.component';
 import { AddPatientComponent } from './Components/ward/add-patient/add-patient.component';
 import { RequestPatientComponent } from './Components/ward/request-patient/request-patient.component';
+import { DischargePatientComponent } from './Components/ward/discharge-patient/discharge-patient.component';
 import { AdmitPatientRequestComponent } from './Components/ward/admit-patient-request/admit-patient-request.component';
 
 @NgModule({
@@ -45,6 +46,7 @@ import { AdmitPatientRequestComponent } from './Components/ward/admit-patient-re
     ViewPatientComponent,
     AddPatientComponent,
     RequestPatientComponent,
+    DischargePatientComponent,
     AdmitPatientRequestComponent
   ],
   imports: [

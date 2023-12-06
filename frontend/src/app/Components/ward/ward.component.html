@@ -35,8 +35,8 @@
                           <button (click)="editWard(item)" title="Edit" class="edit-button">
                               <i class="material-icons">edit</i>
                           </button>
-                          <button (click)="deleteWard(item)" title="Delete" class="delete-button">
-                              <i class="material-icons">clear</i>
+                          <button (click)="dischargePatientFromWard(item)" title="Discharge Patient" class="delete-button">
+                              <i class="material-icons">person_remove</i>
                           </button>
                           <button *ngIf="item.status != WARD_COMPLETE" (click)="addPatientToWard(item)" title="Add Patient" class="add-button">
                               <i class="material-icons">person_add</i>
