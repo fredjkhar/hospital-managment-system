@@ -12,11 +12,22 @@ export class ViewPatientComponent {
   prescriptions: any[] = []
   constructor(private patientsService: PatientsService, private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
-    this.patient = this.patientsService.getPatientById(this.id)
+    this.loadPatient()
     this.prescriptions = this.patientsService.getPatientPrescriptions(this.id)
+  }
+
+  loadPatient(): void {
+    this.patientsService.getPatients().subscribe(patients => {
+      this.patient = patients.find(patient => patient.id == this.id)
+    })
+    this.patientsService.getPrescriptions().subscribe(prescriptions => {
+      this.prescriptions = prescriptions.filter((prescription: any) => prescription.patientId == this.id)
+    })
+    // this.patientsService.getPatientById(this.id)
+    console.log("Patient file " + this.id + " was accessed")
   }
 }

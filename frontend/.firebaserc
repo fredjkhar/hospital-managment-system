@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "seg3502-ee55d": {
+      "hosting": {
+        "frontend": [
+          "seg3502-ee55d"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "seg3502-ee55d"
+  }
+}

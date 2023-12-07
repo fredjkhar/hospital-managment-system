@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StaffService } from './staff.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-staff',
@@ -10,28 +11,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class StaffComponent {
   registrationForm: FormGroup;
 
-  constructor(private staffService: StaffService, private fb: FormBuilder){
+  constructor(private staffService: StaffService, private fb: FormBuilder, private router: Router) {
     this.registrationForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       job: ['', Validators.required],
       telephoneNumber: ['', Validators.required],
-      Email: ['', Validators.required]
-    })}
+      Email: ['', Validators.required],
+      empId: ['', Validators.required]
+    })
+  }
 
-    onSubmit() {
-      if (this.registrationForm.valid) {
-        const formData = this.registrationForm.value;
-    
-        this.staffService.registerPatient(formData).subscribe(
-          response => {
-            console.log('Patient registered successfully', response);
-            this.registrationForm.reset();
-          },
-          error => {
-            console.error('Error registering patient', error);
-          }
-        );
-      }
-    }
+  onSubmit() {
+    const emp = this.registrationForm.value;
+    this.staffService.addEmployee({name: emp.firstName + " " + emp.lastName, email: emp.Email, role: emp.job, contact: emp.telephoneNumber, employeeNbr: emp.empId})
+    this.router.navigate(["doctors"])
+  }
 }

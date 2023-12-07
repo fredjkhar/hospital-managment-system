@@ -26,15 +26,15 @@
                   <tr *ngFor="let item of Wards">
                       <td>{{ item.id }}</td>
                       <td>{{ item.name }}</td>
-                      <td id='nurse' (click)="showNurseDetails(item.nurse, item.name, 'nurse')">{{ item.nurse }}</td>
+                      <td id='nurse' (click)="showNurseDetails(item.nurse.name, item.name, 'nurse')">{{ item.nurse.name }}</td>
                       <td>{{ item.location }}</td>
                       <td>{{ item.beds }}</td>
                       <td>{{ item.telExt }}</td>
                       <td>{{ item.status }}</td>
                       <td>
-                          <button (click)="editWard(item)" title="Edit" class="edit-button">
+                          <!-- <button (click)="editWard(item)" title="Edit" class="edit-button">
                               <i class="material-icons">edit</i>
-                          </button>
+                          </button> -->
                           <button (click)="dischargePatientFromWard(item)" title="Discharge Patient" class="delete-button">
                               <i class="material-icons">person_remove</i>
                           </button>

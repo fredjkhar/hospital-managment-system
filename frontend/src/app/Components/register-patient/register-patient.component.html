@@ -19,8 +19,12 @@
           <input type="text" id="address" formControlName="address" required>
         </div>
         <div class="form-group">
-          <label for="telephoneNumber">Telephone Number</label>
-          <input type="tel" id="telephoneNumber" formControlName="telephoneNumber" required>
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email" required>
+        </div>
+        <div class="form-group">
+          <label for="tel">Telephone Number</label>
+          <input type="tel" id="tel" formControlName="tel" required>
         </div>
         <div class="form-group">
           <label for="dob">Date of Birth</label>
@@ -46,8 +50,8 @@
           <input type="text" id="familyDoctor" formControlName="familyDoctor" required>
         </div>
         <div class="form-group">
-          <label for="nextOfKin">Next of Kin (Full Name)</label>
-          <input type="text" id="nextOfKin" formControlName="nextOfKin" required>
+          <label for="nextOfKinName">Next of Kin (Full Name)</label>
+          <input type="text" id="nextOfKinName" formControlName="nextOfKinName" required>
         </div>
         <div class="form-group">
           <label for="relationship">Relationship to the Patient</label>
@@ -61,8 +65,8 @@
           <label for="kinPhoneNumber">Next of Kin Telephone Number</label>
           <input type="tel" id="kinPhoneNumber" formControlName="kinPhoneNumber" required>
         </div>
-        <div class="form-group">
-          <button type="submit">Register</button>
+        <div class="form-group" style="text-align: center;">
+          <button type="submit" [disabled]="registrationForm.invalid">Register</button>
         </div>
       </form>
     </div>

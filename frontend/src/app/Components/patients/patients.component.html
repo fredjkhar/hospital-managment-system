@@ -36,17 +36,17 @@
               <td>{{ item.id }}</td>
               <td>{{ item.fullname }}</td>
               <td>{{ item.gender }}</td>
-              <td>{{ item.birthday }}</td>
+              <td>{{ item.dob | date :'y-MM-dd' }}</td>
               <td>{{ item.address }}</td>
               <td>{{ item.email }}</td>
-              <td>{{ item.contact }}</td>
+              <td>{{ item.tel }}</td>
               <td>
                 <button (click)="editPatient(item)" title="Edit" class="edit-button">
                   <i class="material-icons">edit</i>
                 </button>
-                <button (click)="deletePatient(item)" title="Delete" class="delete-button">
+                <!-- <button (click)="deletePatient(item)" title="Delete" class="delete-button">
                   <i class="material-icons">clear</i>
-                </button>
+                </button> -->
                 <button (click)="viewPatientFile(item)" title="ViewFile" class="view-button">
                   <i class="material-icons">file_open</i>
                 </button>

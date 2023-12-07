@@ -19,25 +19,16 @@
           <th>Specialization</th>
           <th>Email</th>
           <th>Contact</th>
-          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <ng-container *ngIf="Doctors.length > 0; else noResults">
           <tr *ngFor="let item of Doctors">
-            <td>{{ item.empId }}</td>
+            <td>{{ item.employeeNbr }}</td>
             <td>{{ item.name }}</td>
-            <td>{{ item.speciality }}</td>
+            <td>{{ item.role }}</td>
             <td>{{ item.email }}</td>
             <td>{{ item.contact }}</td>
-            <td>
-              <button (click)="editDoctor(item)" title="Edit" class="edit-button">
-                <i class="material-icons">edit</i>
-              </button>
-              <button (click)="deleteDoctor(item)" title="Delete" class="delete-button">
-                <i class="material-icons">clear</i>
-              </button>
-            </td>
           </tr>
         </ng-container>
         <ng-template #noResults>

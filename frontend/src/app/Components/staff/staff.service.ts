@@ -1,6 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  addDoc,
+  CollectionReference,
+  where,
+  query,
+  getDocs
+} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +18,14 @@ import { Observable, map, of } from 'rxjs';
 export class StaffService {
   private apiUrl = 'http://localhost:8080/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private firestore: Firestore) { }
 
   getStaff(): Observable<any[]> {
-    const userRoleProperty = this.http.get<any[]>(`${this.apiUrl}/staff`);
-    return userRoleProperty;
+    return collectionData(collection(this.firestore, 'staff'))
+  }
+
+  addEmployee(emp: any): void {
+    addDoc(collection(this.firestore, 'staff'), emp)
   }
 
   deleteDoctor(doctorId: number): Observable<void> {
@@ -24,6 +37,7 @@ export class StaffService {
   }
 
   isUserNurse(): Observable<boolean> {
+    return of(true)
     return this.getStaff().pipe(
       map((staff: any[]) => {
         const userRole = staff[0]?.userRoleProperty; 

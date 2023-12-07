@@ -14,12 +14,12 @@
             <tbody>
                 <ng-container *ngFor="let adminReq of patientAdmissionRequests">
                     <tr>
-                        <td>{{ adminReq.id }}</td>
+                        <td>{{ adminReq.patientId }}</td>
                         <td>{{ adminReq.localDoctor }}</td>
                         <td>{{ adminReq.priority }}</td>
                         <td>{{ adminReq.rationale }}</td>
                         <td>
-                            <button (click)="admitPatient(adminReq.id)" title="Admit Patient" class="add-button">
+                            <button (click)="admitPatient(adminReq.patientId)" title="Admit Patient" class="add-button">
                                 <i class="material-icons">person_add</i>
                             </button>
                         </td>

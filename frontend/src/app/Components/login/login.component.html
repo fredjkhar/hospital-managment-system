@@ -1,23 +1,28 @@
-<div class="login-container">
+<div class="container">
+  <div class="form-container">
     <h2>Login</h2>
-  
-    <div class="form-group">
-      <label for="usernumb">User Identification:</label>
-      <input type="text" id="usernumb" [(ngModel)]="userId" />
-    </div>
-
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password" id="password" [(ngModel)]="password" />
-    </div>
-  
-    <button class="login-button" (click)="login()">Login</button>
-    <h2></h2>
-
-    <div class="form-group">
-      <label for="password">Don't have an account?</label>
-      <a routerLink="/register">Register</a>
-    </div>
-    
-
+    <form [formGroup]="loginForm">
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email" />
+        <div *ngIf="loginForm.get('email')!.hasError('email')">
+          Please enter a valid email address.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password" />
+        <div *ngIf="loginForm.get('password')?.hasError('minlength')">
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+      <div>
+        <button type="button" (click)="login()" class="login-button">Login</button>
+      </div>
+      <div class="form-group" style="margin-top: 20px;">
+        <label for="password">Don't have an account?</label>
+        <a routerLink="/register">Register</a>
+      </div>
+    </form>
   </div>
+</div>

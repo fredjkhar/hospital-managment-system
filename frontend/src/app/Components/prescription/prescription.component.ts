@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { PatientsService } from '../patients/patients.service';
 
 @Component({
   selector: 'app-prescription',
@@ -15,7 +16,7 @@ export class PrescriptionComponent {
   prescriptions: any[] = []
   hasSearchResults: boolean = true;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private patientsService: PatientsService) { }
 
   ngOnInit(): void {
     this.loadPrescriptions();
@@ -23,7 +24,10 @@ export class PrescriptionComponent {
 
   //might be unnecessary if we subscribe via a service
   private loadPrescriptions(): void {
-    this.prescriptions = [...this.placeholderPrescriptions];
+    this.patientsService.getPrescriptions().subscribe(prescriptions => {
+      this.prescriptions = prescriptions
+    })
+    // this.prescriptions = [...this.placeholderPrescriptions];
   }
 
   search(): void {

@@ -1,16 +1,24 @@
 <body>
     <h2>Patient File</h2>
-    <div>
+    <div class="file-container">
         <h3>Patient details</h3>
         <ul>
-            <li>Insurance number: {{ patient.id }}</li>
-            <li>Full name: {{ patient.fullname }}</li>
-            <li>Gender: {{ patient.gender }}</li>
-            <li>Address: {{ patient.address }}</li>
-            <li>Birthday: {{ patient.birthday }}</li>
-            <li>Email: {{ patient.email }}</li>
-            <li>Contact / Telephone number: {{ patient.contact }}</li>
+            <li>Insurance number: {{ patient?.id }}</li>
+            <li>Full name: {{ patient?.fullname }}</li>
+            <li>Gender: {{ patient?.gender }}</li>
+            <li>Address: {{ patient?.address }}</li>
+            <li>Birthday: {{ patient?.dob }}</li>
+            <li>Email: {{ patient?.email }}</li>
+            <li>Contact / Telephone number: {{ patient?.tel }}</li>
         </ul>
+        <details>
+            <summary>Next-of-Kin: {{ patient?.nextOfKin.fullname }}</summary>
+            <ul>
+                <li>Relationship: {{patient?.nextOfKin.relationship}}</li>
+                <li>Address: {{patient?.nextOfKin?.address}}</li>
+                <li>Contact: {{patient?.nextOfKin?.tel}}</li>
+            </ul>
+        </details>
         <h3>Patient prescriptions</h3>
         <div *ngFor="let prescription of prescriptions">
             <details>
