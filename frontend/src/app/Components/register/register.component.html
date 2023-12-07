@@ -1,27 +1,26 @@
-<div class="register-container">
+<!-- src/app/register/register.component.html -->
+
+<div class="container">
+  <div class="form-container">
     <h2>Register</h2>
-  
-    <div class="form-group">
-      <label for="usernumb">Employee Number:</label>
-      <input type="text" id="usernumb" [(ngModel)]="usernumb" />
-    </div>
-
-    <div class="form-group">
-      <label for="username">Full Name:</label>
-      <input type="text" id="username" [(ngModel)]="username" />
-    </div>
-    
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="text" id="email" [(ngModel)]="email" />
-    </div>
-  
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password" id="password" [(ngModel)]="password" />
-    </div>
-  
-    <button class="login-button" (click)="register()">Register</button>
-    <h2></h2>
-
+    <form [formGroup]="registrationForm">
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email" />
+        <div *ngIf="registrationForm.get('email')!.hasError('email')">
+          Please enter a valid email address.
+        </div>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password" />
+        <div *ngIf="registrationForm.get('password')?.hasError('minlength')">
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+      <div>
+        <button type="button" (click)="register()">Register</button>
+      </div>
+    </form>
   </div>
+</div>
