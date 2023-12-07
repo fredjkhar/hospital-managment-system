@@ -27,10 +27,10 @@ export class PatientsComponent {
   }
 
   loadPatients() {
-    // this.patientService.getPatients().subscribe((patients) => {
-    //   this.Patients = patients;
-    // });
-    this.Patients = this.originalPatients;
+    this.patientService.getPatients().subscribe((patients) => {
+      this.Patients = patients;
+    });
+    // this.Patients = this.originalPatients;
   }
 
   search(): void {

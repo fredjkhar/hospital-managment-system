@@ -7,7 +7,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class PatientsService {
-  private apiUrl = 'BACKEND_API_URL';
+  private apiUrl = 'http://localhost:8080/api';
 
   private patients: Patient[] = [];
 
@@ -25,21 +25,22 @@ export class PatientsService {
   constructor(private http: HttpClient) { }
 
   getPatients(): Observable<any[]> {
-    const userRoleProperty = this.http.get<any[]>(`${this.apiUrl}/patients`);
-    return userRoleProperty;
+    return this.http.get<any[]>(`${this.apiUrl}/getPatientsList`);
   }
 
-  getPatientById(id: number): Observable<Patient | undefined> {
-    const patient = this.patients.find((p) => p.id === id);
-    return of(patient);
+  getPatientById(id: number): Observable<any | undefined> {
+    return this.http.get<any>(`${this.apiUrl}/consultPatientFile/${id}`);
   }
 
   deletePatient(id: number): void {
     this.patients.splice(id, 1);
   }
 
+  dischargePatientFromWard(patientId: any, wardId: any): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.apiUrl}/ward/${wardId}/patients/${patientId}`)
+  }
+
   getPatientsNotAssignedToWard(): Object[] {
-    //do some filtering here
     return PatientsService.originalPatients
   }
 
@@ -74,18 +75,15 @@ export class PatientsService {
     return false;
   }
 
-  editPatient(newPatient: any): boolean {
-    const indexToModify = PatientsService.originalPatients.findIndex(e => e.id === newPatient.id)
-    if (indexToModify != -1) {
-      PatientsService.originalPatients[indexToModify] = newPatient
-      console.log(PatientsService.originalPatients)
-      return true
-    }
-    return false
-  }
-
-  dischargePatientFromWard(patientId: any, wardId: any): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.apiUrl}/ward/${wardId}/patients/${patientId}`)
+  editPatient(id: string, patientData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/updatePatientFile/${id}`, patientData);
+    // const indexToModify = PatientsService.originalPatients.findIndex(e => e.id === newPatient.id)
+    // if (indexToModify != -1) {
+    //   PatientsService.originalPatients[indexToModify] = newPatient
+    //   console.log(PatientsService.originalPatients)
+    //   return true
+    // }
+    // return false
   }
 
   getPatientAdmissionRequestsFromWard(wardId: any): Observable<any> {
@@ -93,6 +91,10 @@ export class PatientsService {
   }
 
   addPrescription(newPrescription: any): any {
-    console.log(newPrescription)
+    return this.http.post(`${this.apiUrl}/prescribeMedication/`, newPrescription);
+  }
+
+  admitPatient(admissionCreateDTO: any): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl}/admitPatient`, admissionCreateDTO);
   }
 }
