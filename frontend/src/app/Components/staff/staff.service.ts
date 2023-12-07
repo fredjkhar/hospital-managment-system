@@ -24,6 +24,10 @@ export class StaffService {
     return collectionData(collection(this.firestore, 'staff'))
   }
 
+  addEmployee(emp: any): void {
+    addDoc(collection(this.firestore, 'staff'), emp)
+  }
+
   deleteDoctor(doctorId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/doctors/${doctorId}`);
   }

@@ -28,5 +28,6 @@ export class ViewPatientComponent {
       this.prescriptions = prescriptions.filter((prescription: any) => prescription.patientId == this.id)
     })
     // this.patientsService.getPatientById(this.id)
+    console.log("Patient file " + this.id + " was accessed")
   }
 }

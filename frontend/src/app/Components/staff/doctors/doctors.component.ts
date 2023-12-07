@@ -33,9 +33,9 @@ export class DoctorsComponent {
     console.log('Search called', this.searchText); 
     if (this.searchText.trim() === '') {
       // If the search text is empty, reset Doctors to the original state
-      this.Doctors = [...this.originalDoctors];
+      this.loadStaff()
     } else {
-      this.Doctors = this.originalDoctors.filter(item => {
+      this.Doctors = this.Doctors.filter(item => {
         return (
         item.employeeNbr.toLowerCase().includes(this.searchText.toLowerCase()) ||
         item.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
