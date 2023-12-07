@@ -23,6 +23,7 @@ export class PatientsService {
   private patients: CollectionReference;
   private wards: CollectionReference;
   private prescriptions: CollectionReference;
+  private admissionReq: CollectionReference
 
   static originalPatients = [
     { id: '1', fullname: 'rada', gender: 'm', address: '350 mt...', birthday: '11-12-2002', email: 'john.doe@example.com', contact: '123-456-7890' },
@@ -39,6 +40,7 @@ export class PatientsService {
     this.patients = collection(this.firestore, 'patients')
     this.wards = collection(this.firestore, 'wards')
     this.prescriptions = collection(this.firestore, 'prescriptions')
+    this.admissionReq = collection(this.firestore, 'admission_request')
   }
 
   getPatients(): Observable<any[]> {
@@ -86,6 +88,7 @@ export class PatientsService {
   }
 
   requestPatientToWard(wardId: any, patientId: any, patientRequest: any): boolean {
+    addDoc(this.admissionReq, { wardId: wardId, patientId: patientId, ...patientRequest })
     if (true) {
       console.log("successful request of admission to ward ", wardId, " for patient ", patientId, " with additional info ", patientRequest)
       return true;
