@@ -54,7 +54,7 @@ export class EditPatientComponent {
       email: this.patientForm.value.email,
       contact: this.patientForm.value.contact
     }
-    this.patientsService.editPatient(editedPatient)
+    this.patientsService.editPatient(editedPatient.id,editedPatient)
     console.log("submitted ", editedPatient)
   }
 }

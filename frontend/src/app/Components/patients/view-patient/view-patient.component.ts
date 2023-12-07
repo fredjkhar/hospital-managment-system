@@ -16,7 +16,7 @@ export class ViewPatientComponent {
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
-    this.patient = this.patientsService.getPatient(this.id)
+    this.patient = this.patientsService.getPatientById(this.id)
     this.prescriptions = this.patientsService.getPatientPrescriptions(this.id)
   }
 }

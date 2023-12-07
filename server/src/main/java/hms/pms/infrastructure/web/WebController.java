@@ -94,13 +94,11 @@ public class WebController {
 
     @GetMapping("/loginStaff/{staffId}")
     public String loginStaff(@PathVariable UUID staffId) {
-        //TODO: Aymane
-        return "Zween";
+        return "login";
     }
 
     @GetMapping("/logoutStaff/{staffId}")
     public String logoutStaff(@PathVariable UUID staffId) {
-        //TODO: Aymane
-        return "Zween";
+        return "logout";
     }
 }
