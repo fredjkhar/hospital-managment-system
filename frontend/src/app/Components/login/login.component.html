@@ -1,5 +1,3 @@
-<!-- src/app/login/login.component.html -->
-
 <div class="container">
   <div class="form-container">
     <h2>Login</h2>
@@ -11,7 +9,7 @@
           Please enter a valid email address.
         </div>
       </div>
-      <div>
+      <div class="form-group">
         <label for="password">Password:</label>
         <input type="password" id="password" formControlName="password" />
         <div *ngIf="loginForm.get('password')?.hasError('minlength')">
@@ -19,7 +17,11 @@
         </div>
       </div>
       <div>
-        <button type="button" (click)="login()">Login</button>
+        <button type="button" (click)="login()" class="login-button">Login</button>
+      </div>
+      <div class="form-group" style="margin-top: 20px;">
+        <label for="password">Don't have an account?</label>
+        <a routerLink="/register">Register</a>
       </div>
     </form>
   </div>

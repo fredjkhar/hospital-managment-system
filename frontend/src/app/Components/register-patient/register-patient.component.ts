@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StaffService } from '../staff/staff.service';
+import { Router } from '@angular/router';
 import { PatientsService } from '../patients/patients.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { PatientsService } from '../patients/patients.service';
 export class RegisterPatientComponent {
   registrationForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private patientsService: PatientsService) {
+  constructor(private fb: FormBuilder, private patientsService: PatientsService, private router: Router) {
     this.registrationForm = this.fb.group({
       insuranceNumber: ['', Validators.required],
       firstName: ['', Validators.required],
@@ -49,6 +50,7 @@ export class RegisterPatientComponent {
         nextOfKin: nextOfKin,
       }
       this.patientsService.registerPatient(patient)
+      this.router.navigate(["patients"])
     }
   }
 }

@@ -34,7 +34,7 @@ export class RequestPatientComponent {
 
   onSubmit(): void {
     console.log("submitted form:", this.requestPatientAdmissionToWardForm.value)
-    this.patientsService.assignPatientToWard(this.wardId, this.requestPatientAdmissionToWardForm.get("patientId")?.value, this.requestPatientAdmissionToWardForm.value)
+    this.patientsService.requestPatientToWard(this.wardId, this.requestPatientAdmissionToWardForm.get("patientId")?.value, this.requestPatientAdmissionToWardForm.value)
     //some db call or whatever
   }
 }

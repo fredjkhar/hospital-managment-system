@@ -69,8 +69,8 @@ export class PatientsService {
     return PatientsService.originalPatients
   }
 
-  getPatientsAdmittedToWard(wardId: any): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/ward/${wardId}/patients`)
+  getPatientsAdmittedToWards(): Observable<any[]> {
+    return collectionData(this.admissionReq)
   }
 
   getPatient(patientId: any): any {
@@ -112,9 +112,9 @@ export class PatientsService {
     setDoc(doc(this.patients, editedPatient.id), editedPatient)
   }
 
-  dischargePatientFromWard(patientId: any, wardId: any): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.apiUrl}/ward/${wardId}/patients/${patientId}`)
-  }
+  // dischargePatientFromWard(patientId: any, wardId: any): Observable<boolean> {
+  //   delete
+  // }
 
   getPatientAdmissionRequestsFromWard(wardId: any): Observable<any> {
     return this.http.get<any[]>(`${this.apiUrl}/ward/${wardId}/requests`);

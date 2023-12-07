@@ -11,25 +11,19 @@
         <thead>
           <tr>
             <th>Id</th>
-            <th>Full Name</th>
-            <th>Gender</th>
-            <th>Date of birth</th>
-            <th>Address</th>
-            <th>Email</th>
-            <th>Contact</th>
+            <th>Priority</th>
+            <th>Local Doctor</th>
+            <th>Rationale</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <ng-container *ngFor="let item of admittedPatients; let i = index">
             <tr>
-              <td>{{ item.id }}</td>
-              <td>{{ item.fullname }}</td>
-              <td>{{ item.gender }}</td>
-              <td>{{ item.birthday }}</td>
-              <td>{{ item.address }}</td>
-              <td>{{ item.email }}</td>
-              <td>{{ item.contact }}</td>
+              <td>{{ item.patientId }}</td>
+              <td>{{ item.priority }}</td>
+              <td>{{ item.localDoctor }}</td>
+              <td>{{ item.rationale }}</td>
               <td>
                 <button (click)="dischargePatient(item.id)" title="Discharge Patient" class="delete-button">
                   <i class="material-icons">clear</i>

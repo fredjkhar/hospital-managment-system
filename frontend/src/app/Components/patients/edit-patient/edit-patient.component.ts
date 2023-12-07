@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PatientsService } from '../patients.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -23,7 +23,7 @@ export class EditPatientComponent {
   get email(): AbstractControl<string> { return <AbstractControl>this.patientForm.get('email'); }
   get tel(): AbstractControl<string> { return <AbstractControl>this.patientForm.get('contact'); }
 
-  constructor(private builder: FormBuilder, private patientsService: PatientsService, private route: ActivatedRoute) {
+  constructor(private builder: FormBuilder, private patientsService: PatientsService, private route: ActivatedRoute, private router: Router) {
     this.id = ''
     this.patientForm = this.builder.group({
       fullname: ['', [Validators.required]],
@@ -63,5 +63,6 @@ export class EditPatientComponent {
   onSubmit() {
     this.patientsService.editPatient({id: this.id, ...this.patientForm.value})
     // console.log("submitted ", this.patientForm.value)
+    this.router.navigate(["patients"])
   }
 }
