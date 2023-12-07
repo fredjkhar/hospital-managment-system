@@ -83,6 +83,7 @@ export class PatientsService {
   }
 
   assignPatientToWard(wardId: any, patientId: any, patientAssignment: any): boolean {
+    addDoc(this.admissionReq, { wardId: wardId, patientId: patientId, ...patientAssignment })
     if (true) {
       console.log("successful assignment to ward ", wardId, " for patient ", patientId, " with additional info ", patientAssignment)
       return true;
@@ -117,7 +118,7 @@ export class PatientsService {
   // }
 
   getPatientAdmissionRequestsFromWard(wardId: any): Observable<any> {
-    return this.http.get<any[]>(`${this.apiUrl}/ward/${wardId}/requests`);
+    return collectionData(this.admissionReq)
   }
 
   addPrescription(newPrescription: any): void {
