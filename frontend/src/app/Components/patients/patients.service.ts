@@ -37,7 +37,7 @@ export class PatientsService {
   }
 
   dischargePatientFromWard(patientId: any, wardId: any): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.apiUrl}/ward/${wardId}/patients/${patientId}`)
+    return this.http.delete<boolean>(`${this.apiUrl}/dischargePatient/${wardId}`)
   }
 
   getPatientsNotAssignedToWard(): Object[] {

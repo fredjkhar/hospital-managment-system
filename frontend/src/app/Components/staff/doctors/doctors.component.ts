@@ -23,15 +23,15 @@ export class DoctorsComponent {
   }
 
   private loadStaff(): void {
-    // this.StaffService.getStaff().subscribe(
-    //   data => {
-    //     this.Doctors = data;
-    //   },
-    //   error => {
-    //     console.error('Error loading Doctors:', error);
-    //   }
-    // );
-    this.Doctors = [...this.originalDoctors];
+    this.StaffService.getStaff().subscribe(
+      data => {
+        this.Doctors = data;
+      },
+      error => {
+        console.error('Error loading Doctors:', error);
+      }
+    );
+    // this.Doctors = [...this.originalDoctors];
   }
 
   search(): void {
@@ -54,7 +54,7 @@ export class DoctorsComponent {
   }
 
   editDoctor(doctor: any): void {
-    console.log('Edit doctor:', doctor);
+    this.router.navigate(['patients', 'edit-patient', doctor.id])
   }
 
   deleteDoctor(doctor: any): void {
