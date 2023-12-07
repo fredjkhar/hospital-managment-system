@@ -18,7 +18,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
   providedIn: 'root'
 })
 export class PatientsService {
-  private apiUrl = 'BACKEND_API_URL';
+  private apiUrl = 'http://localhost:8080/api';
 
   private patients: CollectionReference;
   private wards: CollectionReference;
@@ -64,8 +64,11 @@ export class PatientsService {
     // this.patients.splice(id, 1);
   }
 
+  dischargePatientFromWard(patientId: any, wardId: any): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.apiUrl}/dischargePatient/${wardId}`)
+  }
+
   getPatientsNotAssignedToWard(): Object[] {
-    //do some filtering here
     return PatientsService.originalPatients
   }
 
@@ -131,5 +134,13 @@ export class PatientsService {
 
   getWards(): Observable<any[]> {
     return collectionData(this.wards, { idField: 'dbid' })
+  }
+  
+  // addPrescription(newPrescription: any): any {
+  //   return this.http.post(`${this.apiUrl}/prescribeMedication/`, newPrescription);
+  // }
+
+  admitPatient(admissionCreateDTO: any): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl}/admitPatient`, admissionCreateDTO);
   }
 }

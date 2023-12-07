@@ -29,7 +29,6 @@ export class PatientsComponent {
   loadPatients() {
     this.patientService.getPatients().subscribe((patients) => {
       this.Patients = patients;
-      console.log(this.Patients)
     });
     // this.Patients = this.originalPatients;
   }

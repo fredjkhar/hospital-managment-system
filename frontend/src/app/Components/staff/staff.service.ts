@@ -16,7 +16,7 @@ import {
   providedIn: 'root'
 })
 export class StaffService {
-  private apiUrl = 'BACKEND_API_URL'; 
+  private apiUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient, private firestore: Firestore) { }
 
@@ -47,7 +47,7 @@ export class StaffService {
   }
 
   registerPatient(patientData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/patients`, patientData);
+    return this.http.post(`${this.apiUrl}/registerPatient`, patientData);
   }
   
   // getNurseInfo(name: string, dept: string, userRole: 'nurse'): Observable<any[]> {

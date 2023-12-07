@@ -1,0 +1,14 @@
+# Use the official OpenJDK image as the base image
+FROM openjdk:17
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the JAR file into the container
+COPY target/your-spring-boot-app.jar app.jar
+
+# Expose the port that your Spring Boot app runs on
+EXPOSE 8080
+
+# Command to run your Spring Boot application
+CMD ["java", "-jar", "app.jar"]

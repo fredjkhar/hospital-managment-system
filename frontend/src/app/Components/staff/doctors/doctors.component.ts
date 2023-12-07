@@ -49,7 +49,7 @@ export class DoctorsComponent {
   }
 
   editDoctor(doctor: any): void {
-    console.log('Edit doctor:', doctor);
+    this.router.navigate(['patients', 'edit-patient', doctor.id])
   }
 
   deleteDoctor(doctor: any): void {
