@@ -13,7 +13,9 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 @CacheConfig(cacheNames = {"patients"})
@@ -39,7 +41,9 @@ public class PatientJpaAdapter implements PatientRepository {
     @Transactional
     @Override
     public Patient find(String insuranceNumber) {
-        return null; //TODO to be implemented
+        return patientJpaRepository.findByInsuranceNumber(insuranceNumber)
+                .map(converter::toModel)
+                .orElse(null);
     }
 
     @CachePut(key = "#patient.getId()")
@@ -48,4 +52,12 @@ public class PatientJpaAdapter implements PatientRepository {
         PatientJpaEntity patientJpa = converter.toJpa(patient);
         patientJpaRepository.save(patientJpa);
     }
+
+    @Override
+    public List<Patient> findAll() {
+        return patientJpaRepository.findAll().stream()
+                .map(converter::toModel)
+                .collect(Collectors.toList());
+    }
+
 }

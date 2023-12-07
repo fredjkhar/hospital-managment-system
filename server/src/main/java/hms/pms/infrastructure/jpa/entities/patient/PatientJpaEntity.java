@@ -12,51 +12,35 @@ import java.util.UUID;
 public class PatientJpaEntity {
     @Id
     @GeneratedValue
+    @Column(name= "patient_id",nullable = false)
     private UUID patientId;
 
-    @Column(nullable = false)
+    @Column(name = "insurance_number",nullable = false)
     private String insuranceNumber;
 
-    @Column(nullable = false)
+    @Column(name = "firstname", nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(name = "lastname", nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
+    @Column(name = "date_of_birth", nullable = false)
     private Date dateOfBirth;
 
-    @Column(nullable = false)
+    @Column(name = "gender", nullable = false)
     private char gender;
 
-    @Column(nullable = false)
+    @Column(name = "marital_status", nullable = false)
     private String maritalStatus;
 
-    @Column
+    @Column(name = "external_doctor_id")
     private UUID externalDoctorId;
 
-    @Column
+    @Column(name = "primary_charge_nurse_id")
     private String primaryChargeNurseId;
-
-    @ElementCollection
-    @CollectionTable(name = "prescriptions", joinColumns = @JoinColumn(name = "patient_id"))
-    @Column(name = "prescription_id")
-    private List<UUID> prescriptions;
-
-    @Embedded
-    private AddressJpaEntity address;
-
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "firstName", column = @Column(name = "nok_first_name")),
-            @AttributeOverride(name = "lastName", column = @Column(name = "nok_last_name")),
-            @AttributeOverride(name = "relationship", column = @Column(name = "nok_relationship")),
-            @AttributeOverride(name = "phoneNumber", column = @Column(name = "nok_phone_number")),
-    })
-    private NextOfKinJpaEntity nextOfKin;
 }

@@ -10,23 +10,25 @@ import java.util.UUID;
 public class StaffJpaEntity {
     @Id
     @GeneratedValue
+    @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "employee_nbr", nullable = false, unique = true)
     private UUID employeeNbr;
 
-    @Column(nullable = false)
+    @Column(name = "firstname", nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(name = "lastname", nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Enumerated(EnumType.STRING) // or @Column, depending on how StaffRole is defined
-    private StaffRole role;
+    @Column(name = "role")
+    private String role;
 }
+

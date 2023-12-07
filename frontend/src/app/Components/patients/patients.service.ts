@@ -69,6 +69,10 @@ export class PatientsService {
     return PatientsService.originalPatients
   }
 
+  getPatientsAdmittedToWard(wardId: any): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/ward/${wardId}/patients`)
+  }
+
   getPatient(patientId: any): any {
     //this call should log the user that accessed the file
     return PatientsService.originalPatients.find(patient => patient.id === patientId)
@@ -106,6 +110,10 @@ export class PatientsService {
     // }
     // return false
     setDoc(doc(this.patients, editedPatient.id), editedPatient)
+  }
+
+  dischargePatientFromWard(patientId: any, wardId: any): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.apiUrl}/ward/${wardId}/patients/${patientId}`)
   }
 
   getPatientAdmissionRequestsFromWard(wardId: any): Observable<any> {

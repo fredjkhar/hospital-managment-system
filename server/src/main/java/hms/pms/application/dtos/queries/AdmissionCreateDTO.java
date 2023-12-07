@@ -10,6 +10,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 public class AdmissionCreateDTO {
+    private UUID id;
     private UUID patientId;
     private UUID localDoctorId;
     private UUID roomNumber;

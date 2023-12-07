@@ -1,0 +1,49 @@
+<body>
+    <div>
+      <h2>Patients Information</h2>
+      <div class="header-container">
+        <input type="text" [(ngModel)]="searchText" placeholder="Search patients" class="search-bar" />
+        <button (click)="search()" class="search-button">
+          <i class="material-icons">search</i>
+        </button>
+      </div>
+      <table class="patient-table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Full Name</th>
+            <th>Gender</th>
+            <th>Date of birth</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of admittedPatients; let i = index">
+            <tr>
+              <td>{{ item.id }}</td>
+              <td>{{ item.fullname }}</td>
+              <td>{{ item.gender }}</td>
+              <td>{{ item.birthday }}</td>
+              <td>{{ item.address }}</td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.contact }}</td>
+              <td>
+                <button (click)="dischargePatient(item.id)" title="Discharge Patient" class="delete-button">
+                  <i class="material-icons">clear</i>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template #noResults>
+            <tr>
+              <td colspan="9" style="text-align: center;">No matching results</td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  

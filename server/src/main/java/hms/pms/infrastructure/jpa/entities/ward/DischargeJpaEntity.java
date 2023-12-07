@@ -10,12 +10,13 @@ public class DischargeJpaEntity {
 
     @Id
     @GeneratedValue
+    @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(name = "patient_id", nullable = false)
     private UUID patientId;
 
-    @Column(nullable = false, length = 128)
+    @Column(name = "discharge_summary", nullable = false)
     private String dischargeSummary;
 
     @ManyToOne(fetch = FetchType.LAZY)
