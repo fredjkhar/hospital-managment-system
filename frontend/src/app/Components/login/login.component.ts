@@ -1,4 +1,8 @@
+// src/app/login/login.component.ts
+
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {AngularFireAuth} from "@angular/fire/compat/auth";
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,22 +11,32 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  userId: string = '';
-  password: string = '';
+  loginForm: FormGroup;
 
-  constructor(private router: Router) {}
-
-  login(): void {
-    console.log(`login clicked with Username: ${this.userId}, Password: ${this.password}`);
-    if (this.userId && this.password) {
-      this.router.navigate(['/staff']);
-    } else {
-      // Handle unsuccessful registration
-      console.log('login failed. Please check your credentials.');
-    }
+  constructor(
+    private formBuilder: FormBuilder,
+    private auth: AngularFireAuth,
+    private router: Router
+  ) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
   }
 
-  register(): void {
-    this.router.navigate(['register'])
+  login() {
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          console.log('User logged in:', userCredential.user);
+
+          // Redirect to the dashboard or another page upon successful login
+          this.router.navigate(['/dashboard']);
+        })
+        .catch((error) => {
+          console.error('Login failed:', error.message);
+        });
+    }
   }
 }

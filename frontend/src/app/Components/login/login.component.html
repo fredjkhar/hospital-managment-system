@@ -1,19 +1,26 @@
-<div class="login-container">
+<!-- src/app/login/login.component.html -->
+
+<div class="container">
+  <div class="form-container">
     <h2>Login</h2>
-  
-    <div class="form-group">
-      <label for="usernumb">User Identification:</label>
-      <input type="text" id="usernumb" [(ngModel)]="userId" />
-    </div>
-
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password" id="password" [(ngModel)]="password" />
-    </div>
-    <div class="d-flex justify-content-around">
-      <button class="login-button" (click)="login()">Login</button>
-      <button class="login-button" (click)="register()">Register</button>
-    </div>
-      <h2></h2>
-
+    <form [formGroup]="loginForm">
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email" />
+        <div *ngIf="loginForm.get('email')!.hasError('email')">
+          Please enter a valid email address.
+        </div>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password" />
+        <div *ngIf="loginForm.get('password')?.hasError('minlength')">
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+      <div>
+        <button type="button" (click)="login()">Login</button>
+      </div>
+    </form>
   </div>
+</div>
