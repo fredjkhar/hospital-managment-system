@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators, AbstractControl} from '@angular/for
 import { StaffService } from '../../staff/staff.service';
 import { PatientsService } from '../../patients/patients.service';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-prescription',
@@ -15,7 +14,7 @@ export class AddPrescriptionComponent {
   patients: any[] = [];
   patientIdSelectorClicked: boolean = false;
 
-  constructor(private builder: FormBuilder, private staffService: StaffService, private patientsService: PatientsService, private router: Router) {
+  constructor(private builder: FormBuilder, private staffService: StaffService, private patientsService: PatientsService) {
     this.addPrescriptionForm = this.builder.group({
       patientId: ['', [Validators.required, Validators.min(0)]],
       drugNumber: ['', [Validators.required, Validators.pattern("[1-9][0-9]*")]],
@@ -48,7 +47,6 @@ get endDate() : AbstractControl<string> { return <AbstractControl>this.addPrescr
       const formData = this.addPrescriptionForm.value;
   
       this.patientsService.addPrescription(formData)
-      this.router.navigate(["prescriptions"])
     }
   }
 

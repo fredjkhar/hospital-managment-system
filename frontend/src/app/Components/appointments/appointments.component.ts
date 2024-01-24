@@ -98,6 +98,5 @@ export class AppointmentsComponent {
     } else {
       console.log("Form is invalid.");
     }
-    this.router.navigate(["dashboard"])
   }
 }

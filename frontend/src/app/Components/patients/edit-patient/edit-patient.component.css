@@ -1,61 +1,15 @@
 body {
+  margin-left: 100px;
   font-family: Arial, sans-serif;
-  background-color: #fff;
-  margin: 0;
-  padding: 0;
-}
-
-.edit-container {
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: -660px;
-  margin-bottom: 100px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-  text-align: center;
   color: #333;
+  margin-left: 40%;
+  margin-top: -650px;
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-input,
-select {
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  background-color: #4caf50;
-  color: #fff;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-button:disabled {
-  background-color: #76aa78;
+.header-container {
+  display: flex;
+  align-items: center;
 }

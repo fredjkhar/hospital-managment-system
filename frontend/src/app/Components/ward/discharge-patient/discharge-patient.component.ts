@@ -12,26 +12,20 @@ export class DischargePatientComponent {
   wardId = null
   searchText: string = '';
   hasSearchResults: boolean = true;
-  admittedPatients: any[] = [] //PatientsService.originalPatients
+  admittedPatients: any[] = PatientsService.originalPatients
   constructor(private patientsService: PatientsService, private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.wardId = params['id']
     })
-    this.patientsService.getPatientsAdmittedToWards().subscribe(admittedPatients => {
+    this.patientsService.getPatientsAdmittedToWard(this.wardId).subscribe(admittedPatients => {
       console.log(admittedPatients)
-      this.admittedPatients = admittedPatients.filter(admission => {
-        console.log(admission)
-        console.log(admission.wardId)
-        console.log(this.wardId)
-        console.log(admission.wardId == this.wardId)
-        return admission.wardId == this.wardId
-      })
+      this.admittedPatients = admittedPatients
     })
   }
 
   dischargePatient(patientId: any) {
     console.log("discharged patient ", patientId)
-    // this.patientsService.dischargePatientFromWard(patientId, this.wardId)
+    this.patientsService.dischargePatientFromWard(patientId, this.wardId)
   }
 
   search(): void {

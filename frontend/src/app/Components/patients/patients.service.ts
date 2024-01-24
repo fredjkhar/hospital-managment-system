@@ -2,17 +2,6 @@ import { Injectable } from '@angular/core';
 import { Patient } from './patient.model';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {
-  Firestore,
-  collection,
-  collectionData,
-  addDoc,
-  CollectionReference,
-  where,
-  query,
-  getDocs
-} from '@angular/fire/firestore';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +9,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 export class PatientsService {
   private apiUrl = 'http://localhost:8080/api';
 
-  private patients: CollectionReference;
-  private wards: CollectionReference;
-  private prescriptions: CollectionReference;
-  private admissionReq: CollectionReference
+  private patients: Patient[] = [];
 
   static originalPatients = [
     { id: '1', fullname: 'rada', gender: 'm', address: '350 mt...', birthday: '11-12-2002', email: 'john.doe@example.com', contact: '123-456-7890' },
@@ -36,32 +22,18 @@ export class PatientsService {
     { id: '4', patientId: '1', drugNumber: '1', drugName: 'Morphine', unitsPerDay: 5, administrationNbrPerDay: 5, administrationMethod: 'IV', startDate: '2022-01-01', endDate: '2023-01-01' },
   ];
 
-  constructor(private http: HttpClient, private firestore: Firestore) {
-    this.patients = collection(this.firestore, 'patients')
-    this.wards = collection(this.firestore, 'wards')
-    this.prescriptions = collection(this.firestore, 'prescriptions')
-    this.admissionReq = collection(this.firestore, 'admission_request')
-  }
+  constructor(private http: HttpClient) { }
 
   getPatients(): Observable<any[]> {
-    return collectionData(this.patients, { idField: 'dbid' })
+    return this.http.get<any[]>(`${this.apiUrl}/getPatientsList`);
   }
 
-  //doesnt work rn, check viewpatient to see what to do
-  async getPatientById(id: any): Promise<any> {
-    // const data = await getDocs(query(this.patients, where("id", "==", id)))
-    // console.log(data)
-    // return data.docs[0]
-    return getDoc(doc(this.patients, id))
-  }
-
-  registerPatient(patient: any): void {
-    // addDoc(this.patients, patient)
-    setDoc(doc(this.patients, patient.id), patient)
+  getPatientById(id: number): Observable<any | undefined> {
+    return this.http.get<any>(`${this.apiUrl}/consultPatientFile/${id}`);
   }
 
   deletePatient(id: number): void {
-    // this.patients.splice(id, 1);
+    this.patients.splice(id, 1);
   }
 
   dischargePatientFromWard(patientId: any, wardId: any): Observable<boolean> {
@@ -72,8 +44,8 @@ export class PatientsService {
     return PatientsService.originalPatients
   }
 
-  getPatientsAdmittedToWards(): Observable<any[]> {
-    return collectionData(this.admissionReq)
+  getPatientsAdmittedToWard(wardId: any): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/ward/${wardId}/patients`)
   }
 
   getPatient(patientId: any): any {
@@ -86,7 +58,6 @@ export class PatientsService {
   }
 
   assignPatientToWard(wardId: any, patientId: any, patientAssignment: any): boolean {
-    addDoc(this.admissionReq, { wardId: wardId, patientId: patientId, ...patientAssignment })
     if (true) {
       console.log("successful assignment to ward ", wardId, " for patient ", patientId, " with additional info ", patientAssignment)
       return true;
@@ -96,7 +67,6 @@ export class PatientsService {
   }
 
   requestPatientToWard(wardId: any, patientId: any, patientRequest: any): boolean {
-    addDoc(this.admissionReq, { wardId: wardId, patientId: patientId, ...patientRequest })
     if (true) {
       console.log("successful request of admission to ward ", wardId, " for patient ", patientId, " with additional info ", patientRequest)
       return true;
@@ -105,40 +75,24 @@ export class PatientsService {
     return false;
   }
 
-  editPatient(editedPatient: any): void {
-    // const indexToModify = PatientsService.originalPatients.findIndex(e => e.id === editedPatient.id)
+  editPatient(id: string, patientData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/updatePatientFile/${id}`, patientData);
+    // const indexToModify = PatientsService.originalPatients.findIndex(e => e.id === newPatient.id)
     // if (indexToModify != -1) {
-    //   PatientsService.originalPatients[indexToModify] = editedPatient
+    //   PatientsService.originalPatients[indexToModify] = newPatient
     //   console.log(PatientsService.originalPatients)
     //   return true
     // }
     // return false
-    setDoc(doc(this.patients, editedPatient.id), editedPatient)
   }
-
-  // dischargePatientFromWard(patientId: any, wardId: any): Observable<boolean> {
-  //   delete
-  // }
 
   getPatientAdmissionRequestsFromWard(wardId: any): Observable<any> {
-    return collectionData(this.admissionReq)
+    return this.http.get<any[]>(`${this.apiUrl}/ward/${wardId}/requests`);
   }
 
-  addPrescription(newPrescription: any): void {
-    setDoc(doc(this.prescriptions, "" + newPrescription.drugNumber), newPrescription)
+  addPrescription(newPrescription: any): any {
+    return this.http.post(`${this.apiUrl}/prescribeMedication/`, newPrescription);
   }
-
-  getPrescriptions(): Observable<any> {
-    return collectionData(this.prescriptions, { idField: 'id' })
-  }
-
-  getWards(): Observable<any[]> {
-    return collectionData(this.wards, { idField: 'dbid' })
-  }
-  
-  // addPrescription(newPrescription: any): any {
-  //   return this.http.post(`${this.apiUrl}/prescribeMedication/`, newPrescription);
-  // }
 
   admitPatient(admissionCreateDTO: any): Observable<string> {
     return this.http.post<string>(`${this.apiUrl}/admitPatient`, admissionCreateDTO);

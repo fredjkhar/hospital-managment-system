@@ -1,8 +1,4 @@
-// src/app/register/register.component.ts
-
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {AngularFireAuth} from "@angular/fire/compat/auth";
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,33 +6,22 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+
 export class RegisterComponent {
-  registrationForm: FormGroup;
+  username: string = '';
+  password: string = '';
+  email: string = '';
+  usernumb: string = '';
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private auth: AngularFireAuth,
-    private router: Router
-  ) {
-    this.registrationForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    });
-  }
+  constructor(private router: Router) {}
 
-  register() {
-    if (this.registrationForm.valid) {
-      const { email, password } = this.registrationForm.value;
-      this.auth.createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          console.log('User registered:', userCredential.user);
-
-          // Redirect to the dashboard or another page upon successful registration
-          this.router.navigate(['/dashboard']);
-        })
-        .catch((error) => {
-          console.error('Registration failed:', error.message);
-        });
+  register(): void {
+    console.log(`Register clicked with Username: ${this.username}, Password: ${this.password}`);
+    if (this.username && this.password && this.email && this.usernumb) {
+      this.router.navigate(['/staff']);
+    } else {
+      // Handle unsuccessful registration
+      console.log('Register failed. Please check your credentials.');
     }
   }
 }

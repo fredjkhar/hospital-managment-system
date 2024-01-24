@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 export class DoctorsComponent {
   searchText: string = '';
   originalDoctors = [
-    { employeeNbr: '1', name: 'rada', role: 'Cardiology', email: 'john.doe@example.com', contact: '123-456-7890' },
-    { employeeNbr: '2', name: 'Dr. Jane Smith', role: 'Orthopedics', email: 'jane.smith@example.com', contact: '987-654-3210' },
+    { empId: '1', name: 'rada', speciality: 'Cardiology', email: 'john.doe@example.com', contact: '123-456-7890' },
+    { empId: '2', name: 'Dr. Jane Smith', speciality: 'Orthopedics', email: 'jane.smith@example.com', contact: '987-654-3210' },
   ];
   Doctors: any[] = [];
   hasSearchResults: boolean = true;
@@ -26,20 +26,25 @@ export class DoctorsComponent {
     this.StaffService.getStaff().subscribe(
       data => {
         this.Doctors = data;
-      })
+      },
+      error => {
+        console.error('Error loading Doctors:', error);
+      }
+    );
+    // this.Doctors = [...this.originalDoctors];
   }
 
   search(): void {
     console.log('Search called', this.searchText); 
     if (this.searchText.trim() === '') {
       // If the search text is empty, reset Doctors to the original state
-      this.loadStaff()
+      this.Doctors = [...this.originalDoctors];
     } else {
-      this.Doctors = this.Doctors.filter(item => {
+      this.Doctors = this.originalDoctors.filter(item => {
         return (
-        item.employeeNbr.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        item.empId.toLowerCase().includes(this.searchText.toLowerCase()) ||
         item.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        item.role.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        item.speciality.toLowerCase().includes(this.searchText.toLowerCase()) ||
         item.email.toLowerCase().includes(this.searchText.toLowerCase()) ||
         item.contact.toLowerCase().includes(this.searchText.toLowerCase())
       );
