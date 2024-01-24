@@ -5,10 +5,13 @@ import hms.pms.application.dtos.responses.PatientFileViewDTO;
 import hms.pms.application.dtos.responses.WardViewDTO;
 import hms.pms.application.dtos.responses.converters.PatientFileViewConverter;
 import hms.pms.application.usecases.*;
+import hms.pms.application.usecases.implementation.AdmitPatientImpl;
 import hms.pms.domain.patient.entities.Patient;
 import hms.pms.domain.patient.facade.PatientFacade;
 import hms.pms.domain.patient.repositories.PatientRepository;
 import hms.pms.domain.staff.facade.StaffFacade;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,8 @@ import java.util.UUID;
 
 @Service
 public class Services {
+    private static final Logger logger = LogManager.getLogger(AdmitPatientImpl.class);
+
     private final AdmitPatient admitPatient;
     private final AdmitPatientFromRequestList admitPatientFromRequestList;
     private final ConsultPatientFile consultPatientFile;

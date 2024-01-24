@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface PatientJpaConverter {
-    PatientJpaEntity toJpa(Patient patient);
+    PatientJpaEntity convertToJpa(Patient patient);
 
     Patient toModel(PatientJpaEntity patientJpaEntity);
 

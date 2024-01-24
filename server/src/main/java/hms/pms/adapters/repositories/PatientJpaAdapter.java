@@ -49,7 +49,7 @@ public class PatientJpaAdapter implements PatientRepository {
     @CachePut(key = "#patient.getId()")
     @Override
     public void save(Patient patient) {
-        PatientJpaEntity patientJpa = converter.toJpa(patient);
+        PatientJpaEntity patientJpa = converter.convertToJpa(patient);
         patientJpaRepository.save(patientJpa);
     }
 

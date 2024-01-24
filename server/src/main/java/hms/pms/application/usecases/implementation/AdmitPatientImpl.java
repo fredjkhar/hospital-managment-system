@@ -42,8 +42,10 @@ public class AdmitPatientImpl implements AdmitPatient {
             logger.error("Failed to admit patient: Ward not found with ID " + wardId);
             return;
         }
+        logger.info(ward.toString());
 
-        if (!ward.getStatus().equals("incomplete")) {
+        String wardStatus = ward.getStatus();
+        if (wardStatus != null && !ward.getStatus().equals("incomplete")) {
             logger.error("Failed to admit patient: Ward status is not incomplete for Ward ID " + wardId);
             return;
         }

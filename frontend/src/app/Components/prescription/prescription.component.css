@@ -101,7 +101,7 @@ button i {
 .register-button {
   display: flex;
   align-items: center;
-  width: auto;
+  width: 150px;
   height: 35px;
   margin-top: 20px;
   margin-left: 63%;
@@ -114,5 +114,5 @@ button i {
 .button-text {
   margin-left: 1px;
   font-size: 14px;
-  width: auto;
+  width: 100px
 }

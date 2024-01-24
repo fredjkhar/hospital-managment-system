@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { PatientsService } from '../../patients/patients.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
@@ -14,7 +14,7 @@ export class RequestPatientComponent {
   requestPatientAdmissionToWardForm: FormGroup;
   assignablePatients: any[] = [];
 
-  constructor(private route: ActivatedRoute, private patientsService: PatientsService, private builder: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private patientsService: PatientsService, private builder: FormBuilder) {
     this.requestPatientAdmissionToWardForm = builder.group({
       wardId: '',
       patientId: ['', Validators.required],
@@ -34,8 +34,7 @@ export class RequestPatientComponent {
 
   onSubmit(): void {
     console.log("submitted form:", this.requestPatientAdmissionToWardForm.value)
-    this.patientsService.requestPatientToWard(this.wardId, this.requestPatientAdmissionToWardForm.get("patientId")?.value, this.requestPatientAdmissionToWardForm.value)
+    this.patientsService.assignPatientToWard(this.wardId, this.requestPatientAdmissionToWardForm.get("patientId")?.value, this.requestPatientAdmissionToWardForm.value)
     //some db call or whatever
-    this.router.navigate(["departments"])
   }
 }

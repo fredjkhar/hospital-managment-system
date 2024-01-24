@@ -55,10 +55,6 @@ button:hover {
   background-color: #45a049;
 }
 
-button:disabled {
-  background-color: #76aa78;
-}
-
 button {
   margin-left: 40%;
   background-color: #4caf50;

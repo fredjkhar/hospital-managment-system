@@ -26,11 +26,6 @@ import { AddPatientComponent } from './Components/ward/add-patient/add-patient.c
 import { RequestPatientComponent } from './Components/ward/request-patient/request-patient.component';
 import { DischargePatientComponent } from './Components/ward/discharge-patient/discharge-patient.component';
 import { AdmitPatientRequestComponent } from './Components/ward/admit-patient-request/admit-patient-request.component';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { getAuth, provideAuth } from '@angular/fire/auth';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { environment } from '../enviroments/enviroment';
-import {AngularFireModule} from "@angular/fire/compat";
 
 @NgModule({
   declarations: [
@@ -61,12 +56,7 @@ import {AngularFireModule} from "@angular/fire/compat";
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireModule,
-    NgbModule,
-    provideFirebaseApp(() => initializeApp({"projectId":"seg3502-ee55d","appId":"1:578845809672:web:1631a2e1165b387a9185bd","databaseURL":"https://seg3502-ee55d-default-rtdb.firebaseio.com","storageBucket":"seg3502-ee55d.appspot.com","apiKey":"AIzaSyCQ3Oh1d9FbWaAYwWVyaAyWE9R2Lo577OU","authDomain":"seg3502-ee55d.firebaseapp.com","messagingSenderId":"578845809672"})),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    NgbModule
   ],
   providers: [StaffService],
   bootstrap: [AppComponent]
